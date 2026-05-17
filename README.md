@@ -20,7 +20,7 @@
 | 1 | DE191019 | Phan Nguyễn | Nguyendeptraibodoi | Leader |  |
 | 2 | DE190425 | Phạm Văn Quyết |  | Member |  |
 | 3 | DE190986 | Nguyễn Tiến Lộc |  | Member |  |
-| 4 | DE190096 | Nguyễn Đức Thương |  | Member |  |
+| 4 | DE190096 | Nguyễn Đức Thương | thuong1703n | Member |  |
 | 5 |  |  |  | Member |  |
 
 ---
