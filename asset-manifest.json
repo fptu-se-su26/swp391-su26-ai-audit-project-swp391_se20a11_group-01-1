@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/swp391-su26-ai-audit-project-swp391_se20a11_group-01-1/static/css/main.384b3d2c.css",
+    "main.js": "/swp391-su26-ai-audit-project-swp391_se20a11_group-01-1/static/js/main.1a7db8e8.js",
+    "index.html": "/swp391-su26-ai-audit-project-swp391_se20a11_group-01-1/index.html",
+    "main.384b3d2c.css.map": "/swp391-su26-ai-audit-project-swp391_se20a11_group-01-1/static/css/main.384b3d2c.css.map",
+    "main.1a7db8e8.js.map": "/swp391-su26-ai-audit-project-swp391_se20a11_group-01-1/static/js/main.1a7db8e8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.384b3d2c.css",
+    "static/js/main.1a7db8e8.js"
+  ]
+}
