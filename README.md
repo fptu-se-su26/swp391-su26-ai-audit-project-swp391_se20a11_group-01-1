@@ -8,7 +8,7 @@
 | Class | SE20A11 |
 | Semester | SU26 |
 | Group | 1 |
-| Topic | Office Maintenance Management System |
+| Topic | Restaurant Management System |
 | Repository |  |
 
 ---
