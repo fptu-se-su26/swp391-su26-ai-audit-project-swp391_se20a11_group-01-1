@@ -1,0 +1,785 @@
+<mxfile host="Electron" agent="ChatGPT" pages="5">
+  <diagram id="diagram2" name="P5-T02 Customer Wireframe">
+    <mxGraphModel dx="1717" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;fontStyle=1;fontColor=#000000;" value="P5-T02 Wireframe - Customer Flow" vertex="1">
+          <mxGeometry height="40" width="1200" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="v4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" value="Low-fidelity wireframe: chỉ thể hiện bố cục màn hình chính, chưa phải UI màu sắc cuối cùng." vertex="1">
+          <mxGeometry height="50" width="760" x="40" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="v5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="40" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Customer Login / Register" vertex="1">
+          <mxGeometry height="34" width="360" x="40" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Email" vertex="1">
+          <mxGeometry height="28" width="250" x="90" y="213" as="geometry" />
+        </mxCell>
+        <mxCell id="v8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Password" vertex="1">
+          <mxGeometry height="28" width="250" x="90" y="253" as="geometry" />
+        </mxCell>
+        <mxCell id="v9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Login" vertex="1">
+          <mxGeometry height="32" width="110" x="90" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="v10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Register" vertex="1">
+          <mxGeometry height="32" width="110" x="230" y="298" as="geometry" />
+        </mxCell>
+        <mxCell id="v11" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontColor=#000000;" value="Forgot password?" vertex="1">
+          <mxGeometry height="24" width="180" x="125" y="343" as="geometry" />
+        </mxCell>
+        <mxCell id="v12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="280" width="360" x="440" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Customer Home / Food Menu" vertex="1">
+          <mxGeometry height="34" width="360" x="440" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Search food..." vertex="1">
+          <mxGeometry height="28" width="330" x="455" y="198" as="geometry" />
+        </mxCell>
+        <mxCell id="v15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Filter" vertex="1">
+          <mxGeometry height="26" width="70" x="705" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="v16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Food Card 1&#xa;Image | Name | Price" vertex="1">
+          <mxGeometry height="90" width="75" x="455" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="v17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Food Card 2&#xa;Image | Name | Price" vertex="1">
+          <mxGeometry height="90" width="75" x="537" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="v18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Food Card 3&#xa;Image | Name | Price" vertex="1">
+          <mxGeometry height="90" width="75" x="619" y="276" as="geometry" />
+        </mxCell>
+        <mxCell id="v19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Cart" vertex="1">
+          <mxGeometry height="28" width="70" x="705" y="376" as="geometry" />
+        </mxCell>
+        <mxCell id="v20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="840" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Food Detail" vertex="1">
+          <mxGeometry height="34" width="360" x="840" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Food Image" vertex="1">
+          <mxGeometry height="95" width="125" x="855" y="198" as="geometry" />
+        </mxCell>
+        <mxCell id="v23" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#000000;" value="Food name&#xa;Price&#xa;Description&#xa;Rating" vertex="1">
+          <mxGeometry height="95" width="185" x="1000" y="198" as="geometry" />
+        </mxCell>
+        <mxCell id="v24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Quantity" vertex="1">
+          <mxGeometry height="28" width="90" x="1000" y="303" as="geometry" />
+        </mxCell>
+        <mxCell id="v25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Add To Cart" vertex="1">
+          <mxGeometry height="30" width="120" x="1000" y="343" as="geometry" />
+        </mxCell>
+        <mxCell id="v26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="AI Suggest Similar" vertex="1">
+          <mxGeometry height="30" width="125" x="855" y="343" as="geometry" />
+        </mxCell>
+        <mxCell id="v27" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="1240" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v28" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Cart / Checkout" vertex="1">
+          <mxGeometry height="34" width="360" x="1240" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="v29" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Cart items table&#xa;Food | Qty | Price | Remove" vertex="1">
+          <mxGeometry height="80" width="330" x="1255" y="198" as="geometry" />
+        </mxCell>
+        <mxCell id="v30" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Coupon code" vertex="1">
+          <mxGeometry height="28" width="150" x="1255" y="293" as="geometry" />
+        </mxCell>
+        <mxCell id="v31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Apply" vertex="1">
+          <mxGeometry height="28" width="70" x="1415" y="293" as="geometry" />
+        </mxCell>
+        <mxCell id="v32" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#000000;" value="Subtotal&#xa;Discount&#xa;Total" vertex="1">
+          <mxGeometry height="55" width="150" x="1275" y="333" as="geometry" />
+        </mxCell>
+        <mxCell id="v33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Checkout" vertex="1">
+          <mxGeometry height="32" width="110" x="1445" y="348" as="geometry" />
+        </mxCell>
+        <mxCell id="v34" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="40" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v35" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Payment" vertex="1">
+          <mxGeometry height="34" width="360" x="40" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v36" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Order summary" vertex="1">
+          <mxGeometry height="70" width="330" x="55" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="v37" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Online Payment" vertex="1">
+          <mxGeometry height="30" width="130" x="55" y="608" as="geometry" />
+        </mxCell>
+        <mxCell id="v38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="QR Payment" vertex="1">
+          <mxGeometry height="30" width="100" x="205" y="608" as="geometry" />
+        </mxCell>
+        <mxCell id="v39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Confirm" vertex="1">
+          <mxGeometry height="32" width="120" x="145" y="663" as="geometry" />
+        </mxCell>
+        <mxCell id="v40" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="280" width="360" x="440" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Order History / Invoice" vertex="1">
+          <mxGeometry height="34" width="360" x="440" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v42" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Order list&#xa;#ID | Date | Total | Status" vertex="1">
+          <mxGeometry height="90" width="330" x="455" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="v43" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Order detail / Invoice preview" vertex="1">
+          <mxGeometry height="70" width="330" x="455" y="623" as="geometry" />
+        </mxCell>
+        <mxCell id="v44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Download Invoice" vertex="1">
+          <mxGeometry height="30" width="150" x="545" y="703" as="geometry" />
+        </mxCell>
+        <mxCell id="v45" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="840" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Table Reservation" vertex="1">
+          <mxGeometry height="34" width="360" x="840" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Date" vertex="1">
+          <mxGeometry height="28" width="120" x="855" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="v48" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Time" vertex="1">
+          <mxGeometry height="28" width="120" x="990" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="v49" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Number of guests" vertex="1">
+          <mxGeometry height="28" width="180" x="855" y="563" as="geometry" />
+        </mxCell>
+        <mxCell id="v50" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Available tables grid" vertex="1">
+          <mxGeometry height="65" width="330" x="855" y="608" as="geometry" />
+        </mxCell>
+        <mxCell id="v51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Reserve Table" vertex="1">
+          <mxGeometry height="30" width="140" x="935" y="688" as="geometry" />
+        </mxCell>
+        <mxCell id="v52" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="1240" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v53" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Support / AI Chatbot" vertex="1">
+          <mxGeometry height="34" width="360" x="1240" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="v54" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Chat messages area" vertex="1">
+          <mxGeometry height="110" width="330" x="1255" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="v55" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Type message..." vertex="1">
+          <mxGeometry height="30" width="250" x="1255" y="643" as="geometry" />
+        </mxCell>
+        <mxCell id="v56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Send" vertex="1">
+          <mxGeometry height="30" width="70" x="1515" y="643" as="geometry" />
+        </mxCell>
+        <mxCell id="v57" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Ask AI" vertex="1">
+          <mxGeometry height="30" width="120" x="1350" y="688" as="geometry" />
+        </mxCell>
+        <mxCell id="v58" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="250" width="360" x="40" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="v59" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" value="Review Food / Restaurant" vertex="1">
+          <mxGeometry height="34" width="360" x="40" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="v60" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Select order / food" vertex="1">
+          <mxGeometry height="28" width="330" x="55" y="838" as="geometry" />
+        </mxCell>
+        <mxCell id="v61" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" value="Rating 1-5" vertex="1">
+          <mxGeometry height="28" width="120" x="55" y="883" as="geometry" />
+        </mxCell>
+        <mxCell id="v62" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" value="Comment box" vertex="1">
+          <mxGeometry height="70" width="330" x="55" y="923" as="geometry" />
+        </mxCell>
+        <mxCell id="v63" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" value="Submit Review" vertex="1">
+          <mxGeometry height="30" width="140" x="145" y="1008" as="geometry" />
+        </mxCell>
+        <mxCell id="e64" edge="1" parent="1" source="v5" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" target="v12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e65" edge="1" parent="1" source="v12" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" target="v20" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e66" edge="1" parent="1" source="v20" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" target="v27" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e67" edge="1" parent="1" source="v27" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" target="v34" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1420" y="440" />
+              <mxPoint x="220" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e68" edge="1" parent="1" source="v34" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" target="v40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e69" edge="1" parent="1" source="v12" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" target="v45" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="830" y="440" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e70" edge="1" parent="1" source="v12" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" target="v52" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e71" edge="1" parent="1" source="v40" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;edgeStyle=orthogonalEdgeStyle;" target="v58" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="915" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="diagram72" name="P5-T02 Staff Wireframe">
+    <mxGraphModel dx="1800" dy="1350" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v73" value="P5-T02 Wireframe - Staff Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="v74" value="Staff tập trung vào bàn, đơn hàng, thanh toán, hóa đơn, yêu cầu đặt bàn và hỗ trợ khách hàng." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="820" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="v75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v76" value="Staff Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v77" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v78" value="Today Orders&#xa;[Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="198" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v79" value="Pending Payments&#xa;[Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="265" y="198" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v80" value="Reserved Tables&#xa;[Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="268" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v81" value="Support Tickets&#xa;[Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="265" y="268" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v83" value="Table Status / Arrange Tables" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v84" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v85" value="Table map grid&#xa;Available / Occupied / Reserved" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="198" width="248" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v86" value="Update Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="323" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v87" value="Transfer Table" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="670" y="323" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v89" value="Order List / Counter Order" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v90" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v91" value="Create Counter Order" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="198" width="155" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v92" value="Orders table&#xa;ID | Customer | Total | Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="243" width="248" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="v93" value="View Detail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="373" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v95" value="Order Detail / Update Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v96" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v97" value="Order items&#xa;Food | Qty | Note" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="198" width="248" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="v98" value="Select new status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="298" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v99" value="Update Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="298" width="120" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v100" value="Send To Kitchen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1410" y="348" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v102" value="Payment Confirmation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v103" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v104" value="Payment info&#xa;Order ID | Amount | Method" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="518" width="248" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="v105" value="Confirm Payment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="613" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v106" value="Process QR Payment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="658" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v108" value="Print Invoice" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v109" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v110" value="Invoice preview&#xa;Items | Tax | Total" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="518" width="248" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="v111" value="Export PDF" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="648" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v112" value="Print" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="670" y="648" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v114" value="Reservation Requests" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v115" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v116" value="Requests table&#xa;Customer | Date | Time | Guests" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="518" width="248" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="v117" value="Approve" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="638" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v118" value="Reject" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1045" y="638" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v119" value="Send Notification" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="683" width="145" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v121" value="Customer Support" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v122" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v123" value="Ticket list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="518" width="90" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="v124" value="Conversation detail" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1445" y="518" width="143" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="v125" value="Reply..." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="656" width="178" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v126" value="Send" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1523" y="656" width="65" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e127" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v75" target="v82">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e128" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v75" target="v88">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e129" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v88" target="v94">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e130" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v94" target="v101">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e131" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v101" target="v107">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e132" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v75" target="v113">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e133" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v75" target="v120">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="diagram134" name="P5-T02 Kitchen Wireframe">
+    <mxGraphModel dx="1800" dy="1350" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v135" value="P5-T02 Wireframe - Kitchen Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="v136" value="Kitchen nhận đơn từ Staff/System, cập nhật trạng thái chế biến và báo món sẵn sàng." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="760" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="v137" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v138" value="Kitchen Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v139" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v140" value="Pending orders&#xa;Preparing&#xa;Ready" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="198" width="248" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="v141" value="View Orders" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="190" y="313" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v142" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v143" value="Cooking Orders" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v144" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v145" value="Cooking order queue&#xa;Order ID | Time | Priority" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="198" width="248" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="v146" value="Open Order" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="605" y="343" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v148" value="Cooking Order Detail" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v149" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v150" value="Food list&#xa;Item | Qty | Note | Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="198" width="248" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="v151" value="Start Cooking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="333" width="115" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v152" value="Reject Item" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="333" width="105" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v153" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v154" value="Update Cooking Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v155" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v156" value="Select item" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="198" width="180" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v157" value="Select status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="243" width="180" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v158" value="Mark Ready" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="293" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v159" value="Save Status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1465" y="293" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v160" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v161" value="Predict Cooking Time" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v162" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v163" value="Order items + quantity" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="518" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="v164" value="Predict Time" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="595" y="623" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v165" value="Estimated cooking time result" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="668" width="248" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="v166" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v167" value="Food Ready Notification" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v168" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v169" value="Ready items list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="518" width="248" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v170" value="Notify Staff" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1005" y="633" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v171" value="Complete Task" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="678" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e172" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v137" target="v142">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e173" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v142" target="v147">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e174" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v147" target="v153">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e175" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v147" target="v160">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e176" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v153" target="v166">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="diagram177" name="P5-T02 Admin Wireframe">
+    <mxGraphModel dx="1800" dy="1350" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v178" value="P5-T02 Wireframe - Admin Flow" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="v179" value="Admin cấu hình tài khoản, quyền, menu, coupon và xem báo cáo/thống kê hệ thống." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="820" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="v180" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v181" value="Admin Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v182" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v183" value="Revenue&#xa;[Chart/Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="198" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v184" value="Orders&#xa;[Chart/Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="265" y="198" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v185" value="Users&#xa;[Chart/Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="268" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v186" value="Best Foods&#xa;[Chart/Number]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="265" y="268" width="110" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="v187" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v188" value="Update Customer / Employee Accounts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v189" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v190" value="User table&#xa;Name | Email | Role | Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="198" width="248" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="v191" value="Add User" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="323" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v192" value="Edit User" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="635" y="323" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v193" value="Lock" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="730" y="323" width="65" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v194" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v195" value="Configure Roles &amp; Permissions" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v196" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v197" value="Role list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="198" width="95" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="v198" value="Permission checklist" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="198" width="138" height="135" as="geometry" />
+        </mxCell>
+        <mxCell id="v199" value="Save" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1015" y="358" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v200" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="150" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v201" value="Update Food Menu" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="150" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v202" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="184" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v203" value="Food table&#xa;Name | Category | Price | Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="198" width="248" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="v204" value="Add Food" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="298" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v205" value="Edit Food" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="298" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v206" value="Upload Image" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="343" width="125" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v207" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v208" value="Configure Coupons" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v209" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v210" value="Coupon table&#xa;Code | Type | Value | Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="518" width="248" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="v211" value="Create Coupon" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="140" y="643" width="125" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v212" value="Deactivate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="280" y="643" width="105" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v213" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v214" value="View Revenue / Statistics" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v215" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="440" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v216" value="Date range" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontColor=#555555;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="540" y="518" width="170" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v217" value="Filter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="720" y="518" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v218" value="Revenue chart" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="563" width="248" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="v219" value="Best-selling foods table" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="540" y="663" width="248" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="v220" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v221" value="View Customer Feedback" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v222" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="840" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v223" value="Feedback list&#xa;Rating | Comment | Food" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="940" y="518" width="248" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="v224" value="View Detail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="673" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="v225" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="470" width="360" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="v226" value="View AI Logs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="470" width="360" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="v227" value="Sidebar&#xa;- Dashboard&#xa;- Menu&#xa;- Orders&#xa;- Reports" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#999999;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="504" width="90" height="216" as="geometry" />
+        </mxCell>
+        <mxCell id="v228" value="AI chat sessions table" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="518" width="248" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="v229" value="Recommendation logs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="628" width="248" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="v230" value="View Log Detail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#333333;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1395" y="708" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e231" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v187">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e232" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v194">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e233" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v200">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e234" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v207">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e235" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v213">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e236" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v220">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e237" value="" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;" edge="1" parent="1" source="v180" target="v225">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="diagram238" name="P5-T02 Screen Inventory">
+    <mxGraphModel dx="1800" dy="1350" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v239" value="P5-T02 Wireframe - Screen Inventory" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=20;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="v240" value="Danh sách màn hình chính đã được thiết kế wireframe theo yêu cầu P5-T02." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="760" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="v241" value="Customer Screens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="520" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="v242" value="• Login / Register&lt;br&gt;• Food Menu&lt;br&gt;• Food Detail&lt;br&gt;• Cart / Checkout&lt;br&gt;• Payment&lt;br&gt;• Order History / Invoice&lt;br&gt;• Table Reservation&lt;br&gt;• Review&lt;br&gt;• Support / AI Chatbot" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;spacing=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="60" y="195" width="520" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="v243" value="Staff Screens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="710" y="160" width="520" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="v244" value="• Staff Dashboard&lt;br&gt;• Table Status / Arrange Tables&lt;br&gt;• Order List / Counter Order&lt;br&gt;• Order Detail / Update Status&lt;br&gt;• Payment Confirmation&lt;br&gt;• Print Invoice&lt;br&gt;• Reservation Requests&lt;br&gt;• Customer Support" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;spacing=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="710" y="195" width="520" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="v245" value="Kitchen Screens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="60" y="590" width="520" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="v246" value="• Kitchen Dashboard&lt;br&gt;• Cooking Orders&lt;br&gt;• Cooking Order Detail&lt;br&gt;• Update Cooking Status&lt;br&gt;• Predict Cooking Time&lt;br&gt;• Food Ready Notification" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;spacing=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="60" y="625" width="520" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="v247" value="Admin Screens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="710" y="590" width="520" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="v248" value="• Admin Dashboard&lt;br&gt;• Update Accounts&lt;br&gt;• Configure Roles &amp; Permissions&lt;br&gt;• Update Food Menu&lt;br&gt;• Configure Coupons&lt;br&gt;• View Revenue / Statistics&lt;br&gt;• View Customer Feedback&lt;br&gt;• View AI Logs" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;verticalAlign=top;spacing=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="710" y="625" width="520" height="320" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

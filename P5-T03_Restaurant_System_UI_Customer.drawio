@@ -1,0 +1,1163 @@
+<mxfile host="Electron" agent="ChatGPT" pages="8">
+  <diagram id="b6b2fd4af3834a6ab4330417ee2644f7" name="Customer UI Overview">
+    <mxGraphModel dx="1373" dy="835" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Customer_UI_Overview_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="70" width="1680" x="40" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" value="P5-T03 - UI Customer Overview" vertex="1">
+          <mxGeometry height="28" width="500" x="65" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" value="Login, menu, food detail, cart, checkout, order history, invoice" vertex="1">
+          <mxGeometry height="22" width="650" x="65" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Restaurant" vertex="1">
+          <mxGeometry height="38" width="120" x="1520" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="60" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Login" vertex="1">
+          <mxGeometry height="44" width="320" x="60" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="85" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="85" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="85" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="230" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="85" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="85" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="460" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Menu" vertex="1">
+          <mxGeometry height="44" width="320" x="460" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="485" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="485" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_18" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="485" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_19" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="630" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_20" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="485" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="485" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_22" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="860" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Food Detail" vertex="1">
+          <mxGeometry height="44" width="320" x="860" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_24" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="885" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_25" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="885" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="885" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_27" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="1030" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_28" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="885" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_29" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="885" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_30" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="1260" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_31" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Cart" vertex="1">
+          <mxGeometry height="44" width="320" x="1260" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_32" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="1285" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_33" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="1285" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_34" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="1285" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_35" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="1430" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_36" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="1285" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_37" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="1285" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_38" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="60" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_39" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Checkout" vertex="1">
+          <mxGeometry height="44" width="320" x="60" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="85" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_41" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="85" y="965" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_42" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="85" y="1055" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_43" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="230" y="1055" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="85" y="1150" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_45" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="85" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="460" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_47" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Order History" vertex="1">
+          <mxGeometry height="44" width="320" x="460" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_48" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="485" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_49" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="485" y="965" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="485" y="1055" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="630" y="1055" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_52" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="485" y="1150" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_53" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="485" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_54" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="520" width="320" x="860" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_55" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Invoice" vertex="1">
+          <mxGeometry height="44" width="320" x="860" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Header / Navigation" vertex="1">
+          <mxGeometry height="38" width="270" x="885" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_57" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Main content area" vertex="1">
+          <mxGeometry height="70" width="270" x="885" y="965" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Card/List" vertex="1">
+          <mxGeometry height="70" width="125" x="885" y="1055" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_59" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Detail/Action" vertex="1">
+          <mxGeometry height="70" width="125" x="1030" y="1055" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_60" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" value="Form / Table / Summary" vertex="1">
+          <mxGeometry height="110" width="270" x="885" y="1150" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_61" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Primary Button" vertex="1">
+          <mxGeometry height="38" width="270" x="885" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_62" edge="1" parent="1" source="Customer_UI_Overview_6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B45309;endArrow=block;endFill=1;" target="Customer_UI_Overview_14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_63" edge="1" parent="1" source="Customer_UI_Overview_14" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B45309;endArrow=block;endFill=1;" target="Customer_UI_Overview_22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_64" edge="1" parent="1" source="Customer_UI_Overview_22" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B45309;endArrow=block;endFill=1;" target="Customer_UI_Overview_30" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_65" edge="1" parent="1" source="Customer_UI_Overview_30" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B45309;endArrow=block;endFill=1;" target="Customer_UI_Overview_38" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1420" y="730" />
+              <mxPoint x="220" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_66" edge="1" parent="1" source="Customer_UI_Overview_38" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B45309;endArrow=block;endFill=1;" target="Customer_UI_Overview_46" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_67" edge="1" parent="1" source="Customer_UI_Overview_46" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#B45309;endArrow=block;endFill=1;" target="Customer_UI_Overview_54" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_68" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=18;spacing=4;fontStyle=1;" value="Customer main flow:&lt;br&gt;Login → Menu → Food Detail → Cart → Checkout → Order History → Invoice" vertex="1">
+          <mxGeometry height="80" width="380" x="1260" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="Customer_UI_Overview_69" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=13;spacing=4;" value="This page summarizes the Customer UI screens. Each following page contains an editable detailed mockup." vertex="1">
+          <mxGeometry height="22" width="1450" x="60" y="55" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="f4efb4b0f6704e1894e506491adf2250" name="Login UI">
+    <mxGraphModel dx="1373" dy="835" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Login_UI_2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="70" width="1180" x="40" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_3" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" value="P5-T03 - Customer UI: Login" vertex="1">
+          <mxGeometry height="28" width="500" x="65" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_4" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" value="Customer UI Design" vertex="1">
+          <mxGeometry height="22" width="650" x="65" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Restaurant" vertex="1">
+          <mxGeometry height="38" width="120" x="1020" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="650" width="1080" x="110" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="44" width="1080" x="110" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#EF4444;strokeColor=#EF4444;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="12" width="12" x="130" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F59E0B;strokeColor=#F59E0B;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="12" width="12" x="150" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#22C55E;strokeColor=#22C55E;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="12" width="12" x="170" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_11" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=11;spacing=4;" value="restaurant-system.com/login" vertex="1">
+          <mxGeometry height="24" width="350" x="205" y="139" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" value="" vertex="1">
+          <mxGeometry height="520" width="485" x="150" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_13" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=30;spacing=4;fontStyle=1;" value="Welcome to Restaurant System" vertex="1">
+          <mxGeometry height="50" width="360" x="190" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_14" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFF7ED;fontSize=16;spacing=4;" value="Order food, reserve table, track order status and download invoices easily." vertex="1">
+          <mxGeometry height="60" width="360" x="190" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_15" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FCD34D;strokeColor=#FCD34D;fontColor=#92400E;fontSize=18;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Restaurant Photo / Promotion Banner" vertex="1">
+          <mxGeometry height="190" width="360" x="190" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_16" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#B45309;fontSize=13;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Explore Menu" vertex="1">
+          <mxGeometry height="38" width="140" x="190" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_17" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" value="" vertex="1">
+          <mxGeometry height="450" width="400" x="710" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_18" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=24;spacing=4;fontStyle=1;" value="Customer Login" vertex="1">
+          <mxGeometry height="36" width="300" x="750" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_19" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" value="Login to continue ordering food." vertex="1">
+          <mxGeometry height="22" width="320" x="750" y="308" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_20" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=11;spacing=4;fontStyle=1;" value="Email" vertex="1">
+          <mxGeometry height="18" width="320" x="750" y="348" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=11;align=left;verticalAlign=middle;spacing=8;" value="customer1@gmail.com" vertex="1">
+          <mxGeometry height="42" width="320" x="750" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_22" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=11;spacing=4;fontStyle=1;" value="Password" vertex="1">
+          <mxGeometry height="18" width="320" x="750" y="433" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_23" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=11;align=left;verticalAlign=middle;spacing=8;" value="••••••••" vertex="1">
+          <mxGeometry height="42" width="320" x="750" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_24" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=11;spacing=4;" value="☑ Remember me" vertex="1">
+          <mxGeometry height="22" width="170" x="750" y="512" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_25" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=11;spacing=4;" value="Forgot password?" vertex="1">
+          <mxGeometry height="22" width="110" x="970" y="512" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_26" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" value="Login" vertex="1">
+          <mxGeometry height="46" width="320" x="750" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_27" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" value="Don&#39;t have account? Register" vertex="1">
+          <mxGeometry height="24" width="220" x="805" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Login_UI_28" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=13;spacing=4;" value="Purpose: allow Customer to access menu, cart, checkout, order history and invoice features." vertex="1">
+          <mxGeometry height="40" width="1120" x="70" y="820" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="1b977a7d28934f98a24ce71d73690e3e" name="Menu UI">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Menu_UI_2" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_3" value="P5-T03 - Customer UI: Menu" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="40" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_4" value="Customer UI Design" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="65" y="68" width="650" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_5" value="Restaurant" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="45" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_6" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_7" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_8" value="🍽️ RMS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="86" y="134" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_9" value="Menu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_10" value="Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="306" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_11" value="Orders" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="382" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_12" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="458" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_13" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="132" width="90" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_14" value="What would you like to eat today?" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=26;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="205" width="360" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_15" value="Search food by name..." style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=12;align=left;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="105" y="265" width="500" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_16" value="Search" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="265" width="110" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_17" value="All" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="330" width="90" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_18" value="Rice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="207" y="330" width="90" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_19" value="Noodles" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="309" y="330" width="90" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_20" value="Drinks" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="411" y="330" width="90" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_21" value="Dessert" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="513" y="330" width="90" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_22" value="Combo" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="615" y="330" width="90" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_23" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="395" width="245" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_24" value="Food Image" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#B45309;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="115" y="405" width="225" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_25" value="Grilled Chicken Rice" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="117" y="505" width="221" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_26" value="75,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="117" y="528" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_27" value="Best" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DCFCE7;strokeColor=#DCFCE7;fontColor=#16A34A;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="274" y="525" width="62" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_28" value="Add to Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="117" y="592" width="221" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_29" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="395" width="245" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_30" value="Food Image" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#B45309;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="405" width="225" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_31" value="Beef Noodle Soup" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="392" y="505" width="221" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_32" value="65,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="392" y="528" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_33" value="Hot" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DCFCE7;strokeColor=#DCFCE7;fontColor=#16A34A;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="549" y="525" width="62" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_34" value="Add to Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="392" y="592" width="221" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_35" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="655" y="395" width="245" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_36" value="Food Image" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#B45309;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="665" y="405" width="225" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_37" value="Seafood Fried Rice" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="667" y="505" width="221" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_38" value="89,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="667" y="528" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_39" value="New" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DCFCE7;strokeColor=#DCFCE7;fontColor=#16A34A;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="824" y="525" width="62" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_40" value="Add to Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="667" y="592" width="221" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_41" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="395" width="245" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_42" value="Food Image" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#B45309;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="940" y="405" width="225" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_43" value="Lemon Tea" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="942" y="505" width="221" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_44" value="25,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="942" y="528" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_45" value="Drink" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DCFCE7;strokeColor=#DCFCE7;fontColor=#16A34A;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1099" y="525" width="62" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_46" value="Add to Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="942" y="592" width="221" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_47" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="185" width="245" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_48" value="Mini Cart" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=15;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="205" width="190" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_49" value="2 items selected" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="950" y="240" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_50" value="Total: 140,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="270" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_51" value="View Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="305" width="190" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Menu_UI_52" value="Menu screen supports search, filter by category, view food detail and add food to cart." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=13;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="105" y="675" width="740" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="e76c8382fd8b465d8d7d6be4535a6828" name="Food Detail UI">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Food_Detail_UI_2" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_3" value="P5-T03 - Customer UI: Food Detail" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="40" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_4" value="Customer UI Design" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="65" y="68" width="650" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_5" value="Restaurant" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="45" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_6" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_7" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_8" value="🍽️ RMS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="86" y="134" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_9" value="Menu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_10" value="Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="306" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_11" value="Orders" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="382" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_12" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="458" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_13" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="132" width="90" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_14" value="← Back to Menu" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="190" width="200" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_15" value="Large Food Image" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#B45309;fontSize=28;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="235" width="520" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_16" value="Image 1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="105" y="650" width="115" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_17" value="Image 2" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="235" y="650" width="115" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_18" value="Image 3" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#6B7280;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="365" y="650" width="115" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_19" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="220" width="500" height="520" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_20" value="Grilled Chicken Rice" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=26;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="255" width="360" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_21" value="Popular" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DCFCE7;strokeColor=#DCFCE7;fontColor=#16A34A;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="300" width="84" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_22" value="75,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=24;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="345" width="220" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_23" value="Tender grilled chicken served with steamed rice, vegetables and special restaurant sauce." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=14;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="720" y="395" width="400" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_24" value="Quantity" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="485" width="120" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_25" value="-" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=18;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="720" y="520" width="42" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_26" value="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="520" width="64" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_27" value="+" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=18;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="842" y="520" width="42" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_28" value="Add to Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="585" width="190" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_29" value="Buy Now" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#16A34A;strokeColor=#16A34A;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="930" y="585" width="190" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_30" value="⭐ 4.8 / 5 from 128 reviews" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=13;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="665" width="400" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="Food_Detail_UI_31" value="Food detail screen displays image, description, price, rating, quantity selector and cart action." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=13;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="105" y="770" width="760" height="24" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d438cd93df744422bd2efaec26dd3b7d" name="Cart UI">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Cart_UI_2" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_3" value="P5-T03 - Customer UI: Cart" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="40" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_4" value="Customer UI Design" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="65" y="68" width="650" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_5" value="Restaurant" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="45" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_6" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_7" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_8" value="🍽️ RMS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="86" y="134" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_9" value="Menu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="230" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_10" value="Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="306" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_11" value="Orders" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="382" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_12" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="458" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_13" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="132" width="90" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_14" value="Shopping Cart" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=26;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="200" width="300" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_15" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="260" width="720" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_16" value="Food" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="280" width="100" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_17" value="Price" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="390" y="280" width="100" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_18" value="Qty" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="280" width="100" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_19" value="Subtotal" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="280" width="100" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_20" value="Action" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="735" y="280" width="100" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_21" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="325" width="58" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_22" value="Grilled Chicken Rice" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="333" width="180" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_23" value="75,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="390" y="337" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_24" value="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="333" width="48" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_25" value="75,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="337" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_26" value="Remove" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FEE2E2;strokeColor=#FEE2E2;fontColor=#DC2626;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="735" y="333" width="58" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_27" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="407" width="58" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_28" value="Beef Noodle Soup" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="415" width="180" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_29" value="65,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="390" y="419" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_30" value="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="415" width="48" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_31" value="65,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="419" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_32" value="Remove" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FEE2E2;strokeColor=#FEE2E2;fontColor=#DC2626;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="735" y="415" width="58" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_33" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FED7AA;strokeColor=#FED7AA;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="130" y="489" width="58" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_34" value="Lemon Tea" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="497" width="180" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_35" value="25,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="390" y="501" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_36" value="2" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="497" width="48" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_37" value="50,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="501" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_38" value="Remove" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FEE2E2;strokeColor=#FEE2E2;fontColor=#DC2626;fontSize=10;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="735" y="497" width="58" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_39" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="260" width="320" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_40" value="Order Summary" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=20;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="290" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_41" value="Subtotal" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="900" y="345" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_42" value="190,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="345" width="110" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_43" value="Discount" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="900" y="385" width="180" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_44" value="-20,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#16A34A;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="385" width="110" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_45" value="Enter coupon code" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=11;align=left;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="900" y="430" width="170" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_46" value="Apply" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="430" width="80" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_47" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#E5E7EB;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="900" y="500" width="260" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_48" value="Total" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="525" width="110" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_49" value="170,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="525" width="140" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_50" value="Proceed to Checkout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="900" y="585" width="260" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="Cart_UI_51" value="Cart screen allows Customer to update quantity, remove food, apply coupon and move to checkout." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=13;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="105" y="690" width="760" height="24" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="8f3d8997a07a408cb8e788b07186a376" name="Checkout UI">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Checkout_UI_2" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_3" value="P5-T03 - Customer UI: Checkout" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="40" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_4" value="Customer UI Design" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="65" y="68" width="650" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_5" value="Restaurant" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="45" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_6" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="720" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_7" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_8" value="🍽️ RMS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="86" y="134" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_9" value="Menu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="230" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_10" value="Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="306" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_11" value="Orders" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="382" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_12" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="458" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_13" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="132" width="90" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_14" value="Checkout" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=26;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="195" width="300" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_15" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="245" width="680" height="505" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_16" value="Customer Information" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="275" width="260" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_17" value="Full Name" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=11;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="318" width="280" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_18" value="Nguyen Van A" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=11;align=left;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="135" y="340" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_19" value="Phone" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=11;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="318" width="280" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_20" value="0901234567" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=11;align=left;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="455" y="340" width="280" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_21" value="Address / Table Note" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=11;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="403" width="600" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_22" value="123 Nguyen Van Linh, Da Nang" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontColor=#6B7280;fontSize=11;align=left;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="135" y="425" width="600" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_23" value="Order Type" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="500" width="250" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_24" value="Delivery" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#B45309;fontColor=#B45309;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="535" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_25" value="Dine-in" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="305" y="535" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_26" value="Takeaway" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="475" y="535" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_27" value="Payment Method" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="615" width="250" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_28" value="Online Payment" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#B45309;fontColor=#B45309;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="135" y="650" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_29" value="QR Payment" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="315" y="650" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_30" value="Cash" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="455" y="650" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_31" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="830" y="245" width="360" height="505" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_32" value="Final Order" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="275" width="220" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_33" value="Grilled Chicken Rice x1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="860" y="330" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_34" value="75,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="330" width="70" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_35" value="Beef Noodle Soup x1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="860" y="365" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_36" value="65,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="365" width="70" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_37" value="Lemon Tea x2" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="860" y="400" width="220" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_38" value="50,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="400" width="70" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_39" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#E5E7EB;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="860" y="455" width="300" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_40" value="Discount" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="860" y="485" width="160" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_41" value="-20,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#16A34A;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="485" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_42" value="Total" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=20;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="530" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_43" value="170,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=20;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="530" width="150" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_44" value="Place Order" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="620" width="300" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="Checkout_UI_45" value="After placing order, Customer is redirected to payment or order tracking screen." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=11;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="860" y="690" width="290" height="28" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="fc02df7e66e74b1fad73bde2d6a6aa28" name="Order History UI">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Order_History_UI_2" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_3" value="P5-T03 - Customer UI: Order History" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="40" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_4" value="Customer UI Design" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="65" y="68" width="650" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_5" value="Restaurant" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="45" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_6" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_7" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_8" value="🍽️ RMS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="86" y="134" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_9" value="Menu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="230" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_10" value="Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="306" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_11" value="Orders" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="382" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_12" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="458" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_13" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="132" width="90" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_14" value="Order History" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=26;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="200" width="350" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_15" value="All" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="255" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_16" value="Pending" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="240" y="255" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_17" value="Preparing" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="375" y="255" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_18" value="Completed" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="510" y="255" width="120" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_19" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="105" y="320" width="1085" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_20" value="Order ID" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="345" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_21" value="Date" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="345" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_22" value="Items" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="445" y="345" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_23" value="Total" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="345" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_24" value="Status" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="345" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_25" value="Action" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="345" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_26" value="#ORD-1001" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="395" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_27" value="08/06/2026" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="270" y="395" width="140" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_28" value="3 items" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="445" y="395" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_29" value="170,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="395" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_30" value="Completed" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DCFCE7;strokeColor=#DCFCE7;fontColor=#16A34A;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="392" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_31" value="View" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="392" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_32" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#F3F4F6;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="392" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_33" value="#ORD-1002" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="477" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_34" value="09/06/2026" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="270" y="477" width="140" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_35" value="2 items" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="445" y="477" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_36" value="145,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="477" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_37" value="Preparing" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FEF3C7;strokeColor=#FEF3C7;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="474" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_38" value="View" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="474" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_39" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#F3F4F6;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="474" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_40" value="#ORD-1003" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="559" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_41" value="10/06/2026" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="270" y="559" width="140" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_42" value="5 items" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="445" y="559" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_43" value="320,000" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="700" y="559" width="120" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_44" value="Pending" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#DBEAFE;strokeColor=#DBEAFE;fontColor=#2563EB;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="556" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_45" value="View" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="556" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_46" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#F3F4F6;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="556" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Order_History_UI_47" value="Order history screen allows Customer to track status, view detail and download invoice." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=13;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="105" y="735" width="760" height="24" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="bb0144ba3f9f4b8dabe6e3de40cfebb5" name="Invoice UI">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Invoice_UI_2" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#111827;strokeColor=#111827;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="1180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_3" value="P5-T03 - Customer UI: Invoice" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;fontSize=22;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="65" y="40" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_4" value="Customer UI Design" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#D1D5DB;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="65" y="68" width="650" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_5" value="Restaurant" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=14;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1020" y="45" width="120" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_6" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F9FAFB;strokeColor=#CBD5E1;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_7" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="120" width="1200" height="56" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_8" value="🍽️ RMS" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=18;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="86" y="134" width="130" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_9" value="Menu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="230" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_10" value="Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="306" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_11" value="Orders" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#FFFFFF;fontColor=#6B7280;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="382" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_12" value="Invoice" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#B45309;fontSize=11;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="458" y="134" width="70" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_13" value="Logout" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#E5E7EB;fontColor=#111827;fontSize=11;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="132" width="90" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_14" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFFFFF;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="200" width="780" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_15" value="INVOICE" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=30;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="245" width="250" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_16" value="Invoice No: INV-1001" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=13;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="780" y="245" width="230" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_17" value="Date: 08/06/2026" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="780" y="275" width="230" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_18" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#E5E7EB;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="330" y="315" width="680" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_19" value="Customer" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=14;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="345" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_20" value="Nguyen Van A&lt;br&gt;0901234567&lt;br&gt;123 Nguyen Van Linh, Da Nang" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="330" y="375" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_21" value="Restaurant" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=14;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="345" width="260" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_22" value="Restaurant System&lt;br&gt;Da Nang City&lt;br&gt;support@restaurant.com" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="720" y="375" width="290" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_23" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#FFF7ED;strokeColor=#FFF7ED;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="330" y="470" width="680" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_24" value="Item" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="480" width="240" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_25" value="Qty" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="630" y="480" width="90" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_26" value="Price" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="480" width="110" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_27" value="Subtotal" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=12;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="885" y="480" width="110" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_28" value="Grilled Chicken Rice" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="350" y="535" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_29" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="630" y="535" width="90" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_30" value="75,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="750" y="535" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_31" value="75,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="885" y="535" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_32" value="Beef Noodle Soup" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="350" y="573" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_33" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="630" y="573" width="90" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_34" value="65,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="750" y="573" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_35" value="65,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="885" y="573" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_36" value="Lemon Tea" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="350" y="611" width="250" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_37" value="2" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="630" y="611" width="90" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_38" value="25,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="750" y="611" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_39" value="50,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="885" y="611" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_40" value="" style="rounded=0;whiteSpace=wrap;html=1;arcSize=10;fillColor=#E5E7EB;strokeColor=#E5E7EB;fontColor=#1f2937;fontSize=12;align=center;verticalAlign=middle;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="330" y="655" width="680" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_41" value="Subtotal" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="735" y="680" width="130" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_42" value="190,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="885" y="680" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_43" value="Discount" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="735" y="715" width="130" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_44" value="-20,000" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#16A34A;fontSize=12;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="885" y="715" width="110" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_45" value="Total" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#111827;fontSize=16;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="735" y="750" width="130" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_46" value="170,000 VND" style="text;html=1;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#B45309;fontSize=16;spacing=4;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="750" width="125" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_47" value="Download" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#B45309;strokeColor=#B45309;fontColor=#FFFFFF;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="850" y="810" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_48" value="Print" style="rounded=1;whiteSpace=wrap;html=1;arcSize=10;fillColor=#F3F4F6;strokeColor=#F3F4F6;fontColor=#111827;fontSize=12;align=center;verticalAlign=middle;spacing=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="810" width="80" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="Invoice_UI_49" value="Invoice screen provides order summary and supports print/download invoice." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#6B7280;fontSize=13;spacing=4;" vertex="1" parent="1">
+          <mxGeometry x="280" y="815" width="500" height="24" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

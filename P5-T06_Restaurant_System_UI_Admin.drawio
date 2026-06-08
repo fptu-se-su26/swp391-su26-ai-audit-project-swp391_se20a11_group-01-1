@@ -1,0 +1,1097 @@
+<mxfile host="Electron" agent="ChatGPT" pages="6">
+  <diagram id="006da88d-9c57-4ef1-82bd-fb5a33da75aa" name="Admin Dashboard">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3f6f9;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1360" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side" value="&lt;b&gt;Restaurant Admin&lt;/b&gt;&lt;br&gt;&lt;br&gt;ADMIN PANEL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;fontColor=#ffffff;strokeColor=#263238;align=left;spacingLeft=16;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="230" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Dashboard" value="● Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;align=left;spacingLeft=14;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="115" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Users" value="  Users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="170" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Employees" value="  Employees" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="225" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Menu" value="  Menu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="280" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Coupons" value="  Coupons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="335" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Reports" value="  Reports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="390" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Settings" value="  Settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="445" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Dashboard_Logout" value="  Logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="500" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top" value="&lt;b&gt;Dashboard&lt;/b&gt; &amp;nbsp;&amp;nbsp; / Admin workspace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fa;fontColor=#263238;strokeColor=#cfd8dc;align=left;spacingLeft=16;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="1130" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="search_top" value="Search in admin..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="34" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="profile_top" value="Admin&lt;br&gt;admin@restaurant.com" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="30" width="270" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="dash_title" value="&lt;b&gt;Admin Dashboard Overview&lt;/b&gt;&lt;br&gt;Monitor restaurant performance and system activities" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#263238;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="105" width="720" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="card1" value="&lt;b&gt;Total Revenue&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;45,800,000 VND&lt;/font&gt;&lt;br&gt;+12% this month" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;fontColor=#1b5e20;strokeColor=#a5d6a7;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="170" width="240" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="card2" value="&lt;b&gt;Orders Today&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;128&lt;/font&gt;&lt;br&gt;18 pending" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;fontColor=#0d47a1;strokeColor=#90caf9;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="540" y="170" width="240" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="card3" value="&lt;b&gt;Active Customers&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;1,245&lt;/font&gt;&lt;br&gt;32 new users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;fontColor=#e65100;strokeColor=#ffcc80;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="170" width="240" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="card4" value="&lt;b&gt;Low Stock / Alerts&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;7&lt;/font&gt;&lt;br&gt;Need checking" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;fontColor=#b71c1c;strokeColor=#ef9a9a;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1060" y="170" width="240" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="sales_chart" value="&lt;b&gt;Revenue Chart&lt;/b&gt;&lt;br&gt;&lt;br&gt;Bar/line chart by day, week, month&lt;br&gt;&lt;br&gt;[chart placeholder]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;fontColor=#455a64;strokeColor=#cfd8dc;arcSize=6;align=center;verticalAlign=middle;dashed=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="315" width="650" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="top_foods" value="&lt;b&gt;Best-Selling Foods&lt;/b&gt;&lt;br&gt;&lt;br&gt;1. Beef Steak&lt;br&gt;2. Fried Chicken&lt;br&gt;3. Seafood Pizza&lt;br&gt;4. Spaghetti&lt;br&gt;5. Iced Lemon Tea" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="315" width="340" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders" value="&lt;b&gt;Recent Orders&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="625" width="650" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_h0" value="Order ID" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="300" y="675" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_h1" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="675" width="130" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_h2" value="Amount" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="675" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_h3" value="Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="650" y="675" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_h4" value="Action" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="770" y="675" width="140" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r0c0" value="#ORD-1021" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="300" y="711" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r0c1" value="Minh Anh" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="711" width="130" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r0c2" value="520,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="711" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r0c3" value="Paid" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="650" y="711" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r0c4" value="View" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="770" y="711" width="140" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r1c0" value="#ORD-1020" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="300" y="747" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r1c1" value="Quoc Bao" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="747" width="130" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r1c2" value="280,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="747" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r1c3" value="Preparing" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="650" y="747" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r1c4" value="View" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="770" y="747" width="140" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r2c0" value="#ORD-1019" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="300" y="783" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r2c1" value="Lan Huong" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="783" width="130" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r2c2" value="760,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="783" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r2c3" value="Completed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="650" y="783" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r2c4" value="View" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="770" y="783" width="140" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r3c0" value="#ORD-1018" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="300" y="819" width="100" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r3c1" value="Duy Khang" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="819" width="130" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r3c2" value="190,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="819" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r3c3" value="Pending" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="650" y="819" width="120" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="recent_orders_tbl_r3c4" value="View" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="770" y="819" width="140" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="notifications" value="&lt;b&gt;System Notifications&lt;/b&gt;&lt;br&gt;&lt;br&gt;• New reservation request waiting for approval&lt;br&gt;• 2 coupons will expire this week&lt;br&gt;• 3 food items are currently unavailable&lt;br&gt;• AI chatbot handled 35 conversations today" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="625" width="340" height="250" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="c60cc545-a257-40b0-b9ff-463ee2d8ddc7" name="User Accounts">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3f6f9;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1360" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side" value="&lt;b&gt;Restaurant Admin&lt;/b&gt;&lt;br&gt;&lt;br&gt;ADMIN PANEL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;fontColor=#ffffff;strokeColor=#263238;align=left;spacingLeft=16;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="230" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Dashboard" value="  Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="115" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Users" value="● Users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;align=left;spacingLeft=14;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="170" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Employees" value="  Employees" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="225" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Menu" value="  Menu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="280" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Coupons" value="  Coupons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="335" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Reports" value="  Reports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="390" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Settings" value="  Settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="445" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Users_Logout" value="  Logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="500" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top" value="&lt;b&gt;Users&lt;/b&gt; &amp;nbsp;&amp;nbsp; / Admin workspace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fa;fontColor=#263238;strokeColor=#cfd8dc;align=left;spacingLeft=16;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="1130" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="search_top" value="Search in admin..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="34" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="profile_top" value="Admin&lt;br&gt;admin@restaurant.com" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="30" width="270" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="users_title" value="&lt;b&gt;User Accounts&lt;/b&gt;&lt;br&gt;View, create, update, lock/unlock customer accounts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#263238;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="105" width="720" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_add_user" value="+ Add User" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;arcSize=20;align=center;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="115" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_filter1" value="Search by name / email" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="170" width="300" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_filter2" value="Role: Customer ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="600" y="170" width="180" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_filter3" value="Status: All ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="170" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_filter_btn" value="Filter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;fontColor=#263238;strokeColor=#b0bec5;arcSize=20;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="980" y="170" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h0" value="ID" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="235" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h1" value="Full Name" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="235" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h2" value="Email" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="235" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h3" value="Phone" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="235" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h4" value="Role" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="235" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h5" value="Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="235" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_h6" value="Action" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="235" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c0" value="U001" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="277" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c1" value="Nguyen Minh Anh" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="277" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c2" value="customer1@gmail.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="277" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c3" value="0901000001" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="277" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c4" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="277" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="277" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r0c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="277" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c0" value="U002" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="319" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c1" value="Tran Quoc Bao" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="319" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c2" value="customer2@gmail.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="319" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c3" value="0901000002" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="319" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c4" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="319" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="319" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r1c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="319" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c0" value="U003" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="361" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c1" value="Le Thanh Tung" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="361" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c2" value="customer3@gmail.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="361" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c3" value="0901000003" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="361" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c4" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="361" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c5" value="Locked" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="361" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r2c6" value="Unlock" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="361" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c0" value="U004" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="403" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c1" value="Pham Gia Huy" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="403" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c2" value="customer4@gmail.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="403" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c3" value="0901000004" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="403" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c4" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="403" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="403" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r3c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="403" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c0" value="U005" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="445" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c1" value="Do Lan Huong" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="445" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c2" value="customer5@gmail.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="445" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c3" value="0901000005" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="445" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c4" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="445" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="445" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r4c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="445" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c0" value="U006" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="487" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c1" value="Hoang Duy Khang" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="487" width="190" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c2" value="customer6@gmail.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="487" width="250" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c3" value="0901000006" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="487" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c4" value="Customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="487" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="487" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_tbl_r5c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="487" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="user_form" value="&lt;b&gt;User Detail Panel&lt;/b&gt;&lt;br&gt;&lt;br&gt;Full name&lt;br&gt;Email&lt;br&gt;Phone&lt;br&gt;Address&lt;br&gt;Status&lt;br&gt;&lt;br&gt;Actions: Save changes / Lock account / Reset password" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="530" width="340" height="310" as="geometry" />
+        </mxCell>
+        <mxCell id="user_pagination" value="‹ Previous      Page 1 / 8      Next ›" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="755" width="650" height="45" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="0cb786e4-2fc6-4b4f-86ba-1007e4cbd535" name="Employee Accounts">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3f6f9;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1360" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side" value="&lt;b&gt;Restaurant Admin&lt;/b&gt;&lt;br&gt;&lt;br&gt;ADMIN PANEL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;fontColor=#ffffff;strokeColor=#263238;align=left;spacingLeft=16;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="230" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Dashboard" value="  Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="115" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Users" value="  Users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="170" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Employees" value="● Employees" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;align=left;spacingLeft=14;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="225" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Menu" value="  Menu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="280" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Coupons" value="  Coupons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="335" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Reports" value="  Reports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="390" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Settings" value="  Settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="445" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Employees_Logout" value="  Logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="500" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top" value="&lt;b&gt;Employees&lt;/b&gt; &amp;nbsp;&amp;nbsp; / Admin workspace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fa;fontColor=#263238;strokeColor=#cfd8dc;align=left;spacingLeft=16;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="1130" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="search_top" value="Search in admin..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="34" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="profile_top" value="Admin&lt;br&gt;admin@restaurant.com" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="30" width="270" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_title" value="&lt;b&gt;Employee Accounts&lt;/b&gt;&lt;br&gt;Update staff, kitchen and admin accounts with role assignment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#263238;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="105" width="760" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_add_emp" value="+ Add Employee" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;arcSize=20;align=center;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="115" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_filter1" value="Search employee" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="170" width="280" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_filter2" value="Department: All ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="580" y="170" width="200" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_filter3" value="Role: All ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="800" y="170" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_filter_btn" value="Filter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;fontColor=#263238;strokeColor=#b0bec5;arcSize=20;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="980" y="170" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h0" value="ID" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="235" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h1" value="Employee Name" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="235" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h2" value="Email" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="235" width="230" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h3" value="Department" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="235" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h4" value="Role" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="910" y="235" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h5" value="Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="235" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_h6" value="Action" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="235" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c0" value="E001" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="277" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c1" value="Tran Van Staff" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="277" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c2" value="staff@restaurant.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="277" width="230" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c3" value="Service" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="277" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c4" value="Staff" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="910" y="277" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="277" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r0c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="277" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c0" value="E002" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="319" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c1" value="Le Van Kitchen" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="319" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c2" value="kitchen@restaurant.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="319" width="230" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c3" value="Kitchen" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="319" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c4" value="Kitchen" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="910" y="319" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="319" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r1c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="319" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c0" value="E003" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="361" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c1" value="Pham Admin" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="361" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c2" value="admin@restaurant.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="361" width="230" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c3" value="Office" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="361" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c4" value="Admin" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="910" y="361" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="361" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r2c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="361" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c0" value="E004" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="403" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c1" value="Nguyen Thu Ha" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="403" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c2" value="ha.staff@restaurant.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="403" width="230" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c3" value="Service" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="403" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c4" value="Staff" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="910" y="403" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="403" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r3c6" value="View / Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="403" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c0" value="E005" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="445" width="80" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c1" value="Do Minh Quan" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="360" y="445" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c2" value="quan.kitchen@restaurant.com" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="530" y="445" width="230" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c3" value="Kitchen" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="445" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c4" value="Kitchen" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="910" y="445" width="130" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c5" value="Inactive" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="445" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_tbl_r4c6" value="Activate" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="445" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="role_card" value="&lt;b&gt;Role Assignment&lt;/b&gt;&lt;br&gt;&lt;br&gt;☑ Staff&lt;br&gt;☑ Kitchen&lt;br&gt;☐ Admin&lt;br&gt;&lt;br&gt;Permission summary:&lt;br&gt;• View orders&lt;br&gt;• Confirm payment&lt;br&gt;• Print invoice&lt;br&gt;• Update cooking status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="500" width="340" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="emp_save" value="Save Employee Changes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;arcSize=20;align=center;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="780" width="200" height="44" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="58d12e8b-b7b1-4c2b-94e7-734b410d89fb" name="Food Menu">
+    <mxGraphModel dx="1585" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3f6f9;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="900" width="1360" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="side" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;fontColor=#ffffff;strokeColor=#263238;align=left;spacingLeft=16;verticalAlign=top;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Restaurant Admin&lt;/b&gt;&lt;br&gt;&lt;br&gt;ADMIN PANEL" vertex="1">
+          <mxGeometry height="900" width="230" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Dashboard" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Dashboard" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Users" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Users" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Employees" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Employees" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Menu" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;align=left;spacingLeft=14;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" value="● Menu" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Coupons" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Coupons" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Reports" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Reports" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Settings" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Settings" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Menu_Logout" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Logout" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="top" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fa;fontColor=#263238;strokeColor=#cfd8dc;align=left;spacingLeft=16;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Menu&lt;/b&gt; &amp;nbsp;&amp;nbsp; / Admin workspace" vertex="1">
+          <mxGeometry height="64" width="1130" x="250" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="search_top" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Search in admin..." vertex="1">
+          <mxGeometry height="36" width="300" x="760" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="profile_top" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" value="Admin&lt;br&gt;admin@restaurant.com" vertex="1">
+          <mxGeometry height="44" width="270" x="1080" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="menu_title" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#263238;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Food Menu&lt;/b&gt;&lt;br&gt;Create, update, hide and display food items" vertex="1">
+          <mxGeometry height="50" width="720" x="280" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_add_food" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;arcSize=20;align=center;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" value="+ Add Food" vertex="1">
+          <mxGeometry height="42" width="140" x="1160" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="category_panel" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Categories&lt;/b&gt;&lt;br&gt;&lt;br&gt;• Appetizer&lt;br&gt;• Main Course&lt;br&gt;• Fast Food&lt;br&gt;• Dessert&lt;br&gt;• Drink&lt;br&gt;• Combo&lt;br&gt;&lt;br&gt;&lt;button&gt;Add Category&lt;/button&gt;" vertex="1">
+          <mxGeometry height="680" width="210" x="280" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="food_search" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Search food name..." vertex="1">
+          <mxGeometry height="42" width="280" x="515" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="food_status" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Status: All ▼" vertex="1">
+          <mxGeometry height="42" width="150" x="815" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="food_filter" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;fontColor=#263238;strokeColor=#b0bec5;arcSize=20;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Filter" vertex="1">
+          <mxGeometry height="42" width="100" x="985" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_h0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="ID" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_h1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Food Name" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_h2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Category" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_h3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Price" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_h4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Status" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_h5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Action" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r0c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="F001" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r0c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Beef Steak" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r0c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Main" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r0c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="250,000" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r0c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Available" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r0c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Edit" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="277" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r1c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="F002" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="319" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r1c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Fried Chicken" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="319" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r1c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Fast Food" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="319" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r1c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="120,000" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="319" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r1c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Available" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="319" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r1c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Edit" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="319" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r2c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="F003" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r2c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Seafood Pizza" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r2c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Main" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r2c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="180,000" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r2c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Available" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r2c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Edit" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="361" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r3c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="F004" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r3c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Spaghetti" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r3c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Main" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r3c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="110,000" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r3c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Unavailable" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r3c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Edit" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r4c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="F005" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r4c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Iced Lemon Tea" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r4c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Drink" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r4c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="35,000" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r4c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Available" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r4c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Edit" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r5c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="F006" vertex="1">
+          <mxGeometry height="42" width="70" x="515" y="487" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r5c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Chocolate Cake" vertex="1">
+          <mxGeometry height="42" width="180" x="585" y="487" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r5c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Dessert" vertex="1">
+          <mxGeometry height="42" width="130" x="765" y="487" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r5c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="65,000" vertex="1">
+          <mxGeometry height="42" width="120" x="895" y="487" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r5c4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Available" vertex="1">
+          <mxGeometry height="42" width="120" x="1015" y="487" as="geometry" />
+        </mxCell>
+        <mxCell id="food_tbl_r5c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Edit" vertex="1">
+          <mxGeometry height="42" width="120" x="1135" y="487" as="geometry" />
+        </mxCell>
+        <mxCell id="food_form" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Food Detail Form&lt;/b&gt;&lt;br&gt;&lt;br&gt;Food name&lt;br&gt;Category&lt;br&gt;Price&lt;br&gt;Description&lt;br&gt;Status&lt;br&gt;Image upload area&lt;br&gt;&lt;br&gt;[Upload image] [Save] [Hide food]" vertex="1">
+          <mxGeometry height="470" width="280" x="1020" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="image_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;fontColor=#455a64;strokeColor=#cfd8dc;arcSize=6;align=center;verticalAlign=middle;dashed=1;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Image Preview&lt;/b&gt;&lt;br&gt;&lt;br&gt;[food image placeholder]&lt;br&gt;&lt;br&gt;Main image / gallery images" vertex="1">
+          <mxGeometry height="120" width="280" x="1020" y="730" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="b2724862-13ad-442b-afd5-d8c2002d62ce" name="Coupon Configuration">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3f6f9;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1360" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side" value="&lt;b&gt;Restaurant Admin&lt;/b&gt;&lt;br&gt;&lt;br&gt;ADMIN PANEL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;fontColor=#ffffff;strokeColor=#263238;align=left;spacingLeft=16;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="230" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Dashboard" value="  Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="115" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Users" value="  Users" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="170" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Employees" value="  Employees" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="225" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Menu" value="  Menu" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="280" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Coupons" value="● Coupons" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;align=left;spacingLeft=14;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="335" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Reports" value="  Reports" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="390" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Settings" value="  Settings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="445" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Coupons_Logout" value="  Logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="35" y="500" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="top" value="&lt;b&gt;Coupons&lt;/b&gt; &amp;nbsp;&amp;nbsp; / Admin workspace" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fa;fontColor=#263238;strokeColor=#cfd8dc;align=left;spacingLeft=16;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="250" y="20" width="1130" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="search_top" value="Search in admin..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="760" y="34" width="300" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="profile_top" value="Admin&lt;br&gt;admin@restaurant.com" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="30" width="270" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_title" value="&lt;b&gt;Coupon Configuration&lt;/b&gt;&lt;br&gt;Create and update discount codes for orders" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#263238;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="105" width="720" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="btn_add_coupon" value="+ Add Coupon" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;arcSize=20;align=center;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="115" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_search" value="Search coupon code..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="170" width="280" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_type" value="Type: All ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="580" y="170" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_status" value="Status: All ▼" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="750" y="170" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_filter" value="Filter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;fontColor=#263238;strokeColor=#b0bec5;arcSize=20;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="920" y="170" width="100" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h0" value="Code" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="235" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h1" value="Description" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="235" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h2" value="Type" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="560" y="235" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h3" value="Value" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="235" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h4" value="Min Order" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="235" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h5" value="Status" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="235" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_h6" value="Action" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="235" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c0" value="WELCOME10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="277" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c1" value="New customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="277" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c2" value="Percent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="560" y="277" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c3" value="10%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="277" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c4" value="100,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="277" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="277" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r0c6" value="Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="277" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c0" value="COMBO50K" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="319" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c1" value="Combo session" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="319" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c2" value="Fixed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="560" y="319" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c3" value="50,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="319" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c4" value="300,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="319" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="319" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r1c6" value="Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="319" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c0" value="VIP15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="361" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c1" value="VIP customer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="361" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c2" value="Percent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="560" y="361" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c3" value="15%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="361" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c4" value="500,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="361" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c5" value="Active" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="361" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r2c6" value="Edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="361" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c0" value="FREESHIP" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="403" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c1" value="Delivery support" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="403" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c2" value="Fixed" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="560" y="403" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c3" value="30,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="403" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c4" value="200,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="403" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c5" value="Inactive" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="403" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r3c6" value="Activate" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="403" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c0" value="SUMMER20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="445" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c1" value="Seasonal promo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="400" y="445" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c2" value="Percent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="560" y="445" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c3" value="20%" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="680" y="445" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c4" value="400,000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="820" y="445" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c5" value="Expired" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="960" y="445" width="120" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_tbl_r4c6" value="View" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="445" width="150" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_form" value="&lt;b&gt;Coupon Form&lt;/b&gt;&lt;br&gt;&lt;br&gt;Coupon code&lt;br&gt;Description&lt;br&gt;Discount type: Percent / Fixed&lt;br&gt;Discount value&lt;br&gt;Minimum order amount&lt;br&gt;Start date&lt;br&gt;End date&lt;br&gt;Status&lt;br&gt;&lt;br&gt;[Save Coupon] [Disable]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="970" y="500" width="330" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="coupon_rules" value="&lt;b&gt;Validation Rules&lt;/b&gt;&lt;br&gt;&lt;br&gt;• Coupon code must be unique&lt;br&gt;• End date must be after start date&lt;br&gt;• Discount value must be positive&lt;br&gt;• Percent discount cannot exceed 100%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="280" y="720" width="650" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="3f9c05a5-4b50-4938-8011-00b7d35b310b" name="Reports">
+    <mxGraphModel dx="1585" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bg" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f3f6f9;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="900" width="1360" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="side" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#263238;fontColor=#ffffff;strokeColor=#263238;align=left;spacingLeft=16;verticalAlign=top;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Restaurant Admin&lt;/b&gt;&lt;br&gt;&lt;br&gt;ADMIN PANEL" vertex="1">
+          <mxGeometry height="900" width="230" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Dashboard" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Dashboard" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Users" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Users" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Employees" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Employees" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="225" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Menu" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Menu" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Coupons" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Coupons" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Reports" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;align=left;spacingLeft=14;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" value="● Reports" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Settings" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Settings" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="side_Reports_Logout" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474f;fontColor=#ffffff;strokeColor=#546e7a;align=left;spacingLeft=14;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="  Logout" vertex="1">
+          <mxGeometry height="44" width="200" x="35" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="top" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fa;fontColor=#263238;strokeColor=#cfd8dc;align=left;spacingLeft=16;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Reports&lt;/b&gt; &amp;nbsp;&amp;nbsp; / Admin workspace" vertex="1">
+          <mxGeometry height="64" width="1130" x="250" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="search_top" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Search in admin..." vertex="1">
+          <mxGeometry height="36" width="300" x="760" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="profile_top" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=8;align=center;verticalAlign=middle;shadow=0;fontFamily=Arial;fontSize=13;" value="Admin&lt;br&gt;admin@restaurant.com" vertex="1">
+          <mxGeometry height="44" width="270" x="1080" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="report_title" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#263238;strokeColor=none;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Reports&lt;/b&gt;&lt;br&gt;View revenue, orders, best-selling foods and export reports" vertex="1">
+          <mxGeometry height="50" width="760" x="280" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="date_from" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="From date" vertex="1">
+          <mxGeometry height="42" width="160" x="280" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="date_to" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="To date" vertex="1">
+          <mxGeometry height="42" width="160" x="460" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="report_type" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#607d8b;strokeColor=#cfd8dc;arcSize=8;align=left;spacingLeft=10;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Report type: Revenue ▼" vertex="1">
+          <mxGeometry height="42" width="230" x="640" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="report_view" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1976d2;fontColor=#ffffff;strokeColor=#0d47a1;arcSize=20;align=center;verticalAlign=middle;fontStyle=1;fontFamily=Arial;fontSize=13;" value="View Report" vertex="1">
+          <mxGeometry height="42" width="140" x="890" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="report_export" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eceff1;fontColor=#263238;strokeColor=#b0bec5;arcSize=20;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Export PDF / Excel" vertex="1">
+          <mxGeometry height="42" width="180" x="1050" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="rev_card" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;fontColor=#1b5e20;strokeColor=#a5d6a7;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Total Revenue&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;168,900,000 VND&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="280" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="order_card" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e3f2fd;fontColor=#0d47a1;strokeColor=#90caf9;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Total Orders&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;1,520&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="540" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="avg_card" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff3e0;fontColor=#e65100;strokeColor=#ffcc80;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Average Order&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;111,000 VND&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="800" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="cancel_card" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffebee;fontColor=#b71c1c;strokeColor=#ef9a9a;arcSize=8;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Cancelled Orders&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:22px&quot;&gt;42&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="1060" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="report_chart" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;fontColor=#455a64;strokeColor=#cfd8dc;arcSize=6;align=center;verticalAlign=middle;dashed=1;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Revenue Trend&lt;/b&gt;&lt;br&gt;&lt;br&gt;[line chart / bar chart placeholder]&lt;br&gt;&lt;br&gt;Daily revenue comparison" vertex="1">
+          <mxGeometry height="310" width="660" x="280" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="report_pie" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fafafa;fontColor=#455a64;strokeColor=#cfd8dc;arcSize=6;align=center;verticalAlign=middle;dashed=1;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Order Status Distribution&lt;/b&gt;&lt;br&gt;&lt;br&gt;[pie chart placeholder]&lt;br&gt;&lt;br&gt;Paid / Pending / Cancelled / Refunded" vertex="1">
+          <mxGeometry height="310" width="330" x="970" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="report_top_foods" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Top Food Report&lt;/b&gt;" vertex="1">
+          <mxGeometry height="170" width="660" x="280" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_h0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Rank" vertex="1">
+          <mxGeometry height="36" width="90" x="300" y="733" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_h1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Food Name" vertex="1">
+          <mxGeometry height="36" width="220" x="390" y="733" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_h2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Quantity" vertex="1">
+          <mxGeometry height="36" width="130" x="610" y="733" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_h3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d9eaf7;fontColor=#0d47a1;strokeColor=#90a4ae;fontStyle=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Revenue" vertex="1">
+          <mxGeometry height="36" width="150" x="740" y="733" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r0c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="1" vertex="1">
+          <mxGeometry height="36" width="90" x="300" y="769" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r0c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Beef Steak" vertex="1">
+          <mxGeometry height="36" width="220" x="390" y="769" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r0c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="320" vertex="1">
+          <mxGeometry height="36" width="130" x="610" y="769" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r0c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="80,000,000" vertex="1">
+          <mxGeometry height="36" width="150" x="740" y="769" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r1c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="2" vertex="1">
+          <mxGeometry height="36" width="90" x="300" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r1c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Seafood Pizza" vertex="1">
+          <mxGeometry height="36" width="220" x="390" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r1c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="280" vertex="1">
+          <mxGeometry height="36" width="130" x="610" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r1c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8fbfd;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="50,400,000" vertex="1">
+          <mxGeometry height="36" width="150" x="740" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r2c0" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="3" vertex="1">
+          <mxGeometry height="36" width="90" x="300" y="841" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r2c1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="Fried Chicken" vertex="1">
+          <mxGeometry height="36" width="220" x="390" y="841" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r2c2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="260" vertex="1">
+          <mxGeometry height="36" width="130" x="610" y="841" as="geometry" />
+        </mxCell>
+        <mxCell id="report_tbl_r2c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#cfd8dc;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" value="31,200,000" vertex="1">
+          <mxGeometry height="36" width="150" x="740" y="841" as="geometry" />
+        </mxCell>
+        <mxCell id="report_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontColor=#263238;strokeColor=#b0bec5;arcSize=6;align=left;spacingLeft=12;verticalAlign=top;fontFamily=Arial;fontSize=13;" value="&lt;b&gt;Report Notes&lt;/b&gt;&lt;br&gt;&lt;br&gt;Admin can filter reports by time range, export files, and use the data to evaluate menu performance, order volume, and revenue growth." vertex="1">
+          <mxGeometry height="170" width="330" x="970" y="710" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
