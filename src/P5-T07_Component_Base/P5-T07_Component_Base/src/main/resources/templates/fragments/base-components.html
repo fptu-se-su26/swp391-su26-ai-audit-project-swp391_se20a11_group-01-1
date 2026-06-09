@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Reusable Navbar -->
+<nav th:fragment="navbar(pageTitle, username, roleName)" class="app-navbar">
+    <div class="navbar-title" th:text="${pageTitle}">Dashboard</div>
+    <div class="navbar-user">
+        <span th:text="${username}">Admin User</span>
+        <span class="role-badge" th:text="${roleName}">ADMIN</span>
+        <a class="btn btn-secondary btn-sm" th:href="@{/logout}">Logout</a>
+    </div>
+</nav>
+
+<!-- Reusable Sidebar -->
+<aside th:fragment="sidebar(activeMenu)" class="app-sidebar">
+    <div class="sidebar-brand">Restaurant System</div>
+
+    <div class="sidebar-section-title">Customer</div>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'menu'} ? 'active'" th:href="@{/customer/menu}">Menu</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'cart'} ? 'active'" th:href="@{/customer/cart}">Cart</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'orders'} ? 'active'" th:href="@{/customer/orders}">Order History</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'reservation'} ? 'active'" th:href="@{/customer/reservations}">Reservation</a>
+
+    <div class="sidebar-section-title">Staff</div>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'table-status'} ? 'active'" th:href="@{/staff/tables}">Table Status</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'counter-order'} ? 'active'" th:href="@{/staff/counter-orders}">Counter Order</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'payment'} ? 'active'" th:href="@{/staff/payments}">Payment Confirm</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'invoice'} ? 'active'" th:href="@{/staff/invoices}">Print Invoice</a>
+
+    <div class="sidebar-section-title">Kitchen</div>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'cooking-orders'} ? 'active'" th:href="@{/kitchen/orders}">Cooking Orders</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'cooking-status'} ? 'active'" th:href="@{/kitchen/status}">Update Status</a>
+
+    <div class="sidebar-section-title">Admin</div>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'dashboard'} ? 'active'" th:href="@{/admin/dashboard}">Dashboard</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'users'} ? 'active'" th:href="@{/admin/users}">User Accounts</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'employees'} ? 'active'" th:href="@{/admin/employees}">Employee Accounts</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'food-menu'} ? 'active'" th:href="@{/admin/foods}">Food Menu</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'coupons'} ? 'active'" th:href="@{/admin/coupons}">Coupon Configuration</a>
+    <a class="sidebar-link" th:classappend="${activeMenu == 'reports'} ? 'active'" th:href="@{/admin/reports}">Reports</a>
+</aside>
+
+<!-- Reusable Link Button -->
+<a th:fragment="linkButton(label, href, variant)"
+   th:href="${href}"
+   th:class="'btn btn-' + ${variant}"
+   th:text="${label}">Button</a>
+
+<!-- Reusable Submit Button -->
+<button th:fragment="submitButton(label, variant)"
+        type="submit"
+        th:class="'btn btn-' + ${variant}"
+        th:text="${label}">Save</button>
+
+<!-- Reusable Input Field -->
+<div th:fragment="inputField(label, name, type, placeholder, required)" class="form-group">
+    <label class="form-label" th:for="${name}" th:text="${label}">Label</label>
+    <input class="form-control"
+           th:id="${name}"
+           th:name="${name}"
+           th:type="${type}"
+           th:placeholder="${placeholder}"
+           th:required="${required}">
+</div>
+
+<!-- Reusable Textarea Field -->
+<div th:fragment="textareaField(label, name, placeholder, required)" class="form-group">
+    <label class="form-label" th:for="${name}" th:text="${label}">Label</label>
+    <textarea class="form-control"
+              th:id="${name}"
+              th:name="${name}"
+              th:placeholder="${placeholder}"
+              th:required="${required}"></textarea>
+</div>
+
+<!-- Reusable Select Field -->
+<div th:fragment="selectField(label, name)" class="form-group">
+    <label class="form-label" th:for="${name}" th:text="${label}">Label</label>
+    <select class="form-control" th:id="${name}" th:name="${name}">
+        <option value="">Select option</option>
+        <th:block th:replace="~{::selectOptions}"></th:block>
+    </select>
+</div>
+
+<!-- Reusable Table Container -->
+<div th:fragment="tableCard(title)" class="card">
+    <div class="card-header">
+        <h2 class="card-title" th:text="${title}">Table Title</h2>
+        <th:block th:replace="~{::tableActions}"></th:block>
+    </div>
+    <div class="table-wrapper">
+        <table class="base-table">
+            <th:block th:replace="~{::tableContent}"></th:block>
+        </table>
+    </div>
+</div>
+
+<!-- Reusable Modal -->
+<div th:fragment="modal(modalId, modalTitle)"
+     class="modal-backdrop"
+     th:id="${modalId}">
+    <div class="base-modal">
+        <div class="modal-header">
+            <h3 class="modal-title" th:text="${modalTitle}">Modal Title</h3>
+            <button type="button" class="modal-close" th:attr="data-modal-close=${modalId}">&times;</button>
+        </div>
+        <div class="modal-body">
+            <th:block th:replace="~{::modalBody}"></th:block>
+        </div>
+        <div class="modal-footer">
+            <th:block th:replace="~{::modalFooter}"></th:block>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

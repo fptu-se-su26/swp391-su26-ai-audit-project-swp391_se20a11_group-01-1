@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Component Base Demo</title>
+    <link rel="stylesheet" th:href="@{/css/base-components.css}">
+    <script th:src="@{/js/base-components.js}" defer></script>
+</head>
+<body>
+<div th:replace="~{fragments/base-components :: navbar('Component Base Demo', 'Admin User', 'ADMIN')}"></div>
+
+<div class="app-layout">
+    <div th:replace="~{fragments/base-components :: sidebar('dashboard')}"></div>
+
+    <main class="app-main">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Button Components</h2>
+            </div>
+            <button class="btn btn-primary">Create</button>
+            <button class="btn btn-success">Save</button>
+            <button class="btn btn-warning">Update</button>
+            <button class="btn btn-danger">Delete</button>
+            <button class="btn btn-secondary">Cancel</button>
+            <button class="btn btn-outline" onclick="openBaseModal('demoModal')">Open Modal</button>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Form Component</h2>
+            </div>
+            <form class="base-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Food Name</label>
+                        <input class="form-control" placeholder="Enter food name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Price</label>
+                        <input class="form-control" type="number" placeholder="Enter price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" placeholder="Enter description"></textarea>
+                    <div class="form-help">This form style can be reused for menu, coupon, user, employee screens.</div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Table Component</h2>
+                <button class="btn btn-primary btn-sm">Create Food</button>
+            </div>
+            <div class="table-wrapper">
+                <table class="base-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Food Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Beef Noodle Soup</td>
+                        <td>Main Dish</td>
+                        <td>65000</td>
+                        <td><span class="status-badge status-active">Active</span></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Spring Roll</td>
+                        <td>Appetizer</td>
+                        <td>45000</td>
+                        <td><span class="status-badge status-inactive">Inactive</span></td>
+                        <td>
+                            <button class="btn btn-warning btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="modal-backdrop" id="demoModal">
+    <div class="base-modal">
+        <div class="modal-header">
+            <h3 class="modal-title">Confirm Action</h3>
+            <button class="modal-close" data-modal-close="demoModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to continue this action?
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" data-modal-close="demoModal">Cancel</button>
+            <button class="btn btn-primary">Confirm</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
