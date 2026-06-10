@@ -77,7 +77,7 @@ Viết tại đây...
 #### 4.1. Prompt đã sử dụng
 
 ```text
-Dán nguyên văn prompt đã hỏi AI tại đây.
+Used AI to identify system actors, define main use cases, analyze user roles, and suggest include/extend relationships for the Restaurant Management System.
 ```
 
 #### 4.2. Kết quả AI gợi ý
@@ -85,7 +85,11 @@ Dán nguyên văn prompt đã hỏi AI tại đây.
 Tóm tắt nội dung AI đã trả lời hoặc gợi ý.
 
 ```text
-Viết tại đây...
+AI identified four main actors: Customer, Staff, Kitchen Staff, and Admin.
+
+AI also suggested the main use cases for each actor, including menu browsing, food ordering, table reservation, payment processing, order management, kitchen operations, and system administration.
+
+Additionally, AI recommended several include and extend relationships to improve the Use Case Diagram structure.
 ```
 
 #### 4.3. Phần sinh viên/nhóm đã sử dụng từ AI
@@ -93,7 +97,7 @@ Viết tại đây...
 Mô tả rõ phần nào được sử dụng lại từ gợi ý của AI.
 
 ```text
-Viết tại đây...
+The team used the actor definitions, use case list, and suggested relationships as a basis for creating the Use Case Diagram and functional requirements in the SRS document.
 ```
 
 #### 4.4. Phần sinh viên/nhóm tự chỉnh sửa hoặc cải tiến
@@ -101,7 +105,11 @@ Viết tại đây...
 Mô tả sinh viên/nhóm đã thay đổi, kiểm tra, sửa lỗi hoặc cải tiến gì so với gợi ý ban đầu của AI.
 
 ```text
-Viết tại đây...
+The team reviewed the AI-generated use cases and refined them to better fit the project scope.
+
+Several duplicated or overly broad use cases were removed or renamed. The team also adjusted actor responsibilities, reduced the overuse of the word "Manage", and added specific use cases for Kitchen Staff and restaurant operations.
+
+The final Use Case Diagram was created based on project requirements rather than using the AI output directly.
 ```
 
 #### 4.5. Minh chứng
@@ -110,7 +118,8 @@ Viết tại đây...
 |---|---|
 | Link commit |  |
 | File liên quan |  |
-| Screenshot |  |
+| Screenshot | <img width="760" height="848" alt="image" src="https://github.com/user-attachments/assets/548330c8-46ca-42d6-91f1-32befc804695" />
+ |
 | Kết quả chạy/test |  |
 | Link video demo |  |
 | Ghi chú khác |  |
@@ -120,7 +129,9 @@ Viết tại đây...
 Sinh viên/nhóm học được gì sau lần sử dụng AI này?
 
 ```text
-Viết tại đây...
+AI helped the team identify actors and generate an initial set of use cases quickly. However, the suggested results still required manual review and refinement to ensure consistency with the project scope and business requirements.
+
+The team gained a better understanding of requirement analysis and Use Case Diagram design through the process of validating and improving AI-generated outputs.
 ```
 
 ---
