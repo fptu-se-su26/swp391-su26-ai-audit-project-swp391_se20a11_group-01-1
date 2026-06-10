@@ -118,8 +118,7 @@ The final Use Case Diagram was created based on project requirements rather than
 |---|---|
 | Link commit |  |
 | File liên quan |  |
-| Screenshot | <img width="760" height="848" alt="image" src="https://github.com/user-attachments/assets/548330c8-46ca-42d6-91f1-32befc804695" />
- |
+| Screenshot | <img width="760" height="848" alt="image" src="https://github.com/user-attachments/assets/548330c8-46ca-42d6-91f1-32befc804695" />|
 | Kết quả chạy/test |  |
 | Link video demo |  |
 | Ghi chú khác |  |
