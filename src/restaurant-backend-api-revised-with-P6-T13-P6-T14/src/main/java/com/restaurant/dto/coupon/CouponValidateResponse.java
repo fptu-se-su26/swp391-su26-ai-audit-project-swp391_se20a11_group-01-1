@@ -1,0 +1,1 @@
+package com.restaurant.dto.coupon; import lombok.*; import java.math.BigDecimal; @Data @Builder @NoArgsConstructor @AllArgsConstructor public class CouponValidateResponse { private Long couponId; private String code; private boolean valid; private String reason; private BigDecimal discountAmount; private BigDecimal finalAmount; }
