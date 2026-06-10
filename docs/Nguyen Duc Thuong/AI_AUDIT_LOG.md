@@ -68,11 +68,11 @@ Viết tại đây...
 
 | Nội dung | Thông tin |
 |---|---|
-| Ngày sử dụng |  |
-| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
-| Mục đích sử dụng |  |
-| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
-| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
+| Ngày sử dụng | 24/5/2026 |
+| Công cụ AI | ChatGPT |
+| Mục đích sử dụng | Project Planning |
+| Phần việc liên quan | Requirement |
+| Mức độ sử dụng | Hỗ trợ ý tưởng  |
 
 #### 4.1. Prompt đã sử dụng
 
