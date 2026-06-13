@@ -1,12 +1,17 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import API from '../services/api';
 import './Login.css';
 
 function Login() {
-  const { login } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ username: '', password: '' });
+
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
@@ -16,22 +21,37 @@ function Login() {
     setError('');
     setLoading(true);
 
-    // Giả lập delay API
-    await new Promise(r => setTimeout(r, 600));
+    try {
+      const response = await API.post('/auth/login', {
+        email: form.email,
+        password: form.password
+      });
 
-    const result = login(form.username, form.password);
-    if (result.success) {
-      const redirectMap = {
-        admin:    '/dashboard',
-        staff:    '/staff/tables',
-        kitchen:  '/kitchen/queue',
-        customer: '/customer/menu',
-      };
-      navigate(redirectMap[result.role] || '/dashboard');
-    } else {
-      setError(result.message);
+      console.log('Login success:', response.data);
+
+localStorage.setItem('user', JSON.stringify(response.data));
+
+const role = response.data.roleName;
+
+const redirectMap = {
+  ADMIN: '/dashboard',
+  STAFF: '/staff/tables',
+  KITCHEN: '/kitchen/queue',
+  CUSTOMER: '/customer/menu'
+};
+
+window.location.href = redirectMap[role] || '/customer/menu';
+    } catch (error) {
+      console.error('Login error:', error);
+
+      if (error.response && error.response.data) {
+        setError(error.response.data.message || 'Email hoặc mật khẩu không đúng');
+      } else {
+        setError('Không thể kết nối tới server');
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -43,13 +63,13 @@ function Login() {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label className="form-label">Tên đăng nhập</label>
+            <label className="form-label">Email</label>
             <input
               className="form-input"
-              type="text"
-              placeholder="Nhập tên đăng nhập"
-              value={form.username}
-              onChange={e => setForm({ ...form, username: e.target.value })}
+              type="email"
+              placeholder="Nhập email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
               required
               autoFocus
             />
@@ -63,9 +83,10 @@ function Login() {
                 type={showPass ? 'text' : 'password'}
                 placeholder="Nhập mật khẩu"
                 value={form.password}
-                onChange={e => setForm({ ...form, password: e.target.value })}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
                 required
               />
+
               <button
                 type="button"
                 className="toggle-pass"
@@ -83,15 +104,17 @@ function Login() {
           </button>
 
           <div className="login-links">
-            <Link to="/forgot-password" style={{color:'#e85d04', fontSize:13}}>Quên mật khẩu?</Link>
+            <Link to="/forgot-password" style={{ color: '#e85d04', fontSize: 13 }}>
+              Quên mật khẩu?
+            </Link>
           </div>
         </form>
 
         <p className="login-hint">
-          Chưa có tài khoản? <Link to="/register" style={{color:'#e85d04', fontWeight:600}}>Đăng ký ngay</Link>
-        </p>
-        <p className="login-hint" style={{marginTop:4}}>
-          admin/admin123 · staff/staff123 · kitchen/kitchen123 · customer/cust123
+          Chưa có tài khoản?{' '}
+          <Link to="/register" style={{ color: '#e85d04', fontWeight: 600 }}>
+            Đăng ký ngay
+          </Link>
         </p>
       </div>
     </div>
@@ -99,3 +122,4 @@ function Login() {
 }
 
 export default Login;
+

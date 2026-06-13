@@ -1,11 +1,24 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
 function PrivateRoute({ children, roles }) {
-  const { user } = useAuth();
-  if (!user) return <Navigate to="/login" replace />;
-  if (roles && !roles.includes(user.role)) return <Navigate to="/login" replace />;
+  const savedUser = localStorage.getItem('user');
+  const user = savedUser ? JSON.parse(savedUser) : null;
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  const userRole = (user.roleName || user.role || '').toUpperCase();
+
+  const allowedRoles = roles
+    ? roles.map(role => role.toUpperCase())
+    : null;
+
+  if (allowedRoles && !allowedRoles.includes(userRole)) {
+    return <Navigate to="/login" replace />;
+  }
+
   return children;
 }
 
