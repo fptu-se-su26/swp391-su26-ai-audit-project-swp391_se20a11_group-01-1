@@ -15,6 +15,26 @@ export function AuthProvider({ children }) {
     }
   });
 
+  const getApiMessage = (data, fallback) => {
+    if (!data) {
+      return fallback;
+    }
+
+    if (typeof data === 'string') {
+      return data;
+    }
+
+    if (typeof data === 'object') {
+      return (
+        data.message ||
+        data.detail ||
+        fallback
+      );
+    }
+
+    return fallback;
+  };
+
   const login = async (email, password) => {
     try {
       const response = await API.post('/auth/login', {
@@ -37,10 +57,7 @@ export function AuthProvider({ children }) {
 
       return {
         success: false,
-        message:
-          error.response?.data?.message ||
-          error.response?.data ||
-          'Email hoặc mật khẩu không đúng'
+        message: 'Email hoặc mật khẩu không đúng'
       };
     }
   };
@@ -63,10 +80,10 @@ export function AuthProvider({ children }) {
 
       return {
         success: false,
-        message:
-          error.response?.data?.message ||
-          error.response?.data ||
+        message: getApiMessage(
+          error.response?.data,
           'Đăng ký thất bại'
+        )
       };
     }
   };
@@ -88,17 +105,20 @@ export function AuthProvider({ children }) {
 
       return {
         success: true,
-        message: response.data || 'Đổi mật khẩu thành công'
+        message:
+          typeof response.data === 'string'
+            ? response.data
+            : 'Đổi mật khẩu thành công'
       };
     } catch (error) {
       console.error('Change password error:', error);
 
       return {
         success: false,
-        message:
-          error.response?.data?.message ||
-          error.response?.data ||
+        message: getApiMessage(
+          error.response?.data,
           'Đổi mật khẩu thất bại'
+        )
       };
     }
   };

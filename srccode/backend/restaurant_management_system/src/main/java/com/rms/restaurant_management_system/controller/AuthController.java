@@ -5,6 +5,8 @@ import com.rms.restaurant_management_system.dto.request.LoginRequest;
 import com.rms.restaurant_management_system.dto.request.RegisterRequest;
 import com.rms.restaurant_management_system.dto.response.AuthResponse;
 import com.rms.restaurant_management_system.service.interfaces.AuthService;
+import com.rms.restaurant_management_system.dto.request.ForgotPasswordRequest;
+import com.rms.restaurant_management_system.dto.request.ResetPasswordRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +33,15 @@ public class AuthController {
     public String changePassword(@Valid @RequestBody ChangePasswordRequest request) {
         authService.changePassword(request);
         return "Change password successfully";
+    }
+        @PostMapping("/forgot-password")
+    public String forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        return authService.forgotPassword(request);
+    }
+
+    @PostMapping("/reset-password")
+    public String resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request);
+        return "Reset password successfully";
     }
 }
