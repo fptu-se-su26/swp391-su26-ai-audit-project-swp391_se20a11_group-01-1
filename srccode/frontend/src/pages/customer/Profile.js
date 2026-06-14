@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useProfile } from '../../context/ProfileContext';
 import { useAuth } from '../../context/AuthContext';
+import API from '../../services/api';
 import './Profile.css';
 
 const AVATARS = ['👤', '👨', '👩', '🧑', '👨‍🍳', '👩‍🍳', '🧔', '👱'];
@@ -16,7 +17,11 @@ function Profile() {
     VOUCHER_TIERS
   } = useProfile();
 
-  const { changePassword } = useAuth();
+  const { user, changePassword } = useAuth();
+
+  const [backendUser, setBackendUser] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileError, setProfileError] = useState('');
 
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({ ...profile });
@@ -39,6 +44,58 @@ function Profile() {
   const progressToNext = nextTier
     ? Math.min((profile.totalSpend / nextTier.minSpend) * 100, 100)
     : 100;
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!user?.email) {
+        return;
+      }
+
+      setProfileLoading(true);
+      setProfileError('');
+
+      try {
+        const response = await API.get('/users/profile', {
+          params: {
+            email: user.email
+          }
+        });
+
+        setBackendUser(response.data);
+
+        setForm((prev) => ({
+          ...prev,
+          name: response.data.username || prev.name,
+          email: response.data.email || prev.email
+        }));
+      } catch (error) {
+        console.error('Fetch profile error:', error);
+        setProfileError('Không thể tải thông tin tài khoản');
+      } finally {
+        setProfileLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [user]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return profile.joinDate;
+    }
+
+    try {
+      return new Date(dateString).toLocaleDateString('vi-VN');
+    } catch (error) {
+      return profile.joinDate;
+    }
+  };
+
+  const displayName = backendUser?.username || profile.name || user?.username || 'User';
+  const displayEmail = backendUser?.email || profile.email || user?.email || '';
+  const displayRole = backendUser?.roleName || user?.roleName || 'CUSTOMER';
+  const displayJoinDate = formatDate(backendUser?.createdAt);
+  const displayStatus = backendUser?.isActive ? 'Đang hoạt động' : 'Đã khóa';
 
   const handleSave = () => {
     updateProfile(form);
@@ -101,8 +158,15 @@ function Profile() {
     <div className="profile-page">
       <h1 className="page-title">Hồ sơ của tôi</h1>
 
+      {profileLoading && (
+        <p className="profile-detail">Đang tải thông tin tài khoản...</p>
+      )}
+
+      {profileError && (
+        <p className="pw-error">{profileError}</p>
+      )}
+
       <div className="profile-layout">
-        {/* Left: Profile card */}
         <div className="profile-left">
           <div className="profile-card card">
             <div className="profile-avatar-wrap">
@@ -110,7 +174,7 @@ function Profile() {
                 className="profile-avatar"
                 onClick={() => editing && setShowAvatars(!showAvatars)}
               >
-                {form.avatar}
+                {form.avatar || '👤'}
               </div>
 
               {editing && <p className="avatar-hint">Nhấn để đổi</p>}
@@ -145,7 +209,7 @@ function Profile() {
 
                   <input
                     className="form-input"
-                    value={form.name}
+                    value={form.name || ''}
                     onChange={(e) =>
                       setForm({
                         ...form,
@@ -161,7 +225,7 @@ function Profile() {
                   <input
                     className="form-input"
                     placeholder="09xx-xxx-xxx"
-                    value={form.phone}
+                    value={form.phone || ''}
                     onChange={(e) =>
                       setForm({
                         ...form,
@@ -178,13 +242,8 @@ function Profile() {
                     className="form-input"
                     type="email"
                     placeholder="email@example.com"
-                    value={form.email}
-                    onChange={(e) =>
-                      setForm({
-                        ...form,
-                        email: e.target.value
-                      })
-                    }
+                    value={form.email || ''}
+                    disabled
                   />
                 </div>
 
@@ -194,7 +253,7 @@ function Profile() {
                   <input
                     className="form-input"
                     type="date"
-                    value={form.birthday}
+                    value={form.birthday || ''}
                     onChange={(e) =>
                       setForm({
                         ...form,
@@ -222,14 +281,12 @@ function Profile() {
               </div>
             ) : (
               <div className="profile-info">
-                <h2 className="profile-name">{profile.name}</h2>
+                <h2 className="profile-name">{displayName}</h2>
+
+                <p className="profile-detail">✉️ {displayEmail}</p>
 
                 {profile.phone && (
                   <p className="profile-detail">📞 {profile.phone}</p>
-                )}
-
-                {profile.email && (
-                  <p className="profile-detail">✉️ {profile.email}</p>
                 )}
 
                 {profile.birthday && (
@@ -237,7 +294,15 @@ function Profile() {
                 )}
 
                 <p className="profile-detail">
-                  📅 Thành viên từ {profile.joinDate}
+                  🔐 Vai trò: {displayRole}
+                </p>
+
+                <p className="profile-detail">
+                  ✅ Trạng thái: {displayStatus}
+                </p>
+
+                <p className="profile-detail">
+                  📅 Thành viên từ {displayJoinDate}
                 </p>
 
                 {saved && (
@@ -321,7 +386,6 @@ function Profile() {
             )}
           </div>
 
-          {/* Stats */}
           <div className="spend-stats card">
             <h3>📊 Thống kê chi tiêu</h3>
 
@@ -351,9 +415,7 @@ function Profile() {
           </div>
         </div>
 
-        {/* Right: Tier + Vouchers */}
         <div className="profile-right">
-          {/* Membership tier */}
           <div className="tier-card card">
             <h3>🏆 Hạng thành viên</h3>
 
@@ -442,7 +504,6 @@ function Profile() {
             </div>
           </div>
 
-          {/* Vouchers */}
           <div className="vouchers-card card">
             <h3>🎁 Voucher của tôi</h3>
 
