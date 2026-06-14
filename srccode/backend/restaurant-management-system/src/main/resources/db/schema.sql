@@ -127,7 +127,8 @@ CREATE TABLE IF NOT EXISTS cart_items (
     food_id  BIGINT NOT NULL,
     quantity INT    NOT NULL DEFAULT 1,
     CONSTRAINT fk_ci_cart FOREIGN KEY (cart_id) REFERENCES carts (id) ON DELETE CASCADE,
-    CONSTRAINT fk_ci_food FOREIGN KEY (food_id) REFERENCES foods (id) ON DELETE CASCADE
+    CONSTRAINT fk_ci_food FOREIGN KEY (food_id) REFERENCES foods (id) ON DELETE CASCADE,
+    UNIQUE(cart_id, food_id)
 );
 
 CREATE TABLE IF NOT EXISTS reservations (
