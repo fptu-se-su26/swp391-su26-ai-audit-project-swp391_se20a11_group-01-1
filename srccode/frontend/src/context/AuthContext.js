@@ -1,108 +1,96 @@
 import React, { createContext, useContext, useState } from 'react';
+import API from '../services/api';
 
 const AuthContext = createContext(null);
 
-const DEFAULT_ACCOUNTS = [
-  { username: 'admin',    password: 'admin123',  role: 'admin',   name: 'Admin',      banned: false },
-  { username: 'staff',    password: 'staff123',  role: 'staff',   name: 'Nhân viên',  banned: false },
-  { username: 'kitchen',  password: 'kitchen123',role: 'kitchen', name: 'Bếp',        banned: false },
-  { username: 'customer', password: 'cust123',   role: 'customer',name: 'Khách hàng', banned: false },
-];
-
 export function AuthProvider({ children }) {
-  const [accounts, setAccounts] = useState(() => {
-    const saved = localStorage.getItem('cgkc_accounts');
-    return saved ? JSON.parse(saved) : DEFAULT_ACCOUNTS;
-  });
-
   const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('restaurant_user');
-    return saved ? JSON.parse(saved) : null;
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  const saveAccounts = (list) => {
-    setAccounts(list);
-    localStorage.setItem('cgkc_accounts', JSON.stringify(list));
-  };
+  const login = async (email, password) => {
+    try {
+      const response = await API.post('/auth/login', {
+        email,
+        password
+      });
 
-  // Đăng nhập — chặn nếu bị ban
-  const login = (username, password) => {
-    const account = accounts.find(a => a.username === username && a.password === password);
-    if (account) {
-      if (account.banned) return { success: false, message: 'Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.' };
-      const userData = { username: account.username, role: account.role, name: account.name, phone: account.phone || '' };
+      const userData = response.data;
+
       setUser(userData);
-      localStorage.setItem('restaurant_user', JSON.stringify(userData));
-      return { success: true, role: account.role };
+      localStorage.setItem('user', JSON.stringify(userData));
+
+      return {
+        success: true,
+        user: userData,
+        role: userData.roleName
+      };
+    } catch (error) {
+      console.error('Login error:', error);
+
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          'Email hoặc mật khẩu không đúng'
+      };
     }
-    return { success: false, message: 'Tên đăng nhập hoặc mật khẩu không đúng' };
   };
 
-  // Đăng ký — mặc định role customer
-  const register = ({ name, username, password, phone }) => {
-    if (accounts.find(a => a.username === username)) {
-      return { success: false, message: 'Tên đăng nhập đã tồn tại' };
+  const register = async ({ username, email, password }) => {
+    try {
+      const response = await API.post('/auth/register', {
+        username,
+        email,
+        password
+      });
+
+      return {
+        success: true,
+        user: response.data,
+        message: 'Đăng ký thành công'
+      };
+    } catch (error) {
+      console.error('Register error:', error);
+
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          'Đăng ký thất bại'
+      };
     }
-    const newAccount = { username, password, role: 'customer', name, phone: phone || '', banned: false };
-    saveAccounts([...accounts, newAccount]);
-    const userData = { username, role: 'customer', name, phone: phone || '' };
-    setUser(userData);
-    localStorage.setItem('restaurant_user', JSON.stringify(userData));
-    return { success: true, role: 'customer' };
   };
 
-  // Đổi mật khẩu (user tự đổi)
-  const changePassword = (oldPassword, newPassword) => {
-    const account = accounts.find(a => a.username === user?.username);
-    if (!account || account.password !== oldPassword) {
-      return { success: false, message: 'Mật khẩu hiện tại không đúng' };
-    }
-    saveAccounts(accounts.map(a => a.username === user.username ? { ...a, password: newPassword } : a));
-    return { success: true };
-  };
-
-  // Đăng xuất
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('user');
     localStorage.removeItem('restaurant_user');
   };
 
-  // ── Admin functions ──────────────────────────────────────
+  const hasRole = (roles) => {
+    if (!user) return false;
 
-  const getAllAccounts = () => accounts;
+    const userRole = (user.roleName || user.role || '').toUpperCase();
 
-  // Cập nhật thông tin (tên, role, phone...)
-  const updateAccount = (username, changes) => {
-    saveAccounts(accounts.map(a => a.username === username ? { ...a, ...changes } : a));
-  };
+    if (!roles) return true;
 
-  // Xóa tài khoản
-  const deleteAccount = (username) => {
-    saveAccounts(accounts.filter(a => a.username !== username));
-  };
+    const allowedRoles = roles.map(role => role.toUpperCase());
 
-  // Ban / Unban tài khoản
-  const banAccount = (username) => {
-    saveAccounts(accounts.map(a => a.username === username ? { ...a, banned: !a.banned } : a));
-  };
-
-  // Reset mật khẩu về mặc định
-  const resetPassword = (username) => {
-    saveAccounts(accounts.map(a => a.username === username ? { ...a, password: '123456' } : a));
-  };
-
-  // Đổi role
-  const changeRole = (username, newRole) => {
-    saveAccounts(accounts.map(a => a.username === username ? { ...a, role: newRole } : a));
+    return allowedRoles.includes(userRole);
   };
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      login, logout, register, changePassword,
-      getAllAccounts, updateAccount, deleteAccount,
-      banAccount, resetPassword, changeRole,
-    }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        register,
+        logout,
+        hasRole
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
