@@ -17,3 +17,5 @@ application-secret.properties
 
 logs/
 *.log
+.vscode/
+**/.vscode/

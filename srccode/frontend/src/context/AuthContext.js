@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState } from 'react';
 import API from '../services/api';
 
@@ -5,8 +6,13 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
+    try {
+      const savedUser = localStorage.getItem('user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    } catch (error) {
+      localStorage.removeItem('user');
+      return null;
+    }
   });
 
   const login = async (email, password) => {
@@ -33,6 +39,7 @@ export function AuthProvider({ children }) {
         success: false,
         message:
           error.response?.data?.message ||
+          error.response?.data ||
           'Email hoặc mật khẩu không đúng'
       };
     }
@@ -58,7 +65,40 @@ export function AuthProvider({ children }) {
         success: false,
         message:
           error.response?.data?.message ||
+          error.response?.data ||
           'Đăng ký thất bại'
+      };
+    }
+  };
+
+  const changePassword = async (oldPassword, newPassword) => {
+    try {
+      if (!user?.email) {
+        return {
+          success: false,
+          message: 'Không tìm thấy thông tin người dùng'
+        };
+      }
+
+      const response = await API.post('/auth/change-password', {
+        email: user.email,
+        oldPassword,
+        newPassword
+      });
+
+      return {
+        success: true,
+        message: response.data || 'Đổi mật khẩu thành công'
+      };
+    } catch (error) {
+      console.error('Change password error:', error);
+
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          error.response?.data ||
+          'Đổi mật khẩu thất bại'
       };
     }
   };
@@ -69,14 +109,23 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('restaurant_user');
   };
 
+  const isAuthenticated = () => {
+    return !!user;
+  };
+
+  const getRole = () => {
+    return (user?.roleName || user?.role || '').toUpperCase();
+  };
+
   const hasRole = (roles) => {
     if (!user) return false;
 
-    const userRole = (user.roleName || user.role || '').toUpperCase();
+    if (!roles || roles.length === 0) {
+      return true;
+    }
 
-    if (!roles) return true;
-
-    const allowedRoles = roles.map(role => role.toUpperCase());
+    const userRole = getRole();
+    const allowedRoles = roles.map((role) => role.toUpperCase());
 
     return allowedRoles.includes(userRole);
   };
@@ -87,7 +136,10 @@ export function AuthProvider({ children }) {
         user,
         login,
         register,
+        changePassword,
         logout,
+        isAuthenticated,
+        getRole,
         hasRole
       }}
     >
@@ -99,3 +151,4 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
+

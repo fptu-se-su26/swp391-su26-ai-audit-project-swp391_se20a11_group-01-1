@@ -1,5 +1,6 @@
 package com.rms.restaurant_management_system.service.impl;
 
+import com.rms.restaurant_management_system.dto.request.ChangePasswordRequest;
 import com.rms.restaurant_management_system.dto.request.LoginRequest;
 import com.rms.restaurant_management_system.dto.request.RegisterRequest;
 import com.rms.restaurant_management_system.dto.response.AuthResponse;
@@ -75,5 +76,29 @@ public class AuthServiceImpl implements AuthService {
                 user.getRole().getRoleName(),
                 "Login successfully"
         );
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        boolean isOldPasswordCorrect = passwordEncoder.matches(
+                request.getOldPassword(),
+                user.getPasswordHash()
+        );
+
+        if (!isOldPasswordCorrect) {
+            throw new RuntimeException("Old password is incorrect");
+        }
+
+        if (request.getNewPassword().length() < 6) {
+            throw new RuntimeException("New password must be at least 6 characters");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+
+        userRepository.save(user);
     }
 }
