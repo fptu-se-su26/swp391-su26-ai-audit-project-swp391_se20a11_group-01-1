@@ -1,1 +1,0 @@
-package com.restaurant.dto.order; import lombok.*; import java.math.BigDecimal; @Data @Builder @NoArgsConstructor @AllArgsConstructor public class OrderItemResponse { private Long orderItemId; private Long foodId; private String foodName; private Integer quantity; private BigDecimal unitPrice; private BigDecimal subtotal; private String itemStatus; private String kitchenNote; }

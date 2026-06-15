@@ -1,1 +1,0 @@
-package com.restaurant.dto.payment; import jakarta.validation.constraints.*; import lombok.Data; @Data public class PaymentCreateRequest { @NotNull private Long orderId; @NotBlank private String paymentMethod; }

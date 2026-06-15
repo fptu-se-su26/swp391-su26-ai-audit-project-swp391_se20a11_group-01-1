@@ -1,1 +1,0 @@
-package com.restaurant.dto.auth; import lombok.*; import java.util.Set; @Data @Builder @NoArgsConstructor @AllArgsConstructor public class AuthResponse { private String token; private Long userId; private String fullName; private String email; private Set<String> roles; }

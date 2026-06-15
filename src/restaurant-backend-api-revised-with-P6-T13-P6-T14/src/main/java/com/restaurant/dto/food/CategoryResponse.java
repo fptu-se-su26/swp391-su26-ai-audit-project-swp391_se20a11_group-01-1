@@ -1,1 +1,0 @@
-package com.restaurant.dto.food; import lombok.*; @Data @Builder @NoArgsConstructor @AllArgsConstructor public class CategoryResponse { private Long categoryId; private String categoryName; private String description; private String status; }

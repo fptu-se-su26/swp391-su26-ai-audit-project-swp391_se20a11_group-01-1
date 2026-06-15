@@ -1,1 +1,0 @@
-package com.restaurant.dto.cart; import jakarta.validation.constraints.*; import lombok.Data; @Data public class AddCartItemRequest { @NotNull private Long foodId; @NotNull @Min(1) private Integer quantity; }
