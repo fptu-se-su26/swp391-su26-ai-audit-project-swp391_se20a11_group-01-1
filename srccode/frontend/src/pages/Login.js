@@ -1,36 +1,44 @@
+
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Login.css';
 
 function Login() {
   const { login } = useAuth();
-  const navigate = useNavigate();
-  const [form, setForm] = useState({ username: '', password: '' });
+
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showPass, setShowPass] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setError('');
     setLoading(true);
 
-    // Giả lập delay API
-    await new Promise(r => setTimeout(r, 600));
+    const result = await login(form.email, form.password);
 
-    const result = login(form.username, form.password);
     if (result.success) {
+      const role = result.role;
+
       const redirectMap = {
-        admin:    '/dashboard',
-        staff:    '/staff/tables',
-        kitchen:  '/kitchen/queue',
-        customer: '/customer/menu',
+        ADMIN: '/dashboard',
+        STAFF: '/staff/tables',
+        KITCHEN: '/kitchen/queue',
+        CUSTOMER: '/customer/menu'
       };
-      navigate(redirectMap[result.role] || '/dashboard');
+
+      window.location.href = redirectMap[role] || '/customer/menu';
     } else {
-      setError(result.message);
+      setError(result.message || 'Email hoặc mật khẩu không đúng');
     }
+
     setLoading(false);
   };
 
@@ -38,18 +46,28 @@ function Login() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-logo">🍜</div>
+
         <h1 className="login-title">Cái Gì Cũng Không Có</h1>
-        <p className="login-subtitle">Đăng nhập vào hệ thống quản lý</p>
+
+        <p className="login-subtitle">
+          Đăng nhập vào hệ thống quản lý
+        </p>
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label className="form-label">Tên đăng nhập</label>
+            <label className="form-label">Email</label>
+
             <input
               className="form-input"
-              type="text"
-              placeholder="Nhập tên đăng nhập"
-              value={form.username}
-              onChange={e => setForm({ ...form, username: e.target.value })}
+              type="email"
+              placeholder="Nhập email"
+              value={form.email}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  email: e.target.value
+                })
+              }
               required
               autoFocus
             />
@@ -57,15 +75,22 @@ function Login() {
 
           <div className="form-group">
             <label className="form-label">Mật khẩu</label>
+
             <div className="input-wrapper">
               <input
                 className="form-input"
                 type={showPass ? 'text' : 'password'}
                 placeholder="Nhập mật khẩu"
                 value={form.password}
-                onChange={e => setForm({ ...form, password: e.target.value })}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    password: e.target.value
+                  })
+                }
                 required
               />
+
               <button
                 type="button"
                 className="toggle-pass"
@@ -76,22 +101,44 @@ function Login() {
             </div>
           </div>
 
-          {error && <div className="login-error">⚠️ {error}</div>}
+          {error && (
+            <div className="login-error">
+              ⚠️ {error}
+            </div>
+          )}
 
-          <button type="submit" className="login-btn" disabled={loading}>
+          <button
+            type="submit"
+            className="login-btn"
+            disabled={loading}
+          >
             {loading ? <span className="spinner"></span> : 'Đăng nhập'}
           </button>
 
           <div className="login-links">
-            <Link to="/forgot-password" style={{color:'#e85d04', fontSize:13}}>Quên mật khẩu?</Link>
+            <Link
+              to="/forgot-password"
+              style={{
+                color: '#e85d04',
+                fontSize: 13
+              }}
+            >
+              Quên mật khẩu?
+            </Link>
           </div>
         </form>
 
         <p className="login-hint">
-          Chưa có tài khoản? <Link to="/register" style={{color:'#e85d04', fontWeight:600}}>Đăng ký ngay</Link>
-        </p>
-        <p className="login-hint" style={{marginTop:4}}>
-          admin/admin123 · staff/staff123 · kitchen/kitchen123 · customer/cust123
+          Chưa có tài khoản?{' '}
+          <Link
+            to="/register"
+            style={{
+              color: '#e85d04',
+              fontWeight: 600
+            }}
+          >
+            Đăng ký ngay
+          </Link>
         </p>
       </div>
     </div>
@@ -99,3 +146,4 @@ function Login() {
 }
 
 export default Login;
+
