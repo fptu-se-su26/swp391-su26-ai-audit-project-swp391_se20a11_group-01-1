@@ -57,10 +57,38 @@
 ## 8. Migration Plan
 Quản lý database versioning qua Flyway.
 Đề xuất chia nhỏ các script migration theo domain để dễ quản lý:
-* `backend/src/main/resources/db/migration/V1__create_auth_tables.sql` (users, roles, user_roles, refresh_tokens, profiles, employees)
-* `backend/src/main/resources/db/migration/V2__create_menu_tables.sql` (food_categories, food_items)
-* `backend/src/main/resources/db/migration/V3__create_cart_coupon_tables.sql` (carts, cart_items, coupons)
-* `backend/src/main/resources/db/migration/V4__create_order_payment_invoice_tables.sql` (restaurant_tables, reservations, restaurant_orders, order_items, payments, invoices, coupon_usages)
+
+V1__create_auth_tables.sql
+- users
+- roles
+- user_roles
+- refresh_tokens
+- customer_profiles
+- employees
+
+V2__create_menu_tables.sql
+- food_categories
+- food_items
+
+V3__create_cart_tables.sql
+- carts
+- cart_items
+- coupons
+
+V4__create_reservation_tables.sql
+- restaurant_tables
+- reservations
+
+V5__create_order_payment_invoice_tables.sql
+- restaurant_orders
+- order_items
+- coupon_usages
+- payments
+- invoices
+
+*Ghi chú:*
+`restaurant_orders` references `restaurant_tables`, therefore reservation/table migration must run before order/payment/invoice migration.
+`coupon_usages` references `restaurant_orders`, therefore it belongs to V5 instead of V3.
 
 ## 9. Seed Data Plan
 Sau khi schema hoàn tất, cần có script seed dữ liệu cơ bản để chạy ứng dụng (Sẽ tạo ở script riêng).
