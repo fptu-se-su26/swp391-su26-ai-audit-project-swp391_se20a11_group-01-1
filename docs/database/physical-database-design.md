@@ -86,6 +86,13 @@ V5__create_order_payment_invoice_tables.sql
 - payments
 - invoices
 
+V6__add_unit_price_to_cart_items.sql
+- (ALTER) cart_items
+
+V7__add_name_description_to_coupons.sql
+- (ALTER) coupons
+
+
 *Ghi chú:*
 `restaurant_orders` references `restaurant_tables`, therefore reservation/table migration must run before order/payment/invoice migration.
 `coupon_usages` references `restaurant_orders`, therefore it belongs to V5 instead of V3.

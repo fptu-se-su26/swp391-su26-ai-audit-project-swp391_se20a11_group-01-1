@@ -186,6 +186,8 @@ CREATE TABLE IF NOT EXISTS cart_items (
 CREATE TABLE IF NOT EXISTS coupons (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     code VARCHAR(50) NOT NULL,
+    name VARCHAR(255),
+    description TEXT,
     discount_type VARCHAR(50) NOT NULL,
     discount_value DECIMAL(19,2) NOT NULL,
     min_order_value DECIMAL(19,2) NOT NULL DEFAULT 0,

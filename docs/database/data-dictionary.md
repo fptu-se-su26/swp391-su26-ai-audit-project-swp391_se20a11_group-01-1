@@ -102,7 +102,7 @@
 
 ### Coupon
 * **Business Description**: Mã giảm giá.
-* **Attributes**: `id`, `code`, `discount_type`, `discount_value`, `min_order_value`, `max_discount_amount`, `start_date`, `end_date`, `usage_limit`.
+* **Attributes**: `id`, `code`, `name`, `description`, `discount_type`, `discount_value`, `min_order_value`, `max_discount_amount`, `start_date`, `end_date`, `usage_limit`.
 * **Example Values**: `code`: "SUMMER50", `discount_type`: "PERCENTAGE", `discount_value`: 50.
 
 ### CouponUsage
