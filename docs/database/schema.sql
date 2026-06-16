@@ -168,6 +168,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
     cart_id BIGINT NOT NULL,
     food_item_id BIGINT NOT NULL,
     quantity INT NOT NULL,
+    unit_price DECIMAL(19,2) NOT NULL DEFAULT 0,
     
     created_at DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6),
     created_by BIGINT,

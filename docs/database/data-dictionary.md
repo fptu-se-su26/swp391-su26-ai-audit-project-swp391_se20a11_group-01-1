@@ -97,7 +97,7 @@
 ### Cart & CartItem
 * **Business Description**: Giỏ hàng tạm.
 * **Attributes (Cart)**: `id`, `user_id`, `session_id`.
-* **Attributes (CartItem)**: `id`, `cart_id`, `food_item_id`, `quantity`.
+* **Attributes (CartItem)**: `id`, `cart_id`, `food_item_id`, `quantity`, `unit_price`.
 * **Validation**: `quantity` > 0.
 
 ### Coupon
