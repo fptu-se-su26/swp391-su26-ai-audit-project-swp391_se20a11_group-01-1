@@ -11,9 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ErrorResponse {
-    private int status;
+    @Builder.Default
+    private boolean success = false;
+    private String errorCode;
     private String message;
-    private String path;
+    private Object details;
     @Builder.Default
     private LocalDateTime timestamp = LocalDateTime.now();
 }

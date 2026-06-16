@@ -14,6 +14,6 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Restaurant Management API")
                         .version("1.0")
-                        .description("API documentation for Restaurant Management System"));
+                        .description("API documentation for Restaurant Management System with JWT Security, Standard Responses and Robust Exception Handling"));
     }
 }
