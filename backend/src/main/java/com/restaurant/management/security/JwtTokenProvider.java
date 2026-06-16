@@ -1,7 +1,15 @@
 package com.restaurant.management.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.SecretKey;
+import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
@@ -12,18 +20,41 @@ public class JwtTokenProvider {
     @Value("${app.jwt.expiration-in-ms:86400000}")
     private long jwtExpirationInMs;
 
-    public String generateToken(String username) {
-        // TODO: Implement actual JWT generation
-        throw new UnsupportedOperationException("Not implemented yet: generateToken");
+    private SecretKey getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String generateToken(Authentication authentication) {
+        CustomUserDetails userPrincipal = (CustomUserDetails) authentication.getPrincipal();
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
+        return Jwts.builder()
+                .subject(userPrincipal.getEmail())
+                .issuedAt(now)
+                .expiration(expiryDate)
+                .signWith(getSigningKey())
+                .compact();
     }
     
     public boolean validateToken(String token) {
-        // TODO: Implement actual JWT validation
-        throw new UnsupportedOperationException("Not implemented yet: validateToken");
+        try {
+            Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
     
     public String getUsername(String token) {
-        // TODO: Implement extraction of username from token
-        throw new UnsupportedOperationException("Not implemented yet: getUsername");
+        Claims claims = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return claims.getSubject();
     }
 }
