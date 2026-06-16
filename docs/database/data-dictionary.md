@@ -60,6 +60,13 @@
 * **Data Type**: `id` (BIGINT), `username` (VARCHAR 50), `password_hash` (VARCHAR 255), `email` (VARCHAR 100), `is_active` (BOOLEAN).
 * **Validation**: Email phải đúng format, username unique.
 
+### RefreshToken
+* **Business Description**: Token để duy trì phiên đăng nhập và làm mới access token.
+* **Attributes**: `id`, `user_id`, `token_hash`, `issued_at`, `expires_at`, `revoked_at`, `device_info`, `ip_address`, `user_agent`, `created_at`, `created_by`, `updated_at`, `updated_by`, `deleted_at`, `deleted_by`, `version`.
+* **Validation**: `user_id` required. `token_hash` required, unique. `expires_at` required. `revoked_at` nullable. `expires_at` > `issued_at`.
+* **Relationship**: User 1:N RefreshToken.
+* **Index đề xuất**: `uk_refresh_token_hash`, `idx_refresh_token_user`, `idx_refresh_token_expires_at`.
+
 ### Role
 * **Business Description**: Vai trò phân quyền.
 * **Attributes**: `id`, `name`, `description`.

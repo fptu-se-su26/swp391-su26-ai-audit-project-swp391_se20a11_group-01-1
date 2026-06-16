@@ -1,15 +1,24 @@
 # Domain Analysis
 
 ## 1. User Domain
-**Entities**: User, Role, UserRole, CustomerProfile, Employee
-* **Purpose**: Quản lý thông tin định danh, phân quyền và hồ sơ cá nhân của tất cả người dùng trong hệ thống.
+**Entities**: User, Role, UserRole, CustomerProfile, Employee, RefreshToken
+* **Purpose**: Quản lý thông tin định danh, phân quyền, hồ sơ cá nhân và bảo mật xác thực (bao gồm chu kỳ sống của token).
 * **Main actors**: Mọi người dùng (Customer, Staff, Kitchen, Admin).
 * **Main business rules**: 
   - Một user có thể có nhiều role (tùy nghiệp vụ, nhưng thường Customer có role CUSTOMER, nhân viên có thể có role STAFF, ADMIN).
   - Khách hàng vãng lai có thể không cần CustomerProfile chi tiết cho đến khi đặt hàng/đăng ký.
   - Employee liên kết chặt chẽ với User account để quản lý lương/ca làm.
-* **Lifecycle**: Đăng ký/Tạo mới -> Xác thực (Active) -> Bị khóa (Banned/Inactive).
-* **Dependencies**: Độc lập (là nền tảng cho mọi domain khác).
+  - **RefreshToken Rules**:
+    - Refresh token thuộc về một user.
+    - Token phải được hash trước khi lưu nếu có thể.
+    - Token có thời hạn (expires).
+    - Token có thể bị revoke khi logout.
+    - Không dùng refresh token đã expired/revoked.
+    - Có thể lưu device/user-agent/ip ở mức tùy chọn.
+* **Lifecycle**: 
+  - User: Đăng ký/Tạo mới -> Xác thực (Active) -> Bị khóa (Banned/Inactive).
+  - RefreshToken: CREATED -> ACTIVE -> EXPIRED -> REVOKED.
+* **Dependencies**: Độc lập (là nền tảng cho mọi domain khác). Riêng RefreshToken phụ thuộc User và JWT authentication.
 
 ## 2. Menu Domain
 **Entities**: FoodCategory, FoodItem
