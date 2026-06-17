@@ -68,16 +68,16 @@ Viết tại đây...
 
 | Nội dung | Thông tin |
 |---|---|
-| Ngày sử dụng | 24/5/2026 |
-| Công cụ AI | ChatGPT |
-| Mục đích sử dụng | Project Planning |
-| Phần việc liên quan | Requirement |
-| Mức độ sử dụng | Hỗ trợ ý tưởng  |
+| Ngày sử dụng |  |
+| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
+| Mục đích sử dụng |  |
+| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
+| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
-Used AI to identify system actors, define main use cases, analyze user roles, and suggest include/extend relationships for the Restaurant Management System.
+Dán nguyên văn prompt đã hỏi AI tại đây.
 ```
 
 #### 4.2. Kết quả AI gợi ý
@@ -85,11 +85,7 @@ Used AI to identify system actors, define main use cases, analyze user roles, an
 Tóm tắt nội dung AI đã trả lời hoặc gợi ý.
 
 ```text
-AI identified four main actors: Customer, Staff, Kitchen Staff, and Admin.
-
-AI also suggested the main use cases for each actor, including menu browsing, food ordering, table reservation, payment processing, order management, kitchen operations, and system administration.
-
-Additionally, AI recommended several include and extend relationships to improve the Use Case Diagram structure.
+Viết tại đây...
 ```
 
 #### 4.3. Phần sinh viên/nhóm đã sử dụng từ AI
@@ -97,7 +93,7 @@ Additionally, AI recommended several include and extend relationships to improve
 Mô tả rõ phần nào được sử dụng lại từ gợi ý của AI.
 
 ```text
-The team used the actor definitions, use case list, and suggested relationships as a basis for creating the Use Case Diagram and functional requirements in the SRS document.
+Viết tại đây...
 ```
 
 #### 4.4. Phần sinh viên/nhóm tự chỉnh sửa hoặc cải tiến
@@ -105,11 +101,7 @@ The team used the actor definitions, use case list, and suggested relationships 
 Mô tả sinh viên/nhóm đã thay đổi, kiểm tra, sửa lỗi hoặc cải tiến gì so với gợi ý ban đầu của AI.
 
 ```text
-The team reviewed the AI-generated use cases and refined them to better fit the project scope.
-
-Several duplicated or overly broad use cases were removed or renamed. The team also adjusted actor responsibilities, reduced the overuse of the word "Manage", and added specific use cases for Kitchen Staff and restaurant operations.
-
-The final Use Case Diagram was created based on project requirements rather than using the AI output directly.
+Viết tại đây...
 ```
 
 #### 4.5. Minh chứng
@@ -118,7 +110,7 @@ The final Use Case Diagram was created based on project requirements rather than
 |---|---|
 | Link commit |  |
 | File liên quan |  |
-| Screenshot | <img width="760" height="848" alt="image" src="https://github.com/user-attachments/assets/548330c8-46ca-42d6-91f1-32befc804695" />|
+| Screenshot |  |
 | Kết quả chạy/test |  |
 | Link video demo |  |
 | Ghi chú khác |  |
@@ -128,9 +120,7 @@ The final Use Case Diagram was created based on project requirements rather than
 Sinh viên/nhóm học được gì sau lần sử dụng AI này?
 
 ```text
-AI helped the team identify actors and generate an initial set of use cases quickly. However, the suggested results still required manual review and refinement to ensure consistency with the project scope and business requirements.
-
-The team gained a better understanding of requirement analysis and Use Case Diagram design through the process of validating and improving AI-generated outputs.
+Viết tại đây...
 ```
 
 ---

@@ -1,25 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { MENU_ITEMS } from '../data/menuData';
 import {
   getAllCategories,
   createCategory,
   deleteCategory as deleteCategoryApi
 } from '../services/categoryService';
+import {
+  getAllFoods,
+  createFood,
+  updateFood,
+  deleteFood as deleteFoodApi,
+  toggleFoodAvailable
+} from '../services/foodService';
 import './Menu.css';
 
 function Menu() {
-  const [items, setItems] = useState(MENU_ITEMS);
-
-  // categories bây giờ là data lấy từ backend
+  const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
 
   const [activeCategory, setActiveCategory] = useState('Tất cả');
   const [search, setSearch] = useState('');
   const [showAdd, setShowAdd] = useState(false);
   const [editItem, setEditItem] = useState(null);
+
   const [form, setForm] = useState({
     name: '',
-    category: '',
+    categoryId: '',
     price: '',
     img: '🍽️',
     desc: '',
@@ -30,27 +35,42 @@ function Menu() {
   const [newCat, setNewCat] = useState('');
   const [tab, setTab] = useState('menu');
   const [loadingCategories, setLoadingCategories] = useState(true);
+  const [loadingFoods, setLoadingFoods] = useState(true);
 
   const fileRef = useRef();
 
   useEffect(() => {
     fetchCategories();
+    fetchFoods();
   }, []);
+
+  const mapFoodFromApi = (food) => ({
+    id: food.foodId,
+    name: food.foodName,
+    desc: food.description,
+    price: Number(food.price),
+    imageUrl: food.imageUrl,
+    img: food.emoji || '🍽️',
+    rating: food.rating || 0,
+    orders: food.orders || 0,
+    available: food.isAvailable,
+    categoryId: food.categoryId,
+    category: food.categoryName
+  });
 
   const fetchCategories = async () => {
     try {
       setLoadingCategories(true);
 
       const data = await getAllCategories();
-
       const activeCategories = data.filter(cat => cat.isActive === true);
 
       setCategories(activeCategories);
 
-      if (activeCategories.length > 0 && !form.category) {
+      if (activeCategories.length > 0) {
         setForm(prev => ({
           ...prev,
-          category: activeCategories[0].categoryName
+          categoryId: prev.categoryId || activeCategories[0].categoryId
         }));
       }
     } catch (error) {
@@ -58,6 +78,20 @@ function Menu() {
       alert('Không thể tải danh mục từ backend.');
     } finally {
       setLoadingCategories(false);
+    }
+  };
+
+  const fetchFoods = async () => {
+    try {
+      setLoadingFoods(true);
+
+      const data = await getAllFoods();
+      setItems(data.map(mapFoodFromApi));
+    } catch (error) {
+      console.error('Lỗi khi lấy món ăn:', error);
+      alert('Không thể tải món ăn từ backend.');
+    } finally {
+      setLoadingFoods(false);
     }
   };
 
@@ -74,7 +108,7 @@ function Menu() {
     setEditItem(null);
     setForm({
       name: '',
-      category: categoryNames[0] || '',
+      categoryId: categories[0]?.categoryId || '',
       price: '',
       img: '🍽️',
       desc: '',
@@ -88,7 +122,7 @@ function Menu() {
     setEditItem(item);
     setForm({
       name: item.name,
-      category: item.category,
+      categoryId: item.categoryId,
       price: item.price,
       img: item.img,
       desc: item.desc || '',
@@ -98,54 +132,73 @@ function Menu() {
     setShowAdd(true);
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
 
-    if (!form.category) {
-      alert('Vui lòng tạo danh mục trước khi thêm món.');
+    if (!form.categoryId) {
+      alert('Vui lòng chọn danh mục.');
       return;
     }
 
-    if (editItem) {
-      setItems(prev =>
-        prev.map(i =>
-          i.id === editItem.id
-            ? { ...i, ...form, price: Number(form.price) }
-            : i
-        )
-      );
-    } else {
-      setItems(prev => [
-        ...prev,
-        {
-          ...form,
-          id: Date.now(),
-          price: Number(form.price),
-          rating: 0,
-          orders: 0
-        }
-      ]);
-    }
+    try {
+      const foodData = {
+        foodName: form.name,
+        description: form.desc,
+        price: Number(form.price),
+        imageUrl: form.imageUrl,
+        emoji: form.img,
+        rating: editItem ? editItem.rating : 0,
+        orders: editItem ? editItem.orders : 0,
+        isAvailable: form.available,
+        categoryId: Number(form.categoryId)
+      };
 
-    setShowAdd(false);
-    setEditItem(null);
+      if (editItem) {
+        await updateFood(editItem.id, foodData);
+      } else {
+        await createFood(foodData);
+      }
+
+      await fetchFoods();
+
+      setShowAdd(false);
+      setEditItem(null);
+    } catch (error) {
+      console.error('Lỗi khi lưu món ăn:', error);
+      alert('Không thể lưu món ăn. Vui lòng kiểm tra backend.');
+    }
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Xóa món này?')) {
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm('Xóa món này?');
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      await deleteFoodApi(id);
       setItems(prev => prev.filter(i => i.id !== id));
+    } catch (error) {
+      console.error('Lỗi khi xóa món ăn:', error);
+      alert('Không thể xóa món ăn.');
     }
   };
 
-  const toggleAvailable = (id) => {
-    setItems(prev =>
-      prev.map(i =>
-        i.id === id ? { ...i, available: !i.available } : i
-      )
-    );
+  const toggleAvailable = async (id) => {
+    try {
+      const updatedFood = await toggleFoodAvailable(id);
+      const mappedFood = mapFoodFromApi(updatedFood);
+
+      setItems(prev =>
+        prev.map(i => i.id === id ? mappedFood : i)
+      );
+    } catch (error) {
+      console.error('Lỗi khi đổi trạng thái món:', error);
+      alert('Không thể đổi trạng thái món ăn.');
+    }
   };
 
-  // Upload ảnh — đọc file thành base64, hiện tại vẫn demo frontend
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
 
@@ -166,7 +219,6 @@ function Menu() {
     reader.readAsDataURL(file);
   };
 
-  // Thêm category qua backend
   const addCategory = async (e) => {
     e.preventDefault();
 
@@ -192,10 +244,10 @@ function Menu() {
       setCategories(prev => [...prev, savedCategory]);
       setNewCat('');
 
-      if (!form.category) {
+      if (!form.categoryId) {
         setForm(prev => ({
           ...prev,
-          category: savedCategory.categoryName
+          categoryId: savedCategory.categoryId
         }));
       }
     } catch (error) {
@@ -204,7 +256,6 @@ function Menu() {
     }
   };
 
-  // Xóa category qua backend
   const deleteCategory = async (cat) => {
     const selectedCategory = categories.find(c => c.categoryName === cat);
 
@@ -235,10 +286,10 @@ function Menu() {
         setActiveCategory('Tất cả');
       }
 
-      if (form.category === cat) {
+      if (Number(form.categoryId) === selectedCategory.categoryId) {
         setForm(prev => ({
           ...prev,
-          category: ''
+          categoryId: categories[0]?.categoryId || ''
         }));
       }
     } catch (error) {
@@ -275,7 +326,6 @@ function Menu() {
         </div>
       </div>
 
-      {/* Tab: Danh mục */}
       {tab === 'categories' && (
         <div className="cat-manager card">
           <h3>Quản lý danh mục món ăn</h3>
@@ -326,7 +376,6 @@ function Menu() {
         </div>
       )}
 
-      {/* Tab: Món ăn */}
       {tab === 'menu' && (
         <>
           <div className="menu-toolbar">
@@ -350,68 +399,71 @@ function Menu() {
             </div>
           </div>
 
-          <div className="menu-grid">
-            {filtered.length > 0 ? (
-              filtered.map(item => (
-                <div
-                  key={item.id}
-                  className={`menu-card card ${!item.available ? 'unavailable' : ''}`}
-                >
-                  <div className="menu-img">
-                    {item.imageUrl ? (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.name}
-                        className="menu-img-photo"
-                      />
-                    ) : (
-                      item.img
-                    )}
-                  </div>
+          {loadingFoods ? (
+            <p>Đang tải món ăn...</p>
+          ) : (
+            <div className="menu-grid">
+              {filtered.length > 0 ? (
+                filtered.map(item => (
+                  <div
+                    key={item.id}
+                    className={`menu-card card ${!item.available ? 'unavailable' : ''}`}
+                  >
+                    <div className="menu-img">
+                      {item.imageUrl ? (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.name}
+                          className="menu-img-photo"
+                        />
+                      ) : (
+                        item.img
+                      )}
+                    </div>
 
-                  <div className="menu-info">
-                    <h3 className="menu-name">{item.name}</h3>
-                    <p className="menu-category">{item.category}</p>
+                    <div className="menu-info">
+                      <h3 className="menu-name">{item.name}</h3>
+                      <p className="menu-category">{item.category}</p>
 
-                    <div className="menu-footer">
-                      <span className="menu-price">
-                        {item.price.toLocaleString('vi-VN')}đ
-                      </span>
+                      <div className="menu-footer">
+                        <span className="menu-price">
+                          {item.price.toLocaleString('vi-VN')}đ
+                        </span>
+
+                        <button
+                          className={`avail-badge ${item.available ? 'avail-yes' : 'avail-no'}`}
+                          onClick={() => toggleAvailable(item.id)}
+                        >
+                          {item.available ? 'Còn món' : 'Hết món'}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="menu-actions">
+                      <button
+                        className="action-btn edit-btn"
+                        onClick={() => handleEdit(item)}
+                      >
+                        ✏️
+                      </button>
 
                       <button
-                        className={`avail-badge ${item.available ? 'avail-yes' : 'avail-no'}`}
-                        onClick={() => toggleAvailable(item.id)}
+                        className="action-btn del-btn"
+                        onClick={() => handleDelete(item.id)}
                       >
-                        {item.available ? 'Còn món' : 'Hết món'}
+                        🗑️
                       </button>
                     </div>
                   </div>
-
-                  <div className="menu-actions">
-                    <button
-                      className="action-btn edit-btn"
-                      onClick={() => handleEdit(item)}
-                    >
-                      ✏️
-                    </button>
-
-                    <button
-                      className="action-btn del-btn"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>Không có món ăn nào.</p>
-            )}
-          </div>
+                ))
+              ) : (
+                <p>Không có món ăn nào.</p>
+              )}
+            </div>
+          )}
         </>
       )}
 
-      {/* Modal thêm/sửa món */}
       {showAdd && (
         <div className="modal-overlay" onClick={() => setShowAdd(false)}>
           <div className="menu-modal card" onClick={e => e.stopPropagation()}>
@@ -507,17 +559,18 @@ function Menu() {
 
                   <select
                     className="form-input"
-                    value={form.category}
+                    value={form.categoryId}
                     onChange={e =>
                       setForm({
                         ...form,
-                        category: e.target.value
+                        categoryId: e.target.value
                       })
                     }
+                    required
                   >
-                    {categoryNames.map(c => (
-                      <option key={c} value={c}>
-                        {c}
+                    {categories.map(c => (
+                      <option key={c.categoryId} value={c.categoryId}>
+                        {c.categoryName}
                       </option>
                     ))}
                   </select>
