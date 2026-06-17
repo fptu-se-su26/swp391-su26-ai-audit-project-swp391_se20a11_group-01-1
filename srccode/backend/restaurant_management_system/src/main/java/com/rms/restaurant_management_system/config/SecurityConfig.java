@@ -26,7 +26,17 @@ public class SecurityConfig {
                 .httpBasic(basic -> basic.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Auth API
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // Category API
+                        .requestMatchers("/api/categories/**").permitAll()
+
+                        // Food API
+                        .requestMatchers("/api/foods/**").permitAll()
+
+                        // Tạm thời cho phép toàn bộ request khác để demo/dev
                         .anyRequest().permitAll()
                 );
 
@@ -46,6 +56,7 @@ public class SecurityConfig {
                 "GET",
                 "POST",
                 "PUT",
+                "PATCH",
                 "DELETE",
                 "OPTIONS"
         ));
