@@ -1,5 +1,6 @@
 package com.restaurant.management.repository;
 
+import com.restaurant.management.entity.order.OrderStatus;
 import com.restaurant.management.entity.order.RestaurantOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +12,5 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<RestaurantOrder, Long> {
     List<RestaurantOrder> findByCustomerId(Long customerId);
     Optional<RestaurantOrder> findByIdAndCustomerId(Long id, Long customerId);
+    List<RestaurantOrder> findByOrderStatusInOrderByCreatedAtAsc(List<OrderStatus> statuses);
 }
