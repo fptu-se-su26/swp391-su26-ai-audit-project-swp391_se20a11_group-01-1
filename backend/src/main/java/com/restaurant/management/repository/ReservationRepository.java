@@ -27,4 +27,19 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("startTimeMinus2Hours") LocalDateTime startTimeMinus2Hours, 
             @Param("endTime") LocalDateTime endTime,
             @Param("statuses") List<ReservationStatus> statuses);
+
+    @Query("SELECT COUNT(r) FROM Reservation r")
+    Long countTotalReservations();
+
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.status = 'PENDING'")
+    Long countPendingReservations();
+
+    @Query("SELECT COUNT(r) FROM Reservation r WHERE r.createdAt >= :start AND r.createdAt <= :end")
+    Long countReservationsByDateRange(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("SELECT r.status, COUNT(r) FROM Reservation r WHERE r.createdAt >= :start AND r.createdAt <= :end GROUP BY r.status")
+    List<Object[]> countGroupedByStatus(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    @Query("SELECT SUM(r.guestCount) FROM Reservation r WHERE r.createdAt >= :start AND r.createdAt <= :end")
+    Long sumGuestsByDateRange(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
 }
