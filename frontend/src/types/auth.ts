@@ -2,6 +2,8 @@ export interface User {
   id: number;
   username: string;
   email: string;
+  fullName?: string;
+  phone?: string;
   roles: string[];
 }
 
@@ -24,6 +26,15 @@ export interface CurrentUserResponse {
 export interface LoginRequest {
   username?: string;
   password?: string;
+}
+
+export interface RegisterRequest {
+  username?: string;
+  email?: string;
+  password?: string;
+  fullName?: string;
+  phone?: string;
+  address?: string;
 }
 
 export interface ApiResponse<T> {

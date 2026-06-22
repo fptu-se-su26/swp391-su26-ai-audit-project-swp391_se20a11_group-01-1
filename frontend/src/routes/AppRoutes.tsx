@@ -18,9 +18,22 @@ import {
 
 import { 
   CustomerHomePage, 
+  CustomerMenuPage,
+  CustomerCartPage,
+  CustomerOrdersPage,
+  CustomerReservationsPage,
+  CustomerProfilePage,
   AdminHomePage, 
+  AdminUsersPage,
+  AdminFoodsPage,
+  AdminCategoriesPage,
+  AdminCouponsPage,
+  AdminReportsPage,
   StaffHomePage, 
-  KitchenHomePage 
+  StaffOrdersPage,
+  StaffTablesPage,
+  KitchenHomePage,
+  KitchenOrdersPage
 } from '../pages/RolePages';
 
 export const AppRoutes: React.FC = () => {
@@ -38,6 +51,11 @@ export const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute allowedRoles={['ROLE_CUSTOMER']} />}>
         <Route element={<CustomerLayout />}>
           <Route path="/customer" element={<CustomerHomePage />} />
+          <Route path="/customer/menu" element={<CustomerMenuPage />} />
+          <Route path="/customer/cart" element={<CustomerCartPage />} />
+          <Route path="/customer/orders" element={<CustomerOrdersPage />} />
+          <Route path="/customer/reservations" element={<CustomerReservationsPage />} />
+          <Route path="/customer/profile" element={<CustomerProfilePage />} />
         </Route>
       </Route>
 
@@ -45,6 +63,11 @@ export const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute allowedRoles={['ROLE_ADMIN']} />}>
         <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminHomePage />} />
+          <Route path="/admin/users" element={<AdminUsersPage />} />
+          <Route path="/admin/foods" element={<AdminFoodsPage />} />
+          <Route path="/admin/categories" element={<AdminCategoriesPage />} />
+          <Route path="/admin/coupons" element={<AdminCouponsPage />} />
+          <Route path="/admin/reports" element={<AdminReportsPage />} />
         </Route>
       </Route>
 
@@ -52,6 +75,8 @@ export const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute allowedRoles={['ROLE_STAFF', 'ROLE_ADMIN']} />}>
         <Route element={<StaffLayout />}>
           <Route path="/staff" element={<StaffHomePage />} />
+          <Route path="/staff/orders" element={<StaffOrdersPage />} />
+          <Route path="/staff/tables" element={<StaffTablesPage />} />
         </Route>
       </Route>
 
@@ -59,6 +84,7 @@ export const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute allowedRoles={['ROLE_KITCHEN', 'ROLE_ADMIN']} />}>
         <Route element={<KitchenLayout />}>
           <Route path="/kitchen" element={<KitchenHomePage />} />
+          <Route path="/kitchen/orders" element={<KitchenOrdersPage />} />
         </Route>
       </Route>
 

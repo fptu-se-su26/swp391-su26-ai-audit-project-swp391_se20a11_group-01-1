@@ -1,17 +1,27 @@
 import React from 'react';
+import { PlaceholderPage } from '../components/common/PlaceholderPage';
 
-export const CustomerHomePage: React.FC = () => {
-  return <div>Customer Dashboard</div>;
-};
+// Customer Pages
+export const CustomerHomePage: React.FC = () => <PlaceholderPage title="Customer Dashboard" />;
+export const CustomerMenuPage: React.FC = () => <PlaceholderPage title="Thực đơn" />;
+export const CustomerCartPage: React.FC = () => <PlaceholderPage title="Giỏ hàng" />;
+export const CustomerOrdersPage: React.FC = () => <PlaceholderPage title="Đơn hàng" />;
+export const CustomerReservationsPage: React.FC = () => <PlaceholderPage title="Đặt bàn" />;
+export const CustomerProfilePage: React.FC = () => <PlaceholderPage title="Hồ sơ" />;
 
-export const AdminHomePage: React.FC = () => {
-  return <div>Admin Dashboard</div>;
-};
+// Admin Pages
+export const AdminHomePage: React.FC = () => <PlaceholderPage title="Admin Dashboard" />;
+export const AdminUsersPage: React.FC = () => <PlaceholderPage title="Quản lý Người dùng" />;
+export const AdminFoodsPage: React.FC = () => <PlaceholderPage title="Quản lý Món ăn" />;
+export const AdminCategoriesPage: React.FC = () => <PlaceholderPage title="Quản lý Danh mục" />;
+export const AdminCouponsPage: React.FC = () => <PlaceholderPage title="Quản lý Coupon" />;
+export const AdminReportsPage: React.FC = () => <PlaceholderPage title="Báo cáo Doanh thu" />;
 
-export const StaffHomePage: React.FC = () => {
-  return <div>Staff Dashboard</div>;
-};
+// Staff Pages
+export const StaffHomePage: React.FC = () => <PlaceholderPage title="Staff Dashboard" />;
+export const StaffOrdersPage: React.FC = () => <PlaceholderPage title="Đơn tại quầy / Đơn hàng" />;
+export const StaffTablesPage: React.FC = () => <PlaceholderPage title="Quản lý Bàn" />;
 
-export const KitchenHomePage: React.FC = () => {
-  return <div>Kitchen Dashboard</div>;
-};
+// Kitchen Pages
+export const KitchenHomePage: React.FC = () => <PlaceholderPage title="Kitchen Dashboard" />;
+export const KitchenOrdersPage: React.FC = () => <PlaceholderPage title="Đơn chờ / Đang chế biến / Món sẵn sàng" />;

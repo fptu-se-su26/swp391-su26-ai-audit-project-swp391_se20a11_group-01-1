@@ -1,9 +1,14 @@
 import axiosClient from './axiosClient';
-import type { AuthResponse, CurrentUserResponse, LoginRequest, ApiResponse } from '../types/auth';
+import type { AuthResponse, CurrentUserResponse, LoginRequest, RegisterRequest, ApiResponse } from '../types/auth';
 
 export const authApi = {
   login: async (credentials: LoginRequest): Promise<AuthResponse> => {
     const response = await axiosClient.post<ApiResponse<AuthResponse>>('/auth/login', credentials);
+    return response.data.data;
+  },
+
+  register: async (data: RegisterRequest): Promise<AuthResponse> => {
+    const response = await axiosClient.post<ApiResponse<AuthResponse>>('/auth/register', data);
     return response.data.data;
   },
   

@@ -27,11 +27,8 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Basic 401 handling
       tokenStorage.clear();
-      if (window.location.pathname !== '/login') {
-        window.location.href = '/login';
-      }
+      window.dispatchEvent(new CustomEvent('auth:401'));
     }
     return Promise.reject(error);
   }
