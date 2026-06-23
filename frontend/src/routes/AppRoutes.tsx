@@ -29,7 +29,6 @@ import { ReservationDetailPage } from '../pages/customer/ReservationDetailPage';
 import { ProfilePage } from '../pages/customer/ProfilePage';
 
 import { 
-  CustomerHomePage, 
   AdminDashboardPage, 
   AdminUsersPage,
   AdminFoodsPage,
@@ -60,7 +59,7 @@ export const AppRoutes: React.FC = () => {
       {/* Customer Routes */}
       <Route element={<ProtectedRoute allowedRoles={['ROLE_CUSTOMER']} />}>
         <Route element={<CustomerLayout />}>
-          <Route path="/customer" element={<CustomerHomePage />} />
+          <Route path="/customer" element={<Navigate to="/customer/menu" replace />} />
           <Route path="/customer/menu" element={<MenuPage baseUrl="/customer/menu" />} />
           <Route path="/customer/menu/:foodId" element={<FoodDetailPage backUrl="/customer/menu" />} />
           

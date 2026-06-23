@@ -1,8 +1,3 @@
-import React from 'react';
-import { PlaceholderPage } from '../components/common/PlaceholderPage';
-
-// Customer Pages
-export const CustomerHomePage: React.FC = () => <PlaceholderPage title="Customer Dashboard" />;
 
 // Admin Pages
 export { AdminDashboardPage } from './admin/AdminDashboardPage';
