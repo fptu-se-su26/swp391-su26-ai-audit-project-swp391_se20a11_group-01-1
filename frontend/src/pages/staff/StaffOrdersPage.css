@@ -1,0 +1,88 @@
+.staff-orders-page {
+  padding: 24px;
+}
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.page-header h2 {
+  margin: 0;
+}
+.btn-refresh {
+  padding: 8px 16px;
+  background: #f1f2f6;
+  border: 1px solid #dcdde1;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.orders-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.btn-create-order {
+  padding: 10px 20px;
+  background: #e67e22;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.filter-group select {
+  padding: 8px;
+  border: 1px solid #dcdde1;
+  border-radius: 4px;
+}
+.table-responsive {
+  overflow-x: auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.staff-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.staff-table th, .staff-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #f1f2f6;
+}
+.staff-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+}
+.highlight-price {
+  font-weight: 600;
+  color: #e67e22;
+}
+.btn-view {
+  padding: 6px 12px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+.badge-warning { background: #fef08a; color: #854d0e; }
+.badge-info { background: #bae6fd; color: #075985; }
+.badge-primary { background: #bfdbfe; color: #1e40af; }
+.badge-secondary { background: #e5e7eb; color: #374151; }
+.badge-success { background: #bbf7d0; color: #166534; }
+.badge-dark { background: #d1d5db; color: #1f2937; }
+.badge-danger { background: #fecaca; color: #991b1b; }
+.badge-default { background: #f3f4f6; color: #4b5563; }

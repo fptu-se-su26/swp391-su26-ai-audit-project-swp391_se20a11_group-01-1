@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
 
 import { PublicLayout } from '../layouts/PublicLayout';
@@ -36,11 +36,12 @@ import {
   AdminCategoriesPage,
   AdminCouponsPage,
   AdminReportsPage,
-  StaffHomePage, 
+  StaffDashboardPage, 
   StaffOrdersPage,
-  StaffTablesPage,
-  KitchenHomePage,
-  KitchenOrdersPage
+  StaffOrderCreatePage,
+  StaffOrderDetailPage,
+  KitchenQueuePage,
+  KitchenOrderDetailPage
 } from '../pages/RolePages';
 
 export const AppRoutes: React.FC = () => {
@@ -90,17 +91,20 @@ export const AppRoutes: React.FC = () => {
       {/* Staff Routes */}
       <Route element={<ProtectedRoute allowedRoles={['ROLE_STAFF', 'ROLE_ADMIN']} />}>
         <Route element={<StaffLayout />}>
-          <Route path="/staff" element={<StaffHomePage />} />
+          <Route path="/staff" element={<StaffDashboardPage />} />
           <Route path="/staff/orders" element={<StaffOrdersPage />} />
-          <Route path="/staff/tables" element={<StaffTablesPage />} />
+          <Route path="/staff/orders/new" element={<StaffOrderCreatePage />} />
+          <Route path="/staff/orders/:orderId" element={<StaffOrderDetailPage />} />
+          {/* Note: /staff/tables is omitted due to backend security limitation */}
         </Route>
       </Route>
 
       {/* Kitchen Routes */}
       <Route element={<ProtectedRoute allowedRoles={['ROLE_KITCHEN', 'ROLE_ADMIN']} />}>
         <Route element={<KitchenLayout />}>
-          <Route path="/kitchen" element={<KitchenHomePage />} />
-          <Route path="/kitchen/orders" element={<KitchenOrdersPage />} />
+          <Route path="/kitchen" element={<Navigate to="/kitchen/queue" replace />} />
+          <Route path="/kitchen/queue" element={<KitchenQueuePage />} />
+          <Route path="/kitchen/orders/:orderId" element={<KitchenOrderDetailPage />} />
         </Route>
       </Route>
 

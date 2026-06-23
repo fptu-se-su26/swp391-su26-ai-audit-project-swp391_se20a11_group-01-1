@@ -17,7 +17,7 @@ export const KitchenLayout: React.FC = () => {
         <div className="header-left">
           <h2>Kitchen Portal</h2>
           <nav>
-            <NavLink to="/kitchen/orders" className={({ isActive }) => isActive ? 'active' : ''}>Đơn chờ / Đang chế biến / Món sẵn sàng</NavLink>
+            <NavLink to="/kitchen/queue" className={({ isActive }) => isActive ? 'active' : ''}>Hàng đợi (Queue)</NavLink>
           </nav>
         </div>
         <div className="header-right">

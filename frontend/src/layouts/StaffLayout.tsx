@@ -17,8 +17,8 @@ export const StaffLayout: React.FC = () => {
         <div className="header-left">
           <h2>Staff Portal</h2>
           <nav>
-            <NavLink to="/staff/orders" className={({ isActive }) => isActive ? 'active' : ''}>Đơn tại quầy / Đơn hàng</NavLink> |{' '}
-            <NavLink to="/staff/tables" className={({ isActive }) => isActive ? 'active' : ''}>Bàn</NavLink>
+            <NavLink to="/staff" end className={({ isActive }) => isActive ? 'active' : ''}>Trang chủ</NavLink> |{' '}
+            <NavLink to="/staff/orders" className={({ isActive }) => isActive ? 'active' : ''}>Quản lý Đơn hàng</NavLink>
           </nav>
         </div>
         <div className="header-right">

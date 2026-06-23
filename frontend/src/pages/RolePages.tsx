@@ -13,10 +13,11 @@ export { AdminCouponsPage } from './admin/AdminCouponsPage';
 export { AdminReportsPage } from './admin/AdminReportsPage';
 
 // Staff Pages
-export const StaffHomePage: React.FC = () => <PlaceholderPage title="Staff Dashboard" />;
-export const StaffOrdersPage: React.FC = () => <PlaceholderPage title="Đơn tại quầy / Đơn hàng" />;
-export const StaffTablesPage: React.FC = () => <PlaceholderPage title="Quản lý Bàn" />;
+export { StaffDashboardPage } from './staff/StaffDashboardPage';
+export { StaffOrdersPage } from './staff/StaffOrdersPage';
+export { StaffOrderCreatePage } from './staff/StaffOrderCreatePage';
+export { StaffOrderDetailPage } from './staff/StaffOrderDetailPage';
 
 // Kitchen Pages
-export const KitchenHomePage: React.FC = () => <PlaceholderPage title="Kitchen Dashboard" />;
-export const KitchenOrdersPage: React.FC = () => <PlaceholderPage title="Đơn chờ / Đang chế biến / Món sẵn sàng" />;
+export { KitchenQueuePage } from './kitchen/KitchenQueuePage';
+export { KitchenOrderDetailPage } from './kitchen/KitchenOrderDetailPage';

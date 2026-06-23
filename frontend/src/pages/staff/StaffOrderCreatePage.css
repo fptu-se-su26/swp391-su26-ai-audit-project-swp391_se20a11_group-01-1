@@ -1,0 +1,230 @@
+.staff-order-create-page {
+  padding: 24px;
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+}
+.create-order-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+@media (max-width: 992px) {
+  .create-order-layout {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+}
+
+.menu-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.menu-section h3 { margin-top: 0; }
+
+.category-filter {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f1f2f6;
+}
+.cat-btn {
+  white-space: nowrap;
+  padding: 6px 12px;
+  border: 1px solid #dcdde1;
+  background: #f8f9fa;
+  border-radius: 16px;
+  cursor: pointer;
+}
+.cat-btn.active {
+  background: #e67e22;
+  color: white;
+  border-color: #e67e22;
+}
+
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-right: 8px;
+}
+.food-item-card {
+  border: 1px solid #dcdde1;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.food-item-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.food-img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+.food-img-placeholder {
+  width: 100%;
+  height: 100px;
+  background: #ecf0f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
+.food-info {
+  padding: 8px;
+}
+.food-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.food-price {
+  color: #e67e22;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.cart-section {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.cart-section h3 { margin-top: 0; }
+
+.order-details-form {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f2f6;
+  margin-bottom: 16px;
+}
+.order-details-form select,
+.order-details-form textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #dcdde1;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.cart-items {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.empty-cart {
+  text-align: center;
+  color: #95a5a6;
+  padding: 24px 0;
+  font-style: italic;
+}
+.cart-item {
+  padding: 12px;
+  border: 1px solid #f1f2f6;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  background: #fdfefe;
+}
+.cart-item-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.cart-item-price {
+  font-weight: bold;
+  color: #e67e22;
+}
+.cart-item-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.qty-controls button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #dcdde1;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qty-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-remove {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-remove:hover {
+  text-decoration: underline;
+}
+.item-note-input {
+  width: 100%;
+  padding: 6px;
+  border: 1px dashed #dcdde1;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.cart-footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid #f1f2f6;
+}
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+.btn-submit-order {
+  width: 100%;
+  padding: 14px;
+  background: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn-submit-order:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+.btn-submit-order:hover:not(:disabled) {
+  opacity: 0.9;
+}

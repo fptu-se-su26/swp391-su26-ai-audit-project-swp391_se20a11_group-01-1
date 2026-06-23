@@ -39,3 +39,16 @@ export const getOrderStatusColor = (status: OrderStatus): string => {
       return '#95a5a6'; // Gray
   }
 };
+
+export const getOrderStatusBadgeClass = (status: OrderStatus): string => {
+  switch (status) {
+    case 'PENDING': return 'badge-warning';
+    case 'PENDING_PAYMENT': return 'badge-info';
+    case 'CONFIRMED': return 'badge-primary';
+    case 'PREPARING': return 'badge-secondary';
+    case 'READY': return 'badge-success';
+    case 'COMPLETED': return 'badge-dark';
+    case 'CANCELLED': return 'badge-danger';
+    default: return 'badge-default';
+  }
+};
