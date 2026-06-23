@@ -3,7 +3,6 @@ import { PlaceholderPage } from '../components/common/PlaceholderPage';
 
 // Customer Pages
 export const CustomerHomePage: React.FC = () => <PlaceholderPage title="Customer Dashboard" />;
-export const CustomerMenuPage: React.FC = () => <PlaceholderPage title="Thực đơn" />;
 export const CustomerCartPage: React.FC = () => <PlaceholderPage title="Giỏ hàng" />;
 export const CustomerOrdersPage: React.FC = () => <PlaceholderPage title="Đơn hàng" />;
 export const CustomerReservationsPage: React.FC = () => <PlaceholderPage title="Đặt bàn" />;

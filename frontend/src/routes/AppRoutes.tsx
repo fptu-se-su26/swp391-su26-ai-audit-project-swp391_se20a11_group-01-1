@@ -16,9 +16,11 @@ import {
   NotFoundPage 
 } from '../pages/public/PublicPages';
 
+import { MenuPage } from '../pages/public/MenuPage';
+import { FoodDetailPage } from '../pages/public/FoodDetailPage';
+
 import { 
   CustomerHomePage, 
-  CustomerMenuPage,
   CustomerCartPage,
   CustomerOrdersPage,
   CustomerReservationsPage,
@@ -42,6 +44,8 @@ export const AppRoutes: React.FC = () => {
       {/* Public Routes */}
       <Route element={<PublicLayout />}>
         <Route path="/" element={<HomePage />} />
+        <Route path="/menu" element={<MenuPage baseUrl="/menu" />} />
+        <Route path="/menu/:foodId" element={<FoodDetailPage backUrl="/menu" />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/unauthorized" element={<UnauthorizedPage />} />
@@ -51,7 +55,8 @@ export const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute allowedRoles={['ROLE_CUSTOMER']} />}>
         <Route element={<CustomerLayout />}>
           <Route path="/customer" element={<CustomerHomePage />} />
-          <Route path="/customer/menu" element={<CustomerMenuPage />} />
+          <Route path="/customer/menu" element={<MenuPage baseUrl="/customer/menu" />} />
+          <Route path="/customer/menu/:foodId" element={<FoodDetailPage backUrl="/customer/menu" />} />
           <Route path="/customer/cart" element={<CustomerCartPage />} />
           <Route path="/customer/orders" element={<CustomerOrdersPage />} />
           <Route path="/customer/reservations" element={<CustomerReservationsPage />} />

@@ -8,8 +8,13 @@ export const HomePage: React.FC = () => {
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Welcome to the Restaurant Management System</h1>
-      <p>
-        <Link to="/login">Login</Link> | <Link to="/register">Register</Link>
+      <p style={{ marginTop: '20px' }}>
+        <Link to="/menu" style={{ padding: '10px 20px', background: '#3498db', color: 'white', textDecoration: 'none', borderRadius: '4px', marginRight: '10px' }}>
+          Xem thực đơn
+        </Link>
+        <Link to="/login" style={{ padding: '10px 20px', background: '#ecf0f1', color: '#2c3e50', textDecoration: 'none', borderRadius: '4px' }}>
+          Đăng nhập
+        </Link>
       </p>
     </div>
   );
