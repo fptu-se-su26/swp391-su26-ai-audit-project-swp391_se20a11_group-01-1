@@ -19,12 +19,15 @@ import {
 import { MenuPage } from '../pages/public/MenuPage';
 import { FoodDetailPage } from '../pages/public/FoodDetailPage';
 import { CartPage } from '../pages/customer/CartPage';
+import { CheckoutPage } from '../pages/customer/CheckoutPage';
+import { OrderListPage } from '../pages/customer/OrderListPage';
+import { OrderDetailPage } from '../pages/customer/OrderDetailPage';
 
 import { 
   CustomerHomePage, 
-  CustomerOrdersPage,
   CustomerReservationsPage,
   CustomerProfilePage,
+  CustomerPaymentPage,
   AdminHomePage, 
   AdminUsersPage,
   AdminFoodsPage,
@@ -57,8 +60,13 @@ export const AppRoutes: React.FC = () => {
           <Route path="/customer" element={<CustomerHomePage />} />
           <Route path="/customer/menu" element={<MenuPage baseUrl="/customer/menu" />} />
           <Route path="/customer/menu/:foodId" element={<FoodDetailPage backUrl="/customer/menu" />} />
+          
           <Route path="/customer/cart" element={<CartPage />} />
-          <Route path="/customer/orders" element={<CustomerOrdersPage />} />
+          <Route path="/customer/checkout" element={<CheckoutPage />} />
+          <Route path="/customer/orders" element={<OrderListPage />} />
+          <Route path="/customer/orders/:orderId" element={<OrderDetailPage />} />
+          <Route path="/customer/payment" element={<CustomerPaymentPage />} />
+          
           <Route path="/customer/reservations" element={<CustomerReservationsPage />} />
           <Route path="/customer/profile" element={<CustomerProfilePage />} />
         </Route>

@@ -9,7 +9,7 @@ import './CartPage.css';
 
 export const CartPage: React.FC = () => {
   const navigate = useNavigate();
-  const { cart, isLoading, error, updateQuantity, removeItem, clearCart, subtotal, loadCart } = useCart();
+  const { cart, isLoading, error, subtotal, loadCart, updateQuantity, removeItem, clearCart } = useCart();
   
   const [couponCode, setCouponCode] = useState('');
   const [couponResult, setCouponResult] = useState<CouponValidationResponse | null>(null);
@@ -195,8 +195,12 @@ export const CartPage: React.FC = () => {
             <span>{formatCurrency(finalAmount)}</span>
           </div>
 
-          <button className="btn-checkout" disabled>
-            Tiếp tục thanh toán — sẽ phát triển ở FE-05
+          <button 
+            className="btn-checkout" 
+            disabled={isLoading || !cart || cart.items.length === 0}
+            onClick={() => navigate('/customer/checkout')}
+          >
+            Tiếp tục thanh toán
           </button>
         </div>
       </div>
