@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { foodApi } from '../../api/foodApi';
 import type { FoodDetailResponse } from '../../types/food';
 import { formatCurrency } from '../../utils/formatCurrency';
+import { useAuth } from '../../hooks/useAuth';
+import { useCart } from '../../hooks/useCart';
 import './FoodDetailPage.css';
 
 interface FoodDetailPageProps {
@@ -12,9 +14,14 @@ interface FoodDetailPageProps {
 export const FoodDetailPage: React.FC<FoodDetailPageProps> = ({ backUrl }) => {
   const { foodId } = useParams<{ foodId: string }>();
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
+  const { addItem } = useCart();
+  const isCustomer = isAuthenticated && user?.roles?.includes('ROLE_CUSTOMER');
+
   const [food, setFood] = useState<FoodDetailResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [adding, setAdding] = useState(false);
 
   useEffect(() => {
     const fetchFoodDetail = async () => {
@@ -37,6 +44,20 @@ export const FoodDetailPage: React.FC<FoodDetailPageProps> = ({ backUrl }) => {
     };
     fetchFoodDetail();
   }, [foodId]);
+
+  const handleAddToCart = async () => {
+    if (!isCustomer || !food || !food.isAvailable) return;
+    setAdding(true);
+    try {
+      await addItem(food.id, 1);
+      alert('Đã thêm món vào giỏ hàng!');
+    } catch (err) {
+      const e = err as Error;
+      alert(e.message || 'Lỗi thêm vào giỏ hàng');
+    } finally {
+      setAdding(false);
+    }
+  };
 
   if (loading) return <div className="detail-state">Đang tải thông tin món ăn...</div>;
   if (error) return (
@@ -71,9 +92,21 @@ export const FoodDetailPage: React.FC<FoodDetailPageProps> = ({ backUrl }) => {
             <p>{food.description || 'Chưa có mô tả cho món ăn này.'}</p>
           </div>
           
-          {/* Cart logic will go here in the future */}
-          <div className="future-actions">
-            <p><i>Chức năng đặt món sẽ được ra mắt sau.</i></p>
+          {/* Cart logic */}
+          <div className="cart-actions">
+            {isCustomer ? (
+              <button 
+                className="btn-add-cart-detail" 
+                onClick={handleAddToCart}
+                disabled={!food.isAvailable || adding}
+              >
+                {adding ? 'Đang thêm...' : 'Thêm vào giỏ'}
+              </button>
+            ) : !isAuthenticated ? (
+              <button className="btn-login-to-order-detail" onClick={() => navigate('/login')}>
+                Đăng nhập để đặt món
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

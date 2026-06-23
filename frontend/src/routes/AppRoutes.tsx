@@ -18,10 +18,10 @@ import {
 
 import { MenuPage } from '../pages/public/MenuPage';
 import { FoodDetailPage } from '../pages/public/FoodDetailPage';
+import { CartPage } from '../pages/customer/CartPage';
 
 import { 
   CustomerHomePage, 
-  CustomerCartPage,
   CustomerOrdersPage,
   CustomerReservationsPage,
   CustomerProfilePage,
@@ -57,7 +57,7 @@ export const AppRoutes: React.FC = () => {
           <Route path="/customer" element={<CustomerHomePage />} />
           <Route path="/customer/menu" element={<MenuPage baseUrl="/customer/menu" />} />
           <Route path="/customer/menu/:foodId" element={<FoodDetailPage backUrl="/customer/menu" />} />
-          <Route path="/customer/cart" element={<CustomerCartPage />} />
+          <Route path="/customer/cart" element={<CartPage />} />
           <Route path="/customer/orders" element={<CustomerOrdersPage />} />
           <Route path="/customer/reservations" element={<CustomerReservationsPage />} />
           <Route path="/customer/profile" element={<CustomerProfilePage />} />
