@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { orderApi } from '../../api/orderApi';
+import { paymentApi } from '../../api/paymentApi';
+import { invoiceApi } from '../../api/invoiceApi';
 import { getApiErrorMessage } from '../../utils/getApiErrorMessage';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDateTime } from '../../utils/formatDateTime';
 import { getOrderStatusLabel, getOrderStatusColor } from '../../utils/orderStatus';
+import { getPaymentMethodLabel } from '../../utils/paymentMethod';
+import { getPaymentStatusLabel, getPaymentStatusColor } from '../../utils/paymentStatus';
 import type { OrderDetailResponse } from '../../types/order';
+import type { PaymentResponse, PaymentMethod } from '../../types/payment';
+import type { InvoiceDetailResponse } from '../../types/invoice';
 import './OrderDetailPage.css';
 
 export const OrderDetailPage: React.FC = () => {
@@ -15,17 +21,25 @@ export const OrderDetailPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [cancelling, setCancelling] = useState(false);
 
+  // Payment states
+  const [payment, setPayment] = useState<PaymentResponse | null>(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [paymentSubmitting, setPaymentSubmitting] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('CASH');
+  const [paymentReference, setPaymentReference] = useState('');
+
+  // Invoice states
+  const [invoice, setInvoice] = useState<InvoiceDetailResponse | null>(null);
+  const [invoiceLoading, setInvoiceLoading] = useState(false);
+  const [invoiceSubmitting, setInvoiceSubmitting] = useState(false);
+
   const fetchOrder = useCallback(async () => {
     if (!orderId) return;
-    setLoading(true);
-    setError(null);
     try {
       const data = await orderApi.getOrderDetail(Number(orderId));
       setOrder(data);
-    } catch (err) {
-      setError(getApiErrorMessage(err, 'Không thể tải chi tiết đơn hàng.'));
-    } finally {
-      setLoading(false);
+    } catch {
+      // ignore here as it's only for refresh
     }
   }, [orderId]);
 
@@ -35,9 +49,44 @@ export const OrderDetailPage: React.FC = () => {
       if (!orderId) return;
       setLoading(true);
       setError(null);
+      setPaymentLoading(true);
+      
       try {
-        const data = await orderApi.getOrderDetail(Number(orderId));
-        if (mounted) setOrder(data);
+        const orderData = await orderApi.getOrderDetail(Number(orderId));
+        if (!mounted) return;
+        setOrder(orderData);
+
+        // Fetch payments
+        let paidPayment: PaymentResponse | null = null;
+        try {
+          const payments = await paymentApi.getPaymentsByOrderId(Number(orderId));
+          if (payments.length > 0) {
+            paidPayment = payments.find(p => p.paymentStatus === 'PAID') || payments[payments.length - 1];
+            if (mounted) setPayment(paidPayment);
+          }
+        } catch {
+          // ignore payment fetch error, assume no payment
+        } finally {
+          if (mounted) setPaymentLoading(false);
+        }
+
+        // Fetch invoice if paid
+        if (paidPayment && paidPayment.paymentStatus === 'PAID') {
+          if (mounted) setInvoiceLoading(true);
+          try {
+            const inv = await invoiceApi.getInvoiceByPaymentId(paidPayment.id);
+            if (mounted) setInvoice(inv);
+          } catch (e: unknown) {
+            // 404 is expected if not generated
+            const err = e as { response?: { status?: number } };
+            if (err?.response?.status !== 404) {
+              console.error('Lỗi khi tải hóa đơn:', e);
+            }
+          } finally {
+            if (mounted) setInvoiceLoading(false);
+          }
+        }
+
       } catch (err) {
         if (mounted) setError(getApiErrorMessage(err, 'Không thể tải chi tiết đơn hàng.'));
       } finally {
@@ -62,11 +111,47 @@ export const OrderDetailPage: React.FC = () => {
     try {
       await orderApi.cancelOrder(order.id, { reason: reason.trim() });
       alert('Đã hủy đơn hàng thành công.');
-      fetchOrder(); // reload
+      await fetchOrder(); // reload
     } catch (err) {
       alert(getApiErrorMessage(err, 'Lỗi khi hủy đơn.'));
     } finally {
       setCancelling(false);
+    }
+  };
+
+  const handleConfirmPayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!order) return;
+    setPaymentSubmitting(true);
+    try {
+      const res = await paymentApi.confirmPayment(order.id, {
+        paymentMethod,
+        amount: order.totalAmount,
+        ...(paymentReference.trim() ? { paymentReference: paymentReference.trim() } : {})
+      });
+      setPayment(res);
+      alert('Xác nhận thanh toán thành công!');
+      await fetchOrder(); // refresh order to get CONFIRMED status
+    } catch (err) {
+      alert(getApiErrorMessage(err, 'Lỗi khi thanh toán.'));
+    } finally {
+      setPaymentSubmitting(false);
+    }
+  };
+
+  const handleGenerateInvoice = async () => {
+    if (!payment) return;
+    setInvoiceSubmitting(true);
+    try {
+      const res = await invoiceApi.generateInvoice(payment.id);
+      alert('Tạo hóa đơn thành công!');
+      // fetch full detail
+      const detail = await invoiceApi.getInvoiceById(res.id);
+      setInvoice(detail);
+    } catch (err) {
+      alert(getApiErrorMessage(err, 'Lỗi khi tạo hóa đơn.'));
+    } finally {
+      setInvoiceSubmitting(false);
     }
   };
 
@@ -83,6 +168,9 @@ export const OrderDetailPage: React.FC = () => {
 
   // Cancel logic: We only block COMPLETED and CANCELLED as per backend mapping logic
   const canCancel = order.orderStatus !== 'COMPLETED' && order.orderStatus !== 'CANCELLED';
+  
+  // Payment logic
+  const canPay = order.orderStatus !== 'COMPLETED' && order.orderStatus !== 'CANCELLED';
 
   return (
     <div className="order-detail-page">
@@ -110,7 +198,7 @@ export const OrderDetailPage: React.FC = () => {
         </div>
 
         <div className="info-card">
-          <h3>Thanh toán</h3>
+          <h3>Chi tiết giá</h3>
           <p><strong>Tạm tính:</strong> {formatCurrency(order.subTotal)}</p>
           {order.discountAmount > 0 && (
             <p className="text-success">
@@ -119,6 +207,80 @@ export const OrderDetailPage: React.FC = () => {
             </p>
           )}
           <p className="final-total"><strong>Tổng cộng:</strong> {formatCurrency(order.totalAmount)}</p>
+        </div>
+
+        <div className="info-card">
+          <h3>Thanh toán & Hóa đơn</h3>
+          {paymentLoading ? (
+            <p className="text-muted">Đang tải thông tin thanh toán...</p>
+          ) : payment ? (
+            <div className="payment-info">
+              <p>
+                <strong>Trạng thái:</strong>{' '}
+                <span className="status-badge" style={{ backgroundColor: getPaymentStatusColor(payment.paymentStatus) }}>
+                  {getPaymentStatusLabel(payment.paymentStatus)}
+                </span>
+              </p>
+              <p><strong>Phương thức:</strong> {getPaymentMethodLabel(payment.paymentMethod)}</p>
+              {payment.transactionCode && <p><strong>Mã GD:</strong> {payment.transactionCode}</p>}
+              <p><strong>Đã thanh toán:</strong> {formatCurrency(payment.amount)}</p>
+              
+              {/* Invoice Section */}
+              <div className="invoice-section">
+                <hr />
+                {invoiceLoading ? (
+                  <p className="text-muted">Đang tải hóa đơn...</p>
+                ) : invoice ? (
+                  <div className="invoice-info">
+                    <p><strong>Hóa đơn:</strong> {invoice.invoiceNumber}</p>
+                    <p><strong>Ngày xuất:</strong> {formatDateTime(invoice.issuedAt)}</p>
+                  </div>
+                ) : (
+                  payment.paymentStatus === 'PAID' && (
+                    <button 
+                      className="btn-secondary btn-sm" 
+                      onClick={handleGenerateInvoice}
+                      disabled={invoiceSubmitting}
+                    >
+                      {invoiceSubmitting ? 'Đang tạo...' : 'Xuất hóa đơn'}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+          ) : (
+            canPay ? (
+              <form onSubmit={handleConfirmPayment} className="payment-form">
+                <div className="form-group-sm">
+                  <label>Phương thức:</label>
+                  <select 
+                    value={paymentMethod} 
+                    onChange={(e) => setPaymentMethod(e.target.value as PaymentMethod)}
+                    className="select-sm"
+                  >
+                    <option value="CASH">Tiền mặt</option>
+                    <option value="QR">Chuyển khoản QR</option>
+                    <option value="ONLINE_SIMULATION">Trực tuyến (Mô phỏng)</option>
+                  </select>
+                </div>
+                <div className="form-group-sm">
+                  <label>Mã giao dịch (tùy chọn):</label>
+                  <input 
+                    type="text" 
+                    value={paymentReference} 
+                    onChange={e => setPaymentReference(e.target.value)} 
+                    placeholder="VD: VNPAY123"
+                    className="input-sm"
+                  />
+                </div>
+                <button type="submit" className="btn-primary btn-sm btn-block" disabled={paymentSubmitting}>
+                  {paymentSubmitting ? 'Đang xử lý...' : `Xác nhận thanh toán ${formatCurrency(order.totalAmount)}`}
+                </button>
+              </form>
+            ) : (
+               <p className="text-muted">Đơn hàng hiện không thể thanh toán.</p>
+            )
+          )}
         </div>
       </div>
 

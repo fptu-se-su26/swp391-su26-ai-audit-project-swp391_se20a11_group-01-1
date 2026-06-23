@@ -24,11 +24,40 @@
   text-decoration: none;
   border-radius: 4px;
   transition: background-color 0.2s;
+  cursor: pointer;
+  border: none;
 }
 
 .btn-back:hover,
 .btn-secondary:hover {
   background: #bdc3c7;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  color: white;
 }
 
 .order-detail-state {
@@ -49,11 +78,13 @@
 @media (min-width: 768px) {
   .order-info-cards {
     flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
 .info-card {
   flex: 1;
+  min-width: 250px;
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -75,6 +106,10 @@
 
 .text-success {
   color: #27ae60 !important;
+}
+
+.text-muted {
+  color: #7f8c8d !important;
 }
 
 .final-total {
@@ -157,4 +192,34 @@
   font-size: 0.9rem;
   color: #7f8c8d;
   margin-top: 10px;
+}
+
+/* Payment Section */
+.payment-form .form-group-sm {
+  margin-bottom: 10px;
+}
+
+.payment-form label {
+  display: block;
+  font-size: 0.85rem;
+  color: #34495e;
+  margin-bottom: 4px;
+}
+
+.select-sm, .input-sm {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.invoice-section hr {
+  margin: 15px 0;
+  border: none;
+  border-top: 1px dashed #eee;
+}
+
+.invoice-info p {
+  margin: 5px 0;
 }
