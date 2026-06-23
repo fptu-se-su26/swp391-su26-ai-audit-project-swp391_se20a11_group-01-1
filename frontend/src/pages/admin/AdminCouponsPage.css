@@ -1,0 +1,31 @@
+.admin-coupons-page {
+  padding: 20px;
+}
+
+.status-badge.expired {
+  background: #fdf2e9;
+  color: #e67e22;
+}
+
+.coupon-dates {
+  line-height: 1.4;
+  color: #7f8c8d;
+}
+
+.modal-content.modal-lg {
+  max-width: 700px;
+}
+
+.coupon-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.coupon-form-grid .form-group {
+  margin-bottom: 0;
+}
+
+.coupon-form-grid .full-width {
+  grid-column: 1 / -1;
+}

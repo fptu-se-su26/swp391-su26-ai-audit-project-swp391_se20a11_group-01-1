@@ -30,7 +30,7 @@ import { ProfilePage } from '../pages/customer/ProfilePage';
 
 import { 
   CustomerHomePage, 
-  AdminHomePage, 
+  AdminDashboardPage, 
   AdminUsersPage,
   AdminFoodsPage,
   AdminCategoriesPage,
@@ -78,7 +78,7 @@ export const AppRoutes: React.FC = () => {
       {/* Admin Routes */}
       <Route element={<ProtectedRoute allowedRoles={['ROLE_ADMIN']} />}>
         <Route element={<AdminLayout />}>
-          <Route path="/admin" element={<AdminHomePage />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
           <Route path="/admin/users" element={<AdminUsersPage />} />
           <Route path="/admin/foods" element={<AdminFoodsPage />} />
           <Route path="/admin/categories" element={<AdminCategoriesPage />} />

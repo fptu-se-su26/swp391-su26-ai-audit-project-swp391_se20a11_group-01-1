@@ -4,3 +4,9 @@ export interface CategoryResponse {
   description?: string;
   imageUrl?: string;
 }
+
+export interface CategoryRequest {
+  name: string;
+  description?: string;
+  imageUrl?: string;
+}

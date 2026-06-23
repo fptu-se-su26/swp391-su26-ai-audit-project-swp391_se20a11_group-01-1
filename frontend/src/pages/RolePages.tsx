@@ -5,12 +5,12 @@ import { PlaceholderPage } from '../components/common/PlaceholderPage';
 export const CustomerHomePage: React.FC = () => <PlaceholderPage title="Customer Dashboard" />;
 
 // Admin Pages
-export const AdminHomePage: React.FC = () => <PlaceholderPage title="Admin Dashboard" />;
-export const AdminUsersPage: React.FC = () => <PlaceholderPage title="Quản lý Người dùng" />;
-export const AdminFoodsPage: React.FC = () => <PlaceholderPage title="Quản lý Món ăn" />;
-export const AdminCategoriesPage: React.FC = () => <PlaceholderPage title="Quản lý Danh mục" />;
-export const AdminCouponsPage: React.FC = () => <PlaceholderPage title="Quản lý Coupon" />;
-export const AdminReportsPage: React.FC = () => <PlaceholderPage title="Báo cáo Doanh thu" />;
+export { AdminDashboardPage } from './admin/AdminDashboardPage';
+export { AdminUsersPage } from './admin/AdminUsersPage';
+export { AdminCategoriesPage } from './admin/AdminCategoriesPage';
+export { AdminFoodsPage } from './admin/AdminFoodsPage';
+export { AdminCouponsPage } from './admin/AdminCouponsPage';
+export { AdminReportsPage } from './admin/AdminReportsPage';
 
 // Staff Pages
 export const StaffHomePage: React.FC = () => <PlaceholderPage title="Staff Dashboard" />;

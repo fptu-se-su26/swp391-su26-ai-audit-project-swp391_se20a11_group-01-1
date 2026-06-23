@@ -29,3 +29,12 @@ export interface FoodSearchParams {
   sortBy?: string;
   sortDirection?: string;
 }
+
+export interface FoodRequest {
+  categoryId: number;
+  name: string;
+  description?: string;
+  price: number;
+  imageUrl?: string;
+  isAvailable: boolean;
+}
