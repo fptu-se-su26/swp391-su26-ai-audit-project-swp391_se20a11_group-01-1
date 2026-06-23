@@ -23,11 +23,13 @@ import { CheckoutPage } from '../pages/customer/CheckoutPage';
 import { OrderListPage } from '../pages/customer/OrderListPage';
 import { OrderDetailPage } from '../pages/customer/OrderDetailPage';
 
+import { ReservationCreatePage } from '../pages/customer/ReservationCreatePage';
+import { ReservationListPage } from '../pages/customer/ReservationListPage';
+import { ReservationDetailPage } from '../pages/customer/ReservationDetailPage';
+import { ProfilePage } from '../pages/customer/ProfilePage';
+
 import { 
   CustomerHomePage, 
-  CustomerReservationsPage,
-  CustomerProfilePage,
-  CustomerPaymentPage,
   AdminHomePage, 
   AdminUsersPage,
   AdminFoodsPage,
@@ -65,10 +67,11 @@ export const AppRoutes: React.FC = () => {
           <Route path="/customer/checkout" element={<CheckoutPage />} />
           <Route path="/customer/orders" element={<OrderListPage />} />
           <Route path="/customer/orders/:orderId" element={<OrderDetailPage />} />
-          <Route path="/customer/payment" element={<CustomerPaymentPage />} />
           
-          <Route path="/customer/reservations" element={<CustomerReservationsPage />} />
-          <Route path="/customer/profile" element={<CustomerProfilePage />} />
+          <Route path="/customer/reservations" element={<ReservationListPage />} />
+          <Route path="/customer/reservations/new" element={<ReservationCreatePage />} />
+          <Route path="/customer/reservations/:reservationId" element={<ReservationDetailPage />} />
+          <Route path="/customer/profile" element={<ProfilePage />} />
         </Route>
       </Route>
 
