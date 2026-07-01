@@ -1,7 +1,6 @@
 # AI AUDIT LOG – SWP391
 
-> **Phạm vi:** Nhật ký cá nhân của **Phạm Văn Quyết (DE190425)** trong dự án nhóm SWP391. Nội dung được tổng hợp từ lịch sử trao đổi với AI, trạng thái repository và các commit đã xác nhận trong Git log. Thông tin chưa có bằng chứng chắc chắn được ghi rõ để bổ sung, không tự suy đoán.
-
+> **Phạm vi:** Nhật ký cá nhân của **Phạm Văn Quyết (DE190425)** trong dự án nhóm SWP391.
 ---
 
 ## 1. Thông tin chung
