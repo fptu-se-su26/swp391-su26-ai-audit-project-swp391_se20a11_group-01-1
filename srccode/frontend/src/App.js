@@ -14,10 +14,13 @@ import StaffLayout from './layouts/StaffLayout';
 import KitchenLayout from './layouts/KitchenLayout';
 import CustomerLayout from './layouts/CustomerLayout';
 
+// Landing
+import Landing from './pages/Landing';
+
 // Auth
-import Login from './pages/Login';
-import Register from './pages/Register';
-import ForgotPassword from './pages/ForgotPassword';
+import Login from './pages/Login.jsx';
+import Register from './pages/Register.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
 
 // Admin pages
 import Dashboard from './pages/Dashboard';
@@ -60,6 +63,9 @@ function App() {
           <FeedbackProvider>
             <BrowserRouter>
               <Routes>
+                {/* Landing - public */}
+                <Route path="/" element={<Landing />} />
+
                 {/* Public Auth Routes */}
                 <Route
                   path="/login"
@@ -90,14 +96,14 @@ function App() {
 
                 {/* Admin */}
                 <Route
-                  path="/"
+                  path="/admin"
                   element={
                     <PrivateRoute roles={['admin']}>
                       <AdminLayout />
                     </PrivateRoute>
                   }
                 >
-                  <Route index element={<Navigate to="/dashboard" replace />} />
+                  <Route index element={<Navigate to="/admin/dashboard" replace />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="tables" element={<Tables />} />
                   <Route path="menu" element={<Menu />} />
@@ -159,7 +165,7 @@ function App() {
                   <Route path="feedback" element={<Feedback />} />
                 </Route>
 
-                <Route path="*" element={<Navigate to="/login" replace />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </BrowserRouter>
           </FeedbackProvider>

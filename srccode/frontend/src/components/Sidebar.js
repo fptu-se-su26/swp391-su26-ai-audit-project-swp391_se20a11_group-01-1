@@ -3,15 +3,15 @@
   import './Sidebar.css';
 
   const navItems = [
-    { path: '/dashboard',    icon: '📊', label: 'Dashboard' },
-    { path: '/tables',       icon: '🪑', label: 'Quản lý bàn' },
-    { path: '/menu',         icon: '🍽️', label: 'Thực đơn' },
-    { path: '/orders',       icon: '📋', label: 'Đơn hàng' },
-    { path: '/reservations', icon: '📅', label: 'Đặt bàn' },
-    { path: '/reports',      icon: '📈', label: 'Báo cáo' },
-    { path: '/feedback',     icon: '💬', label: 'Phản hồi' },
-    { path: '/accounts',     icon: '🔐', label: 'Tài khoản' },
-    { path: '/vouchers',     icon: '🎁', label: 'Voucher' },
+    { path: '/admin/dashboard',    icon: '📊', label: 'Dashboard' },
+    { path: '/admin/tables',       icon: '🪑', label: 'Quản lý bàn' },
+    { path: '/admin/menu',         icon: '🍽️', label: 'Thực đơn' },
+    { path: '/admin/orders',       icon: '📋', label: 'Đơn hàng' },
+    { path: '/admin/reservations', icon: '📅', label: 'Đặt bàn' },
+    { path: '/admin/reports',      icon: '📈', label: 'Báo cáo' },
+    { path: '/admin/feedback',     icon: '💬', label: 'Phản hồi' },
+    { path: '/admin/accounts',     icon: '🔐', label: 'Tài khoản' },
+    { path: '/admin/vouchers',     icon: '🎁', label: 'Voucher' },
   ];
 
   function Sidebar({ isOpen }) {
