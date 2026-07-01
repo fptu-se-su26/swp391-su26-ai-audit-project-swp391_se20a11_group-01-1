@@ -68,15 +68,16 @@ Viết tại đây...
 
 | Nội dung | Thông tin |
 |---|---|
-| Ngày sử dụng |  |
-| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
-| Mục đích sử dụng |  |
-| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
-| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
+| Ngày sử dụng | 20/5/2026 |
+| Công cụ AI | ChatGPT |
+| Mục đích sử dụng | The AI tools were used to support requirement analysis, system design, database design, frontend and backend architecture, code generation, debugging, SRS documentation, Jira planning, presentation preparation, and business process improvement for the Restaurant Management System. |
+| Phần việc liên quan | Requirement |
+| Mức độ sử dụng | Hỗ trợ ý tưởng |
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
+I am developing a Restaurant Management System. Help me identify the actors and main use cases of the system.
 Dán nguyên văn prompt đã hỏi AI tại đây.
 ```
 
@@ -85,6 +86,7 @@ Dán nguyên văn prompt đã hỏi AI tại đây.
 Tóm tắt nội dung AI đã trả lời hoặc gợi ý.
 
 ```text
+AI suggested four main actors (Customer, Staff, Kitchen Staff, Admin) and generated the initial list of use cases with include and extend relationships.
 Viết tại đây...
 ```
 
@@ -93,6 +95,7 @@ Viết tại đây...
 Mô tả rõ phần nào được sử dụng lại từ gợi ý của AI.
 
 ```text
+Used the actor definitions and use case list as the initial version of the SRS and Use Case Diagram.
 Viết tại đây...
 ```
 
@@ -101,6 +104,7 @@ Viết tại đây...
 Mô tả sinh viên/nhóm đã thay đổi, kiểm tra, sửa lỗi hoặc cải tiến gì so với gợi ý ban đầu của AI.
 
 ```text
+Renamed several use cases, removed duplicated functions, reduced the use of "Manage", and refined actor responsibilities after reviewing the project requirements.
 Viết tại đây...
 ```
 
