@@ -17,12 +17,11 @@
 | MSSV | DE190425 |
 | Git username | `quyetpham2k5` |
 | Vai trò hiện tại | Member – Backend & Security Lead |
-| Giảng viên hướng dẫn | **Chưa được cung cấp – cần bổ sung trước khi nộp** |
-| Ngày bắt đầu ghi nhận | 15/06/2026 |
+| Giảng viên hướng dẫn |QuangLTN3|
+| Ngày bắt đầu ghi nhận | 18/05/2026|
 | Ngày cập nhật gần nhất | 02/07/2026 |
 | Repository baseline đã đối chiếu | `main`, HEAD `3188f436` – `Update AI_AUDIT_LOG.md` |
 | Nhánh cá nhân | `origin/QuyetPV_DE190425` |
-| Nhánh chức năng liên quan | `origin/Loc-Branch-order` |
 
 ### Thành viên nhóm
 
