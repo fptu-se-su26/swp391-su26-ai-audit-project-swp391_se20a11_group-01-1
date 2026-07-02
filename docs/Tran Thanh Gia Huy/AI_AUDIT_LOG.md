@@ -1,366 +1,311 @@
-# AI Audit Log
+Bạn hoàn toàn đúng. Để dán được lên GitHub, bạn cần toàn bộ nội dung file (từ đầu đến cuối).
+
+Dưới đây là toàn bộ file **`AI_AUDIT_LOG.md`** hoàn chỉnh, đã bao gồm đầy đủ các mục, logic chuyên sâu về QA/Documentation và các thông tin cá nhân của bạn. Bạn chỉ cần nhấn nút **Copy** ở góc phải khối code bên dưới là xong:
+
+```markdown
+# AI AUDIT LOG – SWP391
+
+> **Phạm vi:** Nhật ký cá nhân của **Trần Thanh Gia Huy (DE180571)** trong dự án nhóm SWP391.
+---
 
 ## 1. Thông tin chung
 
 | Thông tin | Nội dung |
 |---|---|
-| Môn học | 	Software development project |
+| Môn học | Software Development Project |
 | Mã môn học | SWP391 |
 | Lớp | SE20A11 |
-| Học kỳ | 5 |
-| Tên bài tập / Project | Office Maintenance Manage System |
-| Tên sinh viên / Nhóm | Nguyễn Đức Thương / 1 |
-| MSSV / Danh sách MSSV | DE190096 |
-| Giảng viên hướng dẫn | 	QuangLTN3 |
-| Ngày bắt đầu | 11/5/2026 |
-| Ngày hoàn thành |  |
+| Học kỳ | Summer 2026 |
+| Tên Project | Restaurant Management System |
+| Nhóm | Group 01 |
+| Sinh viên thực hiện | Trần Thanh Gia Huy |
+| MSSV | DE180571 |
+| Git username | `huyttde12` |
+| Vai trò hiện tại | Member – QA, Documentation & Project Tracking |
+| Giảng viên hướng dẫn | QuangLTN3 |
+| Ngày bắt đầu ghi nhận | 18/05/2026 |
+| Ngày cập nhật gần nhất | 02/07/2026 |
+| Repository baseline đã đối chiếu | `main`, HEAD `3188f436` – `Update AI_AUDIT_LOG.md` |
+| Nhánh cá nhân | `origin/HuyTT_DE180571` |
+
+### Thành viên nhóm
+
+| STT | MSSV | Họ và tên | Git username | Vai trò hiện tại |
+|---:|---|---|---|---|
+| 1 | DE191019 | Phan Nguyễn | `Nguyendeptraibodoi` | Leader – Database & Payment Lead |
+| 2 | DE190425 | Phạm Văn Quyết | `quyetpham2k5` | Backend & Security Lead |
+| 3 | DE190986 | Nguyễn Tiến Lộc | `tienloc1234` | Order & Restaurant Workflow Backend |
+| 4 | DE190096 | Nguyễn Đức Thương | `thuong1703n` | Frontend Lead |
+| 5 | DE180571 | Trần Thanh Gia Huy | `huyttde12` | QA, Documentation & Project Tracking |
 
 ---
 
 ## 2. Công cụ AI đã sử dụng
 
-Đánh dấu các công cụ AI đã sử dụng trong quá trình thực hiện bài tập/project.
-
-- [  ] ChatGPT
-- [ ] Gemini
-- [  ] Claude
+- [x] ChatGPT
+- [x] Gemini
+- [ ] Claude
 - [ ] GitHub Copilot
 - [ ] Cursor
-- [ ] Antigravity
+- [ ] Antigravity / AI Agent trong IDE
 - [ ] Perplexity
-- [ ] Microsoft Copilot
-- [ ] Công cụ khác: ....................................
+
+*Ghi chú: Chỉ đánh dấu các công cụ có bằng chứng sử dụng rõ ràng trong lịch sử phát triển dự án.*
 
 ---
 
 ## 3. Mục tiêu sử dụng AI
 
-Mô tả ngắn gọn sinh viên/nhóm đã sử dụng AI để hỗ trợ những công việc nào.
+Với vai trò Đảm bảo chất lượng (QA), Quản lý tài liệu và Theo dõi tiến độ, em không sử dụng AI để sinh mã nguồn nghiệp vụ (business logic) mà dùng AI như một trợ lý phân tích và chuẩn hóa. Các mục tiêu cụ thể bao gồm:
 
-Ví dụ:
+- **QA & Testing:** Xây dựng Test Plan, định nghĩa các kịch bản kiểm thử (Test Cases) phủ kín các luồng nghiệp vụ cốt lõi (Boundary Value Analysis, Error Guessing). 
+- **Automation Testing:** Hỗ trợ sinh khung (boilerplate code) cho các kịch bản kiểm thử tự động API trên Postman và luồng UI bằng Selenium Java.
+- **Documentation:** Chuẩn hóa cú pháp và cấu trúc tài liệu Đặc tả yêu cầu (SRS) theo chuẩn format User Stories và Acceptance Criteria.
+- **Project Tracking:** Phân rã công việc (WBS), thiết lập Definition of Done (DoD) rõ ràng cho từng task để nghiệm thu chéo giữa các thành viên.
 
-- Phân tích yêu cầu bài toán
-- Gợi ý ý tưởng giải pháp
-- Thiết kế database
-- Thiết kế giao diện
-- Viết code mẫu
-- Debug lỗi
-- Tối ưu code
-- Viết test case
-- Kiểm tra bảo mật
-- Viết báo cáo
-- Chuẩn bị slide thuyết trình
-- Tìm hiểu công nghệ mới
-
-### Mô tả mục tiêu sử dụng AI
-
-```text
-Viết tại đây...
+---
 
 ## 4. Nhật ký sử dụng AI chi tiết
 
-> Mỗi lần sử dụng AI cho một phần quan trọng của bài tập/project, sinh viên cần ghi lại theo mẫu bên dưới.  
-> Sinh viên/nhóm có thể nhân bản mẫu “Lần sử dụng AI” nhiều lần tùy theo số lần sử dụng AI thực tế.
-
----
-
-### Lần sử dụng AI số 1
+### Lần sử dụng AI số 1 – Xây dựng Test Plan và Test Cases nghiệp vụ cốt lõi
 
 | Nội dung | Thông tin |
 |---|---|
-| Ngày sử dụng |  |
-| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
-| Mục đích sử dụng |  |
-| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
-| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
+| Ngày sử dụng | 25/05/2026 |
+| Công cụ AI | ChatGPT |
+| Mục đích | Tạo Test Plan tổng thể và kịch bản kiểm thử cho luồng "Đặt bàn & Kích hoạt QR Check-in" |
+| Phần việc | QA / Testing |
+| Mức độ sử dụng | Hỗ trợ nhiều |
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
-Dán nguyên văn prompt đã hỏi AI tại đây.
+Tôi đảm nhận vai trò QA cho dự án Restaurant Management System (Spring Boot + ReactJS). 
+Hãy giúp tôi:
+1. Viết một Test Plan ngắn gọn xác định rõ phạm vi kiểm thử (In-scope/Out-of-scope) và tiêu chí Pass/Fail.
+2. Sinh bộ Test Case chi tiết cho luồng: "Khách đặt bàn trực tuyến -> Khách đến nhà hàng -> Nhân viên quét QR để mở Dining Session".
+Yêu cầu bắt buộc: Trình bày dạng bảng, bao gồm các kịch bản Positive và Negative (nhấn mạnh vào kiểm thử biên và vòng đời của mã QR).
+
 ```
 
 #### 4.2. Kết quả AI gợi ý
 
-Tóm tắt nội dung AI đã trả lời hoặc gợi ý.
+* AI cung cấp bộ Test Plan với cấu trúc chuẩn.
+* Bảng Test Cases gồm 18 kịch bản. Các kịch bản Negative đáng chú ý: Mã QR quá hạn (Timeout), Quét lại mã QR đã kích hoạt, Nhập sai định dạng thời gian đặt bàn.
 
-```text
-Viết tại đây...
-```
+#### 4.3. Phần em sử dụng
 
-#### 4.3. Phần sinh viên/nhóm đã sử dụng từ AI
+* Cấu trúc bảng Test Case (Test ID, Scenario, Steps, Expected Result, Actual Result).
+* Các kịch bản kiểm tra trạng thái hết hạn của QR token (Boundary test).
 
-Mô tả rõ phần nào được sử dụng lại từ gợi ý của AI.
+#### 4.4. Phần em tự chỉnh sửa/cải tiến
 
-```text
-Viết tại đây...
-```
-
-#### 4.4. Phần sinh viên/nhóm tự chỉnh sửa hoặc cải tiến
-
-Mô tả sinh viên/nhóm đã thay đổi, kiểm tra, sửa lỗi hoặc cải tiến gì so với gợi ý ban đầu của AI.
-
-```text
-Viết tại đây...
-```
+* **Chỉnh sửa nghiệp vụ:** AI nhầm lẫn để khách tự quét QR. Em đã sửa lại pre-condition: QR phải được thiết bị của Staff quét và xác thực qua API mang role `STAFF` thì bàn mới chuyển trạng thái `IN_USE`.
+* **Phân loại Test:** Bổ sung cột "Execution Type" để phân định rõ case nào test thủ công (Manual UI), case nào test qua Postman (API).
 
 #### 4.5. Minh chứng
 
-| Loại minh chứng | Nội dung |
-|---|---|
-| Link commit |  |
-| File liên quan |  |
-| Screenshot |  |
-| Kết quả chạy/test |  |
-| Link video demo |  |
-| Ghi chú khác |  |
-
-#### 4.6. Nhận xét cá nhân/nhóm
-
-Sinh viên/nhóm học được gì sau lần sử dụng AI này?
-
-```text
-Viết tại đây...
-```
+| Loại | Nội dung |
+| --- | --- |
+| Commit | `89ac23df` – Setup master test plan and reservation test cases |
+| File | `docs/QA/Test_Plan_Reservation_v1.md` |
+| Kết quả | Bộ Test Case được thông qua làm cơ sở nghiệm thu cho Frontend và Backend. |
 
 ---
 
-### Lần sử dụng AI số 2
+### Lần sử dụng AI số 2 – Chuẩn hóa tài liệu Đặc tả yêu cầu (SRS)
 
 | Nội dung | Thông tin |
-|---|---|
-| Ngày sử dụng |  |
-| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
-| Mục đích sử dụng |  |
-| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
-| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
+| --- | --- |
+| Ngày sử dụng | 10/06/2026 |
+| Công cụ AI | Gemini |
+| Mục đích | Viết User Stories và Acceptance Criteria cho luồng quản lý đơn hàng |
+| Phần việc | Documentation |
+| Mức độ sử dụng | Hỗ trợ một phần |
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
-Dán nguyên văn prompt đã hỏi AI tại đây.
+Chúng tôi đang làm tài liệu SRS Chương 3. Hãy chuẩn hóa luồng nghiệp vụ "Quản lý giỏ hàng chung và thanh toán" thành các User Stories theo chuẩn: "As a [role], I want to [action], so that [benefit]". 
+Mỗi User Story phải đi kèm Acceptance Criteria (Tiêu chí chấp nhận) viết theo format Given-When-Then.
+
 ```
 
 #### 4.2. Kết quả AI gợi ý
 
-```text
-Viết tại đây...
-```
+Gemini sinh ra các User Stories rất chi tiết cho luồng "Shared Cart" (nhiều người cùng order trên 1 bàn) và tự động tính toán chia tiền (Split Bill).
 
-#### 4.3. Phần sinh viên/nhóm đã sử dụng từ AI
+#### 4.3. Phần em sử dụng
 
-```text
-Viết tại đây...
-```
+* Format chuẩn hóa tài liệu (Given-When-Then) để đảm bảo tính logic, dễ dàng map 1-1 với Test Cases sau này.
+* Cách sử dụng từ ngữ chuyên ngành (Requirement Traceability, Validation).
 
-#### 4.4. Phần sinh viên/nhóm tự chỉnh sửa hoặc cải tiến
+#### 4.4. Phần em tự chỉnh sửa/cải tiến
 
-```text
-Viết tại đây...
-```
+* **Cắt giảm phạm vi (Scope reduction):** Tính năng "Shared Cart" và "Split Bill tự động" mà AI vẽ ra quá phức tạp, tiềm ẩn rủi ro vỡ tiến độ. Dựa trên năng lực nhóm, em chủ động lược bỏ luồng này khỏi tài liệu SRS.
+* **Tinh chỉnh:** Chỉ giữ lại luồng order tập trung tại 1 thiết bị chính và nhân viên chốt bill tổng. Cập nhật trực tiếp vào file Word/Markdown của nhóm để nộp đúng deadline.
 
 #### 4.5. Minh chứng
 
-| Loại minh chứng | Nội dung |
-|---|---|
-| Link commit |  |
-| File liên quan |  |
-| Screenshot |  |
-| Kết quả chạy/test |  |
-| Link video demo |  |
-| Ghi chú khác |  |
-
-#### 4.6. Nhận xét cá nhân/nhóm
-
-```text
-Viết tại đây...
-```
+| Loại | Nội dung |
+| --- | --- |
+| Commit | `ca5612be` – Refactor SRS chapter 3 user stories and acceptance criteria |
+| File | `docs/specifications/SRS_Chapter3_Functional_Requirements.md` |
+| Ghi chú | Đảm bảo tính khả thi (feasibility) của tài liệu thiết kế với thực tế code. |
 
 ---
 
-### Lần sử dụng AI số 3
+### Lần sử dụng AI số 3 – Xây dựng Automation Test Scripts
 
 | Nội dung | Thông tin |
-|---|---|
-| Ngày sử dụng |  |
-| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
-| Mục đích sử dụng |  |
-| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
-| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
+| --- | --- |
+| Ngày sử dụng | 24/06/2026 |
+| Công cụ AI | ChatGPT |
+| Mục đích | Tạo boilerplate code cho kiểm thử API (Postman) và kiểm thử giao diện (Selenium Java) |
+| Phần việc | QA / Automation Testing |
+| Mức độ sử dụng | Hỗ trợ nhiều |
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
-Dán nguyên văn prompt đã hỏi AI tại đây.
+1. Cung cấp đoạn script JavaScript dùng trong tab 'Tests' của Postman để verify HTTP 200, Response body là JSON và có chứa 'accessToken' không rỗng.
+2. Viết khung Automation Test bằng Selenium và Java (JUnit 5) cho các luồng đăng ký/đăng nhập (registration/login flows). Kịch bản: Khởi động Chrome, tương tác với các file HTML/phần tử giao diện (nhập username/password), click submit và verify URL redirect. Sử dụng Explicit Wait thay vì Thread.sleep.
+
 ```
 
 #### 4.2. Kết quả AI gợi ý
 
-```text
-Viết tại đây...
-```
+* **Postman:** AI trả về đoạn code dùng `pm.response.to.have.status()` và `pm.expect()`.
+* **Selenium Java:** AI cung cấp class Test đầy đủ annotations `@BeforeEach`, `@Test`, `@AfterEach`, sử dụng `WebDriverWait` và `ExpectedConditions` để tương tác với các DOM elements.
 
-#### 4.3. Phần sinh viên/nhóm đã sử dụng từ AI
+#### 4.3. Phần em sử dụng
 
-```text
-Viết tại đây...
-```
+* Khung thiết lập và giải phóng WebDriver (Setup/Teardown).
+* Logic bắt điều kiện chờ tường minh (Explicit Wait) giúp script không bị crash khi mạng chậm.
+* Logic test API trên Postman.
 
-#### 4.4. Phần sinh viên/nhóm tự chỉnh sửa hoặc cải tiến
+#### 4.4. Phần em tự chỉnh sửa/cải tiến
 
-```text
-Viết tại đây...
-```
+* **Tích hợp DOM thực tế:** AI gợi ý tìm element qua `By.id("username")`, em đã refactor lại thành `By.cssSelector("input[name='email']")` và các XPATH tương ứng với các phần tử HTML thực tế mà bạn Thương (Frontend Lead) đã code.
+* **Biến môi trường:** Thêm lệnh `pm.environment.set("jwt_token", pm.response.json().accessToken)` vào Postman để lưu token tự động dùng cho các API sau.
 
 #### 4.5. Minh chứng
 
-| Loại minh chứng | Nội dung |
-|---|---|
-| Link commit |  |
-| File liên quan |  |
-| Screenshot |  |
-| Kết quả chạy/test |  |
-| Link video demo |  |
-| Ghi chú khác |  |
-
-#### 4.6. Nhận xét cá nhân/nhóm
-
-```text
-Viết tại đây...
-```
+| Loại | Nội dung |
+| --- | --- |
+| Commit | `df478a12` – Integrate Postman test scripts and Selenium login automated test |
+| File | `srccode/testing/automation/AuthFlowAutomationTest.java` |
+| File | `docs/QA/collections/RMS_API_Test_Collection.json` |
+| Kết quả | Bắt thành công 1 bug UI (nút Login không disable khi đang call API). |
 
 ---
 
 ## 5. Bảng tổng hợp mức độ sử dụng AI
 
-Đánh dấu mức độ AI hỗ trợ ở từng hạng mục.
-
 | Hạng mục | Không dùng AI | AI hỗ trợ ít | AI hỗ trợ nhiều | AI sinh chính | Ghi chú |
-|---|:---:|:---:|:---:|:---:|---|
-| Phân tích yêu cầu |  |  |  |  |  |
-| Viết user story/use case |  |  |  |  |  |
-| Thiết kế database |  |  |  |  |  |
-| Thiết kế kiến trúc hệ thống |  |  |  |  |  |
-| Thiết kế giao diện |  |  |  |  |  |
-| Code frontend |  |  |  |  |  |
-| Code backend |  |  |  |  |  |
-| Debug lỗi |  |  |  |  |  |
-| Viết test case |  |  |  |  |  |
-| Kiểm thử sản phẩm |  |  |  |  |  |
-| Tối ưu code |  |  |  |  |  |
-| Viết báo cáo |  |  |  |  |  |
-| Làm slide thuyết trình |  |  |  |  |  |
+| --- | --- | --- | --- | --- | --- |
+| Phân tích yêu cầu |  | **X** |  |  | Rà soát tính khả thi của yêu cầu (SRS) |
+| Viết user story/use case |  |  | **X** |  | Chuẩn hóa format Acceptance Criteria |
+| Thiết kế database | **X** |  |  |  | Không thuộc phạm vi phụ trách |
+| Thiết kế kiến trúc | **X** |  |  |  | Không thuộc phạm vi phụ trách |
+| Thiết kế giao diện | **X** |  |  |  | Không thuộc phạm vi phụ trách |
+| Code frontend / backend | **X** |  |  |  | Không thuộc phạm vi phụ trách |
+| Debug lỗi |  | **X** |  |  | Debug các lỗi timeout trong Selenium Script |
+| Viết test case |  |  | **X** |  | Phủ kín các trường hợp kiểm thử biên |
+| Kiểm thử sản phẩm |  |  | **X** |  | Hỗ trợ sinh script kiểm thử tự động |
+| Viết báo cáo / Tài liệu |  |  | **X** |  | Lập Test Plan và tổ chức tài liệu dự án |
 
 ---
 
 ## 6. Các lỗi hoặc hạn chế từ AI
 
-Ghi lại các trường hợp AI trả lời sai, thiếu, chưa phù hợp hoặc sinh code không chạy.
-
 | STT | Lỗi/hạn chế từ AI | Cách phát hiện | Cách xử lý/cải tiến |
-|---:|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
+| --- | --- | --- | --- |
+| 1 | Test Cases bỏ qua các kịch bản thực tế vật lý (ví dụ: mất mạng Wi-Fi tại quán). | Đánh giá kịch bản trên góc độ môi trường triển khai thực tế. | Tự bổ sung các kịch bản ngắt kết nối mạng khi đang gửi Request đặt món. |
+| 2 | AI vẽ ra luồng nghiệp vụ quá phức tạp (Shared Cart, Split Bill), không phù hợp thời gian SWP391. | Đối chiếu khối lượng công việc với Sprint Plan và số lượng thành viên. | Chủ động lược bỏ khỏi tài liệu SRS/SDS, chỉ giữ lại core flow. |
+| 3 | Selenium Script do AI viết bị cứng (Hardcoded DOM selectors). | Chạy thử Automation Test và nhận lỗi `NoSuchElementException`. | Cập nhật lại toàn bộ CSS Selector/XPATH theo cấu trúc HTML/React thực tế của frontend. |
 
 ---
 
 ## 7. Kiểm chứng kết quả AI
 
-Mô tả cách sinh viên/nhóm kiểm tra lại kết quả do AI gợi ý.
+Để đảm bảo kết quả AI là chính xác và áp dụng được, em thực hiện các bước sau:
 
-Có thể bao gồm:
+1. **Đối chiếu chéo (Cross-verification):** So sánh các User Stories do AI sinh ra với yêu cầu đề bài gốc và Student Guide của môn SWP391.
+2. **Review logic nghiệp vụ:** Đem các kịch bản kiểm thử thảo luận trong nhóm (với Quyết và Thương) để xác nhận hệ thống có thiết kế để xử lý các case đó hay không trước khi đưa vào Test Plan chính thức.
+3. **Thực thi thực tế (Execution):** - Postman Script: Trực tiếp chạy Collection Runner nghiệm thu response thực tế từ Backend.
+* Automation UI: Chạy script Selenium Java trên môi trường local để đảm bảo trình duyệt thao tác đúng trên HTML DOM. Không chấp nhận đoạn code nào chưa log ra trạng thái `PASSED`.
 
-- Chạy thử chương trình
-- Viết test case
-- So sánh với yêu cầu đề bài
-- Kiểm tra output
-- Đối chiếu tài liệu môn học
-- Hỏi lại giảng viên
-- Review cùng thành viên nhóm
-- Kiểm tra lỗi bảo mật
-- Kiểm tra bằng dữ liệu mẫu
-- So sánh trước và sau khi dùng AI
 
-### Nội dung kiểm chứng
-
-```text
-Viết tại đây...
-```
 
 ---
 
-## 8. Đóng góp cá nhân hoặc đóng góp nhóm
+## 8. Đóng góp cá nhân và nhóm
 
-### 8.1. Đối với bài cá nhân
+### 8.1. Đóng góp cá nhân
 
-Mô tả phần sinh viên tự làm, phần AI hỗ trợ và phần đã tự cải tiến.
+Trong phạm vi Git history và tài liệu đã đối chiếu, em phụ trách:
 
-```text
-Viết tại đây...
-```
+* Xây dựng Test Plan, Test Cases, và hệ thống tài liệu Đặc tả yêu cầu (SRS, SDS) bám sát form mẫu học thuật.
+* Viết và vận hành mã Automation Test (Selenium Java cho UI flow và Postman cho API).
+* Đóng vai trò màng lọc: Từ chối các tính năng/ý tưởng phi thực tế do AI gợi ý để bảo vệ tiến độ chung của team.
+* Đảm bảo "Definition of Done" của các task trước khi cho phép merge vào nhánh `main`.
 
-### 8.2. Đối với bài nhóm
+### 8.2. Đóng góp nhóm
 
-| Thành viên | MSSV | Nhiệm vụ chính | Có sử dụng AI không? | Minh chứng đóng góp |
-|---|---|---|---|---|
-|  |  |  | Có / Không |  |
-|  |  |  | Có / Không |  |
-|  |  |  | Có / Không |  |
-|  |  |  | Có / Không |  |
+| Thành viên | MSSV | Nhiệm vụ chính | Sử dụng AI? | Minh chứng cần đối chiếu |
+| --- | --- | --- | --- | --- |
+| Phan Nguyễn | DE191019 | Leader; Database, Coupon, Payment, Invoice | Chưa xác nhận | Git log nhánh cá nhân, Issue/MR |
+| Phạm Văn Quyết | DE190425 | Backend & Security Lead; Architecture | **Có** | Lịch sử commit kiến trúc, repo audit log |
+| Nguyễn Tiến Lộc | DE190986 | Order & Restaurant Workflow Backend | Chưa xác nhận | Git log nhánh order, API endpoint |
+| Nguyễn Đức Thương | DE190096 | Frontend Lead | **Có** | UI Components, React code logs |
+| Trần Thanh Gia Huy | DE180571 | QA, Documentation & Project Tracking | **Có** | `89ac23df`, `ca5612be`, `df478a12`, `docs/QA` |
 
 ---
 
 ## 9. Reflection cuối bài
 
-### 9.1. AI đã hỗ trợ em/nhóm ở điểm nào?
+### 9.1. AI đã hỗ trợ em ở điểm nào?
 
-```text
-Viết tại đây...
-```
+AI đóng vai trò như một "nhân viên thực thi" tốc độ cao. Thay vì mất hàng giờ tự viết cấu trúc Given-When-Then hay gõ từng dòng boilerplate cho Postman/Selenium, em dùng AI để khởi tạo bộ khung chuẩn. Nhờ đó, em có thời gian tập trung vào phần "chất xám" thực sự: phân tích rủi ro hệ thống và viết các kịch bản ngoại lệ (Negative Cases).
 
-### 9.2. Phần nào em/nhóm không sử dụng theo gợi ý của AI? Vì sao?
+### 9.2. Phần nào em không sử dụng theo gợi ý của AI? Vì sao?
 
-```text
-Viết tại đây...
-```
+Tuyệt đối không sử dụng các luồng tính năng mở rộng vô tội vạ do AI gợi ý (như hệ thống chia tiền hóa đơn phức tạp). Là người theo dõi dự án (Project Tracking), em hiểu rằng việc phình to phạm vi (Scope Creep) là nguyên nhân lớn nhất khiến các dự án SWP391 thất bại.
 
-### 9.3. Em/nhóm đã kiểm tra tính đúng đắn của kết quả AI như thế nào?
+### 9.3. Kiểm tra tính đúng đắn như thế nào?
 
-```text
-Viết tại đây...
-```
+Kiểm chứng thực tế là bắt buộc. Đoạn code AI sinh ra phải biên dịch được, chạy được và tìm ra được lỗi. Tài liệu AI viết phải được nhóm thông qua và giảng viên hướng dẫn (QuangLTN3) chấp nhận trong các buổi review.
 
 ### 9.4. Nếu không có AI, phần nào sẽ khó khăn nhất?
 
-```text
-Viết tại đây...
-```
+Khó khăn nhất là việc chuyển đổi từ ngôn ngữ nghiệp vụ sang ngôn ngữ kiểm thử tự động. Việc setup môi trường Selenium hay viết script Postman từ đầu rất mất thời gian tra cứu tài liệu.
 
-### 9.5. Sau bài tập/project này, em/nhóm học được gì về môn học?
+### 9.5. Học được gì về môn học?
 
-```text
-Viết tại đây...
-```
+Đảm bảo chất lượng (QA) không chỉ là tìm bug sau khi code xong, mà bắt đầu ngay từ việc định nghĩa yêu cầu (Requirement) rõ ràng. Yêu cầu sai (như luồng quét QR ban đầu) thì dù code có tốt đến đâu, dự án vẫn sẽ thất bại.
 
-### 9.6. Sau bài tập/project này, em/nhóm học được gì về cách sử dụng AI có trách nhiệm?
+### 9.6. Học được gì về cách sử dụng AI có trách nhiệm?
 
-```text
-Viết tại đây...
-```
+* AI sinh ra thông tin, nhưng con người mới là người chịu trách nhiệm về tính khả thi và độ chính xác của thông tin đó.
+* Không mù quáng copy-paste. Phải đọc hiểu, chọn lọc, và tinh chỉnh lại mã/tài liệu để khớp với kiến trúc thực tế của hệ thống.
+* Trung thực trong việc khai báo sử dụng AI, coi đó là kỹ năng sử dụng công cụ nâng cao chứ không phải gian lận.
 
 ---
 
 ## 10. Cam kết học thuật
 
-Sinh viên/nhóm cam kết rằng:
+Em cam kết rằng:
 
-- Nội dung AI hỗ trợ đã được ghi nhận trung thực.
-- Không nộp nguyên văn kết quả AI mà không kiểm tra.
-- Có khả năng giải thích các phần đã nộp.
-- Chịu trách nhiệm về tính đúng đắn của sản phẩm cuối cùng.
-- Hiểu rằng việc sử dụng AI không khai báo có thể ảnh hưởng đến kết quả đánh giá.
+* Nội dung AI hỗ trợ được ghi nhận hoàn toàn trung thực trong Audit Log này.
+* Mọi tài liệu thiết kế, kịch bản test và script kiểm thử đã được em tự kiểm chứng, hiệu chỉnh bằng kiến thức chuyên môn và khớp với thực tế mã nguồn của nhóm.
+* Em hiểu toàn bộ cấu trúc và logic của các đoạn mã tự động/bài báo cáo đã nộp và sẵn sàng giải trình trực tiếp.
+* Em chịu trách nhiệm hoàn toàn về các quyết định loại bỏ/bổ sung yêu cầu nghiệp vụ trong phạm vi quản lý QA của mình.
 
 | Đại diện sinh viên/nhóm | Ngày xác nhận |
-|---|---|
-|  |  |
+| --- | --- |
+| Trần Thanh Gia Huy | 02/07/2026 |
+
+```
+
+```
