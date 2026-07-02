@@ -1,0 +1,76 @@
+.staff-customers {}
+
+.search-input {
+  width: 360px; padding: 10px 16px;
+  border: 1.5px solid #e2e8f0; border-radius: 8px;
+  font-size: 14px; background: white; display: block;
+}
+.search-input:focus { border-color: #e85d04; outline: none; }
+
+.customers-list { display: flex; flex-direction: column; gap: 12px; }
+
+.customer-card { padding: 16px 20px; }
+
+.customer-info { display: flex; align-items: flex-start; gap: 14px; }
+
+.cust-avatar-lg {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #e85d04; color: white;
+  font-size: 20px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.cust-details { flex: 1; }
+
+.cust-name-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.cust-name-row h3 { font-size: 15px; font-weight: 700; }
+
+.tier-badge {
+  font-size: 11px; font-weight: 700; color: white;
+  padding: 2px 8px; border-radius: 20px;
+}
+
+.cust-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: #718096; margin-bottom: 6px; }
+.cust-stats { display: flex; gap: 12px; margin-bottom: 8px; }
+.cust-stat { font-size: 12px; font-weight: 600; color: #4a5568; background: #f5f6fa; padding: 3px 10px; border-radius: 20px; }
+
+/* Ghi chú */
+.note-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cust-note {
+  font-size: 12px; color: #718096;
+  background: #fffbeb; padding: 5px 10px;
+  border-radius: 6px; border-left: 3px solid #d69e2e;
+}
+.cust-note-empty { font-size: 12px; color: #a0aec0; font-style: italic; }
+
+.edit-note-btn {
+  font-size: 12px; color: #e85d04; font-weight: 600;
+  background: #fff0e6; padding: 4px 10px;
+  border-radius: 6px; white-space: nowrap;
+}
+.edit-note-btn:hover { background: #fde0cc; }
+
+/* Inline note editing */
+.note-edit-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.note-input { flex: 1; min-width: 200px; }
+
+.note-saved {
+  font-size: 12px; color: #38a169; font-weight: 600;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Shared */
+.form-label { display: block; font-size: 12px; font-weight: 600; color: #4a5568; margin-bottom: 4px; }
+.form-input {
+  width: 100%; padding: 8px 12px;
+  border: 1.5px solid #e2e8f0; border-radius: 8px;
+  font-size: 13px; background: #f5f6fa; font-family: inherit;
+}
+.form-input:focus { border-color: #e85d04; background: white; outline: none; }
+
+.save-btn-sm { padding: 7px 14px; background: #e85d04; color: white; border-radius: 8px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.save-btn-sm:hover { background: #c44d00; }
+.cancel-btn-sm { padding: 7px 12px; background: #f5f6fa; color: #718096; border-radius: 8px; font-size: 13px; white-space: nowrap; }
+.cancel-btn-sm:hover { background: #e2e8f0; }
