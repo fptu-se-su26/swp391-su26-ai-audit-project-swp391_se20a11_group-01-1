@@ -1,0 +1,153 @@
+.admin-reports-page {
+  padding: 20px;
+}
+
+.filter-section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #34495e;
+}
+
+.filter-group input {
+  padding: 8px 12px;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+}
+
+.btn-filter {
+  padding: 10px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-filter:hover:not(:disabled) {
+  background: #2980b9;
+}
+
+.btn-filter:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+.filter-error {
+  margin-top: 15px;
+  color: #c0392b;
+  font-size: 0.9rem;
+}
+
+.reports-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+
+@media (min-width: 1024px) {
+  .reports-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.report-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-top: 4px solid #3498db;
+}
+
+.report-card h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.report-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary-item .label {
+  color: #7f8c8d;
+}
+
+.summary-item .value {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.summary-item .highlight {
+  color: #27ae60;
+  font-size: 1.1rem;
+}
+
+.data-table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.data-table th {
+  background: #f8f9fa;
+  color: #34495e;
+  font-weight: 600;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.data-table td.highlight {
+  color: #27ae60;
+  font-weight: 500;
+}
+
+.empty-state {
+  color: #7f8c8d;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}

@@ -1,0 +1,102 @@
+.profile-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.profile-state {
+  text-align: center;
+  padding: 50px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.profile-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  padding: 30px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #3498db;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.profile-title h3 {
+  margin: 0 0 5px 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #ecf0f1;
+  color: #7f8c8d;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.profile-body {
+  padding: 20px 30px;
+}
+
+.info-row {
+  display: flex;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f2f6;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  flex: 1;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.info-value {
+  flex: 2;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.profile-footer {
+  padding: 20px 30px;
+  background: #fdfefe;
+  border-top: 1px solid #eee;
+}
+
+.limitation-notice {
+  background: #e8f4f8;
+  color: #2980b9;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  border-left: 4px solid #3498db;
+}
+
+.limitation-notice p {
+  margin: 0;
+}
