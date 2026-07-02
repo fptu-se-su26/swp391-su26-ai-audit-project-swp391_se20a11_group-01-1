@@ -70,15 +70,14 @@ Viết tại đây...
 |---|---|
 | Ngày sử dụng | 20/5/2026 |
 | Công cụ AI | ChatGPT |
-| Mục đích sử dụng | The AI tools were used to support requirement analysis, system design, database design, frontend and backend architecture, code generation, debugging, SRS documentation, Jira planning, presentation preparation, and business process improvement for the Restaurant Management System. |
+| Mục đích sử dụng |Sử dụng AI để hỗ trợ phân tích yêu cầu hệ thống, xây dựng Use Case, thiết kế cơ sở dữ liệu, xây dựng kiến trúc Frontend và Backend, xử lý lỗi trong quá trình lập trình, xây dựng tài liệu SRS, lập kế hoạch Jira, chuẩn bị slide thuyết trình và cải tiến quy trình nghiệp vụ của Restaurant Management System.|
 | Phần việc liên quan | Requirement |
 | Mức độ sử dụng | Hỗ trợ ý tưởng |
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
-I am developing a Restaurant Management System. Help me identify the actors and main use cases of the system.
-Dán nguyên văn prompt đã hỏi AI tại đây.
+Tôi đang làm dự án Restaurant Management System. Hãy giúp tôi xác định các actor và use case chính của hệ thống.
 ```
 
 #### 4.2. Kết quả AI gợi ý
@@ -86,7 +85,12 @@ Dán nguyên văn prompt đã hỏi AI tại đây.
 Tóm tắt nội dung AI đã trả lời hoặc gợi ý.
 
 ```text
-AI suggested four main actors (Customer, Staff, Kitchen Staff, Admin) and generated the initial list of use cases with include and extend relationships.
+Đề xuất 4 actor
+Customer
+Staff
+Kitchen Staff
+Admin
+Đồng thời gợi ý danh sách các Use Case chính của hệ thống.
 Viết tại đây...
 ```
 
@@ -95,7 +99,7 @@ Viết tại đây...
 Mô tả rõ phần nào được sử dụng lại từ gợi ý của AI.
 
 ```text
-Used the actor definitions and use case list as the initial version of the SRS and Use Case Diagram.
+Sử dụng danh sách Actor và Use Case để xây dựng SRS và Use Case Diagram.
 Viết tại đây...
 ```
 
@@ -104,7 +108,7 @@ Viết tại đây...
 Mô tả sinh viên/nhóm đã thay đổi, kiểm tra, sửa lỗi hoặc cải tiến gì so với gợi ý ban đầu của AI.
 
 ```text
-Renamed several use cases, removed duplicated functions, reduced the use of "Manage", and refined actor responsibilities after reviewing the project requirements.
+Sau khi trao đổi với giảng viên, nhóm đã chỉnh sửa lại một số Use Case, thay đổi vai trò của Kitchen Staff và bổ sung thêm các chức năng phù hợp với thực tế.
 Viết tại đây...
 ```
 
@@ -186,34 +190,39 @@ Viết tại đây...
 
 | Nội dung | Thông tin |
 |---|---|
-| Ngày sử dụng |  |
-| Công cụ AI | ChatGPT / Gemini / Claude / GitHub Copilot / Cursor / Antigravity / Khác |
-| Mục đích sử dụng |  |
-| Phần việc liên quan | Requirement / Design / Database / Frontend / Backend / Testing / Debug / Report / Presentation / Other |
-| Mức độ sử dụng | Hỗ trợ ý tưởng / Hỗ trợ một phần / Hỗ trợ nhiều / Sinh chính nội dung |
+| Ngày sử dụng | 22/06/2026 |
+| Công cụ AI | ChatGPT |
+| Mục đích sử dụng | Cải tiến nghiệp vụ |
+| Phần việc liên quan | Requirement |
+| Mức độ sử dụng | Hỗ trợ ý tưởng|
 
 #### 4.1. Prompt đã sử dụng
 
 ```text
-Dán nguyên văn prompt đã hỏi AI tại đây.
+Giảng viên góp ý rằng Kitchen Staff không hợp lý và nhiều người cùng quét QR sẽ xử lý như thế nào?
 ```
 
 #### 4.2. Kết quả AI gợi ý
 
 ```text
-Viết tại đây...
+Đề xuất:
+Dining Session
+Staff xác nhận trước khi mở phiên gọi món
+Shared Cart
+Reservation Check-in
+QR chỉ hoạt động khi Staff xác nhận
 ```
 
 #### 4.3. Phần sinh viên/nhóm đã sử dụng từ AI
 
 ```text
-Viết tại đây...
+Nhóm sử dụng các ý tưởng này để chỉnh sửa lại quy trình nghiệp vụ của hệ thống sau buổi phản biện.
 ```
 
 #### 4.4. Phần sinh viên/nhóm tự chỉnh sửa hoặc cải tiến
 
 ```text
-Viết tại đây...
+Tiếp tục thảo luận để hoàn thiện luồng đặt bàn, quét QR và thanh toán theo đúng quy trình thực tế của nhà hàng.
 ```
 
 #### 4.5. Minh chứng
