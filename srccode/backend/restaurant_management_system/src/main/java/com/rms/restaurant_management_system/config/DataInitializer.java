@@ -1,8 +1,10 @@
-
 package com.rms.restaurant_management_system.config;
 
+import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.Role;
 import com.rms.restaurant_management_system.entity.User;
+import com.rms.restaurant_management_system.enums.TableStatus;
+import com.rms.restaurant_management_system.repository.RestaurantTableRepository;
 import com.rms.restaurant_management_system.repository.RoleRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final RestaurantTableRepository restaurantTableRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -52,6 +55,8 @@ public class DataInitializer implements CommandLineRunner {
                 "123456",
                 "CUSTOMER"
         );
+
+        createDefaultTables();
     }
 
     private void createRoleIfNotExists(String roleName) {
@@ -88,5 +93,46 @@ public class DataInitializer implements CommandLineRunner {
 
         userRepository.save(user);
     }
-}
 
+    private void createDefaultTables() {
+        createTableIfNotExists("Bàn 1", 2);
+        createTableIfNotExists("Bàn 2", 2);
+        createTableIfNotExists("Bàn 3", 4);
+        createTableIfNotExists("Bàn 4", 4);
+        createTableIfNotExists("Bàn 5", 4);
+        createTableIfNotExists("Bàn 6", 4);
+        createTableIfNotExists("Bàn 7", 6);
+        createTableIfNotExists("Bàn 8", 6);
+        createTableIfNotExists("Bàn 9", 6);
+        createTableIfNotExists("Bàn 10", 6);
+        createTableIfNotExists("Bàn 11", 8);
+        createTableIfNotExists("Bàn 12", 8);
+        createTableIfNotExists("Bàn 13", 2);
+        createTableIfNotExists("Bàn 14", 2);
+        createTableIfNotExists("Bàn 15", 4);
+        createTableIfNotExists("Bàn 16", 4);
+        createTableIfNotExists("Bàn 17", 6);
+        createTableIfNotExists("Bàn 18", 6);
+        createTableIfNotExists("Bàn 19", 8);
+        createTableIfNotExists("Bàn 20", 10);
+    }
+
+    private void createTableIfNotExists(String tableName, Integer capacity) {
+        if (restaurantTableRepository.existsByTableName(tableName)) {
+            return;
+        }
+
+        RestaurantTable table = RestaurantTable.builder()
+                .tableName(tableName)
+                .capacity(capacity)
+                .status(TableStatus.EMPTY)
+                .currentOrderCode(null)
+                .reservedBy(null)
+                .mergedInto(null)
+                .mergedWith(null)
+                .isActive(true)
+                .build();
+
+        restaurantTableRepository.save(table);
+    }
+}
