@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const DISHES = [
-  { img: 'https://images.pexels.com/photos/3655916/pexels-photo-3655916.jpeg?auto=compress&w=400', name: 'Bò Wagyu nướng than hoa',  price: '580.000đ', cat: 'Món chính' },
-  { img: 'https://images.pexels.com/photos/3892469/pexels-photo-3892469.jpeg?auto=compress&w=400', name: 'Tôm hùm hấp bia',           price: '750.000đ', cat: 'Món chính' },
-  { img: 'https://images.pexels.com/photos/2456435/pexels-photo-2456435.jpeg?auto=compress&w=400', name: 'Cá hồi áp chảo sốt chanh',  price: '320.000đ', cat: 'Món chính' },
-  { img: 'https://images.pexels.com/photos/539451/pexels-photo-539451.jpeg?auto=compress&w=400',   name: 'Súp bào ngư vi cá',          price: '185.000đ', cat: 'Khai vị'  },
-  { img: 'https://images.pexels.com/photos/1854652/pexels-photo-1854652.jpeg?auto=compress&w=400', name: 'Bánh soufflé socola',         price: '125.000đ', cat: 'Tráng miệng' },
-  { img: 'https://images.pexels.com/photos/1123260/pexels-photo-1123260.jpeg?auto=compress&w=400', name: 'Rượu vang đỏ Pháp',          price: '280.000đ', cat: 'Đồ uống'  },
+  { img: 'https://images.unsplash.com/photo-1558030006-450675393462?w=400', name: 'Bò Wagyu nướng than hoa',  price: '580.000đ', cat: 'Món chính' },
+  { img: 'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=400', name: 'Tôm hùm hấp bia',          price: '750.000đ', cat: 'Món chính' },
+  { img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400', name: 'Cá hồi áp chảo sốt chanh', price: '320.000đ', cat: 'Món chính' },
+  { img: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400', name: 'Súp bào ngư vi cá',         price: '185.000đ', cat: 'Khai vị'   },
+  { img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400', name: 'Bánh soufflé socola',      price: '125.000đ', cat: 'Tráng miệng' },
+  { img: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400', name: 'Rượu vang đỏ Pháp',       price: '280.000đ', cat: 'Đồ uống'  },
 ];
 
 const REVIEWS = [
