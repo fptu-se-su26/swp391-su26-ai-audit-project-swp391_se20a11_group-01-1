@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
 import './KitchenHistory.css';
@@ -77,6 +76,10 @@ function KitchenHistory() {
     });
   };
 
+  const formatMoney = (value) => {
+    return Number(value || 0).toLocaleString('vi-VN');
+  };
+
   const getCompletedTime = (order) => {
     return formatDateTime(order.updatedAt || order.createdAt);
   };
@@ -105,6 +108,14 @@ function KitchenHistory() {
     };
   };
 
+  const getCustomerDisplay = (order) => {
+    return order.customerName || order.username || 'Khách vãng lai';
+  };
+
+  const getTableDisplay = (order) => {
+    return order.tableName || (order.tableId ? `Bàn ${order.tableId}` : 'Không có bàn');
+  };
+
   const filteredHistory =
     filter === 'all'
       ? history
@@ -113,7 +124,7 @@ function KitchenHistory() {
   if (loading) {
     return (
       <div className="kitchen-history">
-        <h1 className="kitchen-history-title">Đơn đã hoàn thành hôm nay</h1>
+        <h1 className="kitchen-history-title">Lịch sử bếp</h1>
 
         <div className="history-card" style={{ textAlign: 'center' }}>
           ⏳ Đang tải lịch sử bếp...
@@ -125,7 +136,7 @@ function KitchenHistory() {
   return (
     <div className="kitchen-history">
       <div className="kitchen-history-header">
-        <h1 className="kitchen-history-title">Đơn đã hoàn thành hôm nay</h1>
+        <h1 className="kitchen-history-title">Lịch sử bếp</h1>
 
         <button className="history-refresh-btn" onClick={fetchKitchenHistory}>
           🔄 Làm mới
@@ -171,8 +182,18 @@ function KitchenHistory() {
                   </span>
 
                   <span className="history-table">
-                    👤 {order.username || 'Customer'}
+                    🪑 {getTableDisplay(order)}
                   </span>
+
+                  <span className="history-table">
+                    👤 {getCustomerDisplay(order)}
+                  </span>
+
+                  {order.customerPhone && (
+                    <span className="history-table">
+                      📞 {order.customerPhone}
+                    </span>
+                  )}
 
                   <span className="history-time">
                     {statusInfo.icon} {getCompletedTime(order)}
@@ -187,9 +208,13 @@ function KitchenHistory() {
                   {order.items?.map((item) => (
                     <span key={item.orderItemId} className="history-tag">
                       {item.emoji ? `${item.emoji} ` : ''}
-                      {item.foodName} x{item.quantity}
+                      {item.foodName} × {item.quantity}
                     </span>
                   ))}
+                </div>
+
+                <div className="history-note">
+                  💰 Tổng tiền: <strong>{formatMoney(order.totalAmount)}đ</strong>
                 </div>
 
                 {order.note && (
@@ -207,4 +232,3 @@ function KitchenHistory() {
 }
 
 export default KitchenHistory;
-
