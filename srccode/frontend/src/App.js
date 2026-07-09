@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -38,6 +37,7 @@ import Reservation from './pages/customer/Reservation';
 import CustomerOrders from './pages/customer/CustomerOrders';
 import Profile from './pages/customer/Profile';
 import Feedback from './pages/customer/Feedback';
+import TableMenu from './pages/customer/TableMenu';
 
 // Staff pages
 import StaffTables from './pages/staff/StaffTables';
@@ -60,6 +60,9 @@ function App() {
           <FeedbackProvider>
             <BrowserRouter>
               <Routes>
+                {/* Public QR Table Ordering Route */}
+                <Route path="/table/:tableId/menu" element={<TableMenu />} />
+
                 {/* Public Auth Routes */}
                 <Route
                   path="/login"
@@ -170,4 +173,3 @@ function App() {
 }
 
 export default App;
-

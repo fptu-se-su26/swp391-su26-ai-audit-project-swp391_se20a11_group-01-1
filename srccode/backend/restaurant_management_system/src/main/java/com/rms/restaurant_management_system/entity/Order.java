@@ -35,6 +35,18 @@ public class Order {
     @Column(columnDefinition = "NVARCHAR(500)")
     private String note;
 
+    @Column(name = "table_id")
+    private Long tableId;
+
+    @Column(name = "table_name", columnDefinition = "NVARCHAR(50)")
+    private String tableName;
+
+    @Column(name = "customer_name", columnDefinition = "NVARCHAR(150)")
+    private String customerName;
+
+    @Column(name = "customer_phone", columnDefinition = "NVARCHAR(30)")
+    private String customerPhone;
+
     @Builder.Default
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -42,7 +54,7 @@ public class Order {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @Builder.Default

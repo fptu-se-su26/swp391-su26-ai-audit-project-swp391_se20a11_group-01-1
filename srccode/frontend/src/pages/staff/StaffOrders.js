@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
 import './StaffOrders.css';
@@ -71,6 +70,15 @@ function InvoiceModal({ order, onClose }) {
     });
   };
 
+  const customerDisplay =
+    order.customerName ||
+    order.username ||
+    'Khách vãng lai';
+
+  const tableDisplay =
+    order.tableName ||
+    (order.tableId ? `Bàn ${order.tableId}` : 'Không có bàn');
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="invoice-modal card" onClick={(e) => e.stopPropagation()}>
@@ -88,8 +96,18 @@ function InvoiceModal({ order, onClose }) {
           </p>
 
           <p>
-            Khách hàng: <strong>{order.username || 'Customer'}</strong>
+            Bàn: <strong>{tableDisplay}</strong>
           </p>
+
+          <p>
+            Khách hàng: <strong>{customerDisplay}</strong>
+          </p>
+
+          {order.customerPhone && (
+            <p>
+              SĐT: <strong>{order.customerPhone}</strong>
+            </p>
+          )}
 
           <p>{formatDateTime(order.createdAt)}</p>
         </div>
@@ -317,6 +335,14 @@ function StaffOrders() {
     return '✓ Cập nhật';
   };
 
+  const getCustomerDisplay = (order) => {
+    return order.customerName || order.username || 'Khách vãng lai';
+  };
+
+  const getTableDisplay = (order) => {
+    return order.tableName || (order.tableId ? `Bàn ${order.tableId}` : 'Không có bàn');
+  };
+
   const filteredOrders =
     filter === 'all'
       ? orders
@@ -383,8 +409,18 @@ function StaffOrders() {
                   </span>
 
                   <span className="sorder-table">
-                    👤 {order.username || 'Customer'}
+                    🪑 {getTableDisplay(order)}
                   </span>
+
+                  <span className="sorder-table">
+                    👤 {getCustomerDisplay(order)}
+                  </span>
+
+                  {order.customerPhone && (
+                    <span className="sorder-waiter">
+                      📞 {order.customerPhone}
+                    </span>
+                  )}
 
                   <span className="sorder-time">
                     🕐 {formatTime(order.createdAt)}
@@ -464,4 +500,3 @@ function StaffOrders() {
 }
 
 export default StaffOrders;
-

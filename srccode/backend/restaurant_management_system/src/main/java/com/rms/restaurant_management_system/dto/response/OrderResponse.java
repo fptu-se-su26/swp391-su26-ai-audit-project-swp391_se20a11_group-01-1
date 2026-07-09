@@ -24,6 +24,14 @@ public class OrderResponse {
 
     private String email;
 
+    private Long tableId;
+
+    private String tableName;
+
+    private String customerName;
+
+    private String customerPhone;
+
     private OrderStatus status;
 
     private BigDecimal totalAmount;
@@ -35,4 +43,4 @@ public class OrderResponse {
     private LocalDateTime updatedAt;
 
     private List<OrderItemResponse> items;
-}   
+}

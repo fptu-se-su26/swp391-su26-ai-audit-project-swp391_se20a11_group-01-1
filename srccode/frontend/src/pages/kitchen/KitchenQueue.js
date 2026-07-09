@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
 import './KitchenQueue.css';
@@ -191,6 +190,14 @@ function KitchenQueue() {
     );
   };
 
+  const getCustomerDisplay = (order) => {
+    return order.customerName || order.username || 'Khách vãng lai';
+  };
+
+  const getTableDisplay = (order) => {
+    return order.tableName || (order.tableId ? `Bàn ${order.tableId}` : 'Không có bàn');
+  };
+
   const filteredQueue = queue.filter((order) => {
     if (filter === 'all') return true;
     return order.status === filter;
@@ -284,8 +291,18 @@ function KitchenQueue() {
                   </span>
 
                   <span className="kcard-table">
-                    👤 {order.username || 'Customer'}
+                    🪑 {getTableDisplay(order)}
                   </span>
+
+                  <span className="kcard-table">
+                    👤 {getCustomerDisplay(order)}
+                  </span>
+
+                  {order.customerPhone && (
+                    <span className="kcard-table">
+                      📞 {order.customerPhone}
+                    </span>
+                  )}
                 </div>
 
                 <div className="kcard-right">
@@ -381,7 +398,11 @@ function KitchenQueue() {
                 </span>
 
                 <span className="done-table">
-                  👤 {order.username || 'Customer'}
+                  🪑 {getTableDisplay(order)}
+                </span>
+
+                <span className="done-table">
+                  👤 {getCustomerDisplay(order)}
                 </span>
 
                 <span className="done-items">
@@ -401,4 +422,3 @@ function KitchenQueue() {
 }
 
 export default KitchenQueue;
-

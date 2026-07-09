@@ -2,7 +2,6 @@ package com.rms.restaurant_management_system.dto.request;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +11,13 @@ import java.util.List;
 @Setter
 public class OrderRequest {
 
-    @NotNull(message = "User ID is required")
     private Long userId;
+
+    private Long tableId;
+
+    private String customerName;
+
+    private String customerPhone;
 
     private String note;
 
