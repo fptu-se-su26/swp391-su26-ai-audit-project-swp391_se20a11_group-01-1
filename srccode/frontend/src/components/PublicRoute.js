@@ -14,7 +14,7 @@ function PublicRoute({ children }) {
   const role = (user.roleName || user.role || '').toUpperCase();
 
   const redirectMap = {
-    ADMIN: '/dashboard',
+    ADMIN: '/admin/dashboard',
     STAFF: '/staff/tables',
     KITCHEN: '/kitchen/queue',
     CUSTOMER: '/customer/menu'
