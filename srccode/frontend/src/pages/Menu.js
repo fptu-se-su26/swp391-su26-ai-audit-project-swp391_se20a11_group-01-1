@@ -140,13 +140,33 @@ function Menu() {
       return;
     }
 
+    if (!form.name.trim()) {
+      alert('Vui long nhap ten mon.');
+      return;
+    }
+
+    if (!form.desc.trim()) {
+      alert('Vui long nhap mo ta mon an.');
+      return;
+    }
+
+    if (!form.imageUrl.trim() && !form.img.trim()) {
+      alert('Vui long them anh mon an hoac icon.');
+      return;
+    }
+
+    if (!form.price || Number(form.price) <= 0) {
+      alert('Vui long nhap gia mon lon hon 0.');
+      return;
+    }
+
     try {
       const foodData = {
-        foodName: form.name,
-        description: form.desc,
+        foodName: form.name.trim(),
+        description: form.desc.trim(),
         price: Number(form.price),
-        imageUrl: form.imageUrl,
-        emoji: form.img,
+        imageUrl: form.imageUrl.trim(),
+        emoji: form.img.trim(),
         rating: editItem ? editItem.rating : 0,
         orders: editItem ? editItem.orders : 0,
         isAvailable: form.available,
@@ -516,6 +536,21 @@ function Menu() {
                     ✕ Xóa ảnh
                   </button>
                 )}
+
+                <input
+                  className="form-input image-url-input"
+                  placeholder="Hoac dan URL anh mon an..."
+                  value={form.imageUrl.startsWith('data:') ? '' : form.imageUrl}
+                  onChange={e =>
+                    setForm({
+                      ...form,
+                      imageUrl: e.target.value,
+                      img: e.target.value ? '' : form.img
+                    })
+                  }
+                />
+
+                <p className="form-hint">Anh upload se duoc luu vao database; URL anh cung duoc luu va hien thi cho khach hang.</p>
               </div>
 
               <div className="form-row-2">

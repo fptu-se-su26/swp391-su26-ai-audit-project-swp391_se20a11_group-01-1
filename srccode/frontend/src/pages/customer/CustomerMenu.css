@@ -121,7 +121,18 @@
   display: flex; align-items: center; justify-content: center;
 }
 
-.modal-img { font-size: 64px; text-align: center; margin-bottom: 16px; }
+.modal-img {
+  height: 220px;
+  font-size: 64px;
+  text-align: center;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff0e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .dish-modal h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
 .modal-cat { font-size: 13px; color: #718096; margin-bottom: 10px; }
 .modal-desc { font-size: 14px; color: #4a5568; line-height: 1.6; margin-bottom: 10px; }

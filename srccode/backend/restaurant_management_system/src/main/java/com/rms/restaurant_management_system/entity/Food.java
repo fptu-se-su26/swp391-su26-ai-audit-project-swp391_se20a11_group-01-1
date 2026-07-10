@@ -28,7 +28,7 @@ public class Food {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal price;
 
-    @Column(columnDefinition = "NVARCHAR(500)")
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String imageUrl;
 
     @Column(columnDefinition = "NVARCHAR(50)")
