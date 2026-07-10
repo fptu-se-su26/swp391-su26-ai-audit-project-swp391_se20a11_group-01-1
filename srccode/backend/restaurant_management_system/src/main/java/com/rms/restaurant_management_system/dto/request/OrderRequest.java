@@ -1,5 +1,6 @@
-package com.rms.restaurant_management_system.dto.request;
+﻿package com.rms.restaurant_management_system.dto.request;
 
+import com.rms.restaurant_management_system.enums.PaymentMethod;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -20,6 +21,8 @@ public class OrderRequest {
     private String customerPhone;
 
     private String note;
+
+    private PaymentMethod paymentMethod;
 
     @Valid
     @NotEmpty(message = "Order must have at least one item")

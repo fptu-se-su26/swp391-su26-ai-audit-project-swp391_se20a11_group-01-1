@@ -1,5 +1,6 @@
 package com.rms.restaurant_management_system.service.interfaces;
 
+import com.rms.restaurant_management_system.dto.request.ConfirmPaymentRequest;
 import com.rms.restaurant_management_system.dto.request.OrderRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateOrderStatusRequest;
 import com.rms.restaurant_management_system.dto.response.OrderResponse;
@@ -19,6 +20,8 @@ public interface OrderService {
     List<OrderResponse> getOrdersByStatus(String status);
 
     OrderResponse updateOrderStatus(Long orderId, UpdateOrderStatusRequest request);
+
+    OrderResponse confirmPayment(Long orderId, ConfirmPaymentRequest request);
 
     void cancelOrder(Long orderId);
 }

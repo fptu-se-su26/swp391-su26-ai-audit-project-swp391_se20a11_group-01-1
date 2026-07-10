@@ -1,5 +1,6 @@
 package com.rms.restaurant_management_system.controller;
 
+import com.rms.restaurant_management_system.dto.request.ConfirmPaymentRequest;
 import com.rms.restaurant_management_system.dto.request.OrderRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateOrderStatusRequest;
 import com.rms.restaurant_management_system.dto.response.OrderResponse;
@@ -49,6 +50,14 @@ public class OrderController {
             @Valid @RequestBody UpdateOrderStatusRequest request
     ) {
         return orderService.updateOrderStatus(orderId, request);
+    }
+
+    @PostMapping("/{orderId}/payment/confirm")
+    public OrderResponse confirmPayment(
+            @PathVariable Long orderId,
+            @Valid @RequestBody ConfirmPaymentRequest request
+    ) {
+        return orderService.confirmPayment(orderId, request);
     }
 
     @DeleteMapping("/{orderId}")

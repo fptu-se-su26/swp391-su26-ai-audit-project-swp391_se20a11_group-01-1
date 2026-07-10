@@ -1,6 +1,8 @@
-package com.rms.restaurant_management_system.dto.response;
+﻿package com.rms.restaurant_management_system.dto.response;
 
 import com.rms.restaurant_management_system.enums.OrderStatus;
+import com.rms.restaurant_management_system.enums.PaymentMethod;
+import com.rms.restaurant_management_system.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +37,16 @@ public class OrderResponse {
     private OrderStatus status;
 
     private BigDecimal totalAmount;
+
+    private PaymentMethod paymentMethod;
+
+    private PaymentStatus paymentStatus;
+
+    private BigDecimal paidAmount;
+
+    private String paymentReference;
+
+    private LocalDateTime paidAt;
 
     private String note;
 

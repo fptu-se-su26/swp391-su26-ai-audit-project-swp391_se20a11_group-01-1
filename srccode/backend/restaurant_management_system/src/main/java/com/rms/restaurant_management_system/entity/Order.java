@@ -1,6 +1,8 @@
 package com.rms.restaurant_management_system.entity;
 
 import com.rms.restaurant_management_system.enums.OrderStatus;
+import com.rms.restaurant_management_system.enums.PaymentMethod;
+import com.rms.restaurant_management_system.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +33,22 @@ public class Order {
 
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal totalAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private PaymentStatus paymentStatus;
+
+    @Column(precision = 12, scale = 2)
+    private BigDecimal paidAmount;
+
+    @Column(length = 100)
+    private String paymentReference;
+
+    private LocalDateTime paidAt;
 
     @Column(columnDefinition = "NVARCHAR(500)")
     private String note;
