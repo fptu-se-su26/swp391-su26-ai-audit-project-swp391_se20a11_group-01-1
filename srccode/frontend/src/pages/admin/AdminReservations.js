@@ -1,175 +1,216 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { getAllReservations, updateReservationStatus } from '../../services/reservationService';
 import './AdminReservations.css';
 
-const initialReservations = [
-  { id: 'R001', name: 'Nguyễn Văn An',  phone: '0901-234-567', date: '2026-05-22', time: '18:00', guests: 4, status: 'confirmed', assignedTable: 'Bàn 4', note: 'Sinh nhật, cần cắm hoa bàn', preOrder: [{ name: 'Bò Wagyu nướng than hoa', qty: 2, price: 580000 }, { name: 'Rượu vang đỏ Pháp', qty: 2, price: 280000 }] },
-  { id: 'R002', name: 'Trần Thị Bích',  phone: '0912-345-678', date: '2026-05-22', time: '19:00', guests: 2, status: 'pending',   assignedTable: null,    note: '', preOrder: [{ name: 'Cá hồi áp chảo sốt chanh', qty: 2, price: 320000 }] },
-  { id: 'R003', name: 'Lê Minh Khoa',   phone: '0933-456-789', date: '2026-05-22', time: '19:30', guests: 6, status: 'arrived',   assignedTable: 'Bàn 7', note: 'Họp mặt gia đình', preOrder: [] },
-  { id: 'R004', name: 'Phạm Thu Hà',    phone: '0944-567-890', date: '2026-05-23', time: '12:00', guests: 3, status: 'pending',   assignedTable: null,    note: '', preOrder: [{ name: 'Tôm hùm hấp bia', qty: 1, price: 750000 }] },
-  { id: 'R005', name: 'Hoàng Văn Nam',  phone: '0955-678-901', date: '2026-05-23', time: '18:30', guests: 2, status: 'cancelled', assignedTable: null,    note: 'Hủy do bận', preOrder: [] },
-];
-
 const statusMap = {
-  pending:   { label: 'Chờ xác nhận', cls: 'res-pending',   icon: '⏳' },
-  confirmed: { label: 'Đã xác nhận',  cls: 'res-confirmed', icon: '✅' },
-  arrived:   { label: 'Đã check-in',  cls: 'res-arrived',   icon: '🪑' },
-  cancelled: { label: 'Đã hủy',       cls: 'res-cancelled', icon: '❌' },
+  PENDING: { label: 'Cho xac nhan', cls: 'res-pending', icon: '⏳' },
+  CONFIRMED: { label: 'Da xac nhan', cls: 'res-confirmed', icon: '✅' },
+  ARRIVED: { label: 'Da check-in', cls: 'res-arrived', icon: '🪑' },
+  CANCELLED: { label: 'Da huy', cls: 'res-cancelled', icon: '✕' },
+  NO_SHOW: { label: 'Khong den', cls: 'res-cancelled', icon: '!' },
 };
 
-const TABLES = ['Bàn 1','Bàn 2','Bàn 3','Bàn 4','Bàn 5','Bàn 6','Bàn 7','Bàn 8'];
+const TABLES = ['Ban 1', 'Ban 2', 'Ban 3', 'Ban 4', 'Ban 5', 'Ban 6', 'Ban 7', 'Ban 8'];
 
 function AdminReservations() {
-  const [reservations, setReservations] = useState(initialReservations);
-  const [filter, setFilter]   = useState('all');
-  const [search, setSearch]   = useState('');
+  const [reservations, setReservations] = useState([]);
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
   const [expanded, setExpanded] = useState(null);
   const [tableChoice, setTableChoice] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const update = (id, changes) => setReservations(prev => prev.map(r => r.id === id ? { ...r, ...changes } : r));
+  const fetchReservations = async () => {
+    setLoading(true);
+    setError('');
 
-  const filtered = reservations.filter(r => {
-    const matchFilter = filter === 'all' || r.status === filter;
-    const matchSearch = r.name.toLowerCase().includes(search.toLowerCase()) ||
-                        r.phone.includes(search) || r.id.includes(search);
+    try {
+      setReservations(await getAllReservations());
+    } catch (err) {
+      console.error('Fetch reservations error:', err);
+      setError('Khong the tai danh sach dat ban.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  const update = async (reservation, status, assignedTable) => {
+    try {
+      const updated = await updateReservationStatus(reservation.reservationId, status, assignedTable);
+      setReservations((prev) => prev.map((item) => (
+        item.reservationId === updated.reservationId ? updated : item
+      )));
+    } catch (err) {
+      console.error('Update reservation error:', err);
+      setError('Khong the cap nhat dat ban.');
+    }
+  };
+
+  const filtered = reservations.filter((reservation) => {
+    const normalizedSearch = search.toLowerCase();
+    const matchFilter = filter === 'all' || reservation.status === filter;
+    const matchSearch =
+      reservation.customerName?.toLowerCase().includes(normalizedSearch) ||
+      reservation.phone?.includes(search) ||
+      reservation.reservationCode?.toLowerCase().includes(normalizedSearch);
+
     return matchFilter && matchSearch;
   });
 
   const stats = {
-    total:     reservations.length,
-    pending:   reservations.filter(r => r.status === 'pending').length,
-    confirmed: reservations.filter(r => r.status === 'confirmed').length,
-    arrived:   reservations.filter(r => r.status === 'arrived').length,
-    cancelled: reservations.filter(r => r.status === 'cancelled').length,
+    total: reservations.length,
+    PENDING: reservations.filter((reservation) => reservation.status === 'PENDING').length,
+    CONFIRMED: reservations.filter((reservation) => reservation.status === 'CONFIRMED').length,
+    ARRIVED: reservations.filter((reservation) => reservation.status === 'ARRIVED').length,
+    CANCELLED: reservations.filter((reservation) => reservation.status === 'CANCELLED').length,
   };
 
-  const preOrderTotal = (items) => items.reduce((s, i) => s + i.price * i.qty, 0);
+  const preOrderTotal = (items = []) =>
+    items.reduce((sum, item) => sum + Number(item.subtotal || 0), 0);
 
   return (
     <div className="admin-reservations">
       <div className="page-header">
-        <h1 className="page-title">Quản lý đặt bàn</h1>
+        <h1 className="page-title">Quan ly dat ban</h1>
       </div>
 
-      {/* Stats */}
+      {error && <div className="card" style={{ padding: 16, color: '#e53e3e', marginBottom: 16 }}>{error}</div>}
+      {loading && <div className="card" style={{ padding: 16, marginBottom: 16 }}>Dang tai dat ban...</div>}
+
       <div className="res-admin-stats">
-        {[['total','Tổng','#e85d04'],['pending','Chờ xác nhận','#d69e2e'],['confirmed','Đã xác nhận','#3182ce'],['arrived','Đã check-in','#38a169'],['cancelled','Đã hủy','#e53e3e']].map(([k,l,c]) => (
-          <div key={k} className="res-stat-card" style={{borderTopColor:c}} onClick={() => setFilter(k === 'total' ? 'all' : k)}>
-            <span className="res-stat-num" style={{color:c}}>{stats[k]}</span>
-            <span className="res-stat-label">{l}</span>
+        {[
+          ['total', 'Tong', '#e85d04'],
+          ['PENDING', 'Cho xac nhan', '#d69e2e'],
+          ['CONFIRMED', 'Da xac nhan', '#3182ce'],
+          ['ARRIVED', 'Da check-in', '#38a169'],
+          ['CANCELLED', 'Da huy', '#e53e3e']
+        ].map(([key, label, color]) => (
+          <div key={key} className="res-stat-card" style={{ borderTopColor: color }} onClick={() => setFilter(key === 'total' ? 'all' : key)}>
+            <span className="res-stat-num" style={{ color }}>{stats[key]}</span>
+            <span className="res-stat-label">{label}</span>
           </div>
         ))}
       </div>
 
-      {/* Toolbar */}
       <div className="res-toolbar">
-        <input className="search-input" placeholder="🔍 Tìm theo tên, SĐT, mã đặt bàn..."
-          value={search} onChange={e => setSearch(e.target.value)} />
+        <input
+          className="search-input"
+          placeholder="Tim theo ten, SDT, ma dat ban..."
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+        />
         <div className="filter-tabs">
-          {[['all','Tất cả'],['pending','Chờ xác nhận'],['confirmed','Đã xác nhận'],['arrived','Đã check-in'],['cancelled','Đã hủy']].map(([v,l]) => (
-            <button key={v} className={`filter-tab ${filter === v ? 'active' : ''}`}
-              onClick={() => setFilter(v)}>{l}</button>
+          {[
+            ['all', 'Tat ca'],
+            ['PENDING', 'Cho xac nhan'],
+            ['CONFIRMED', 'Da xac nhan'],
+            ['ARRIVED', 'Da check-in'],
+            ['CANCELLED', 'Da huy'],
+            ['NO_SHOW', 'Khong den']
+          ].map(([value, label]) => (
+            <button key={value} className={`filter-tab ${filter === value ? 'active' : ''}`} onClick={() => setFilter(value)}>
+              {label}
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Table */}
       <div className="res-admin-list">
-        {filtered.length === 0 && (
-          <div className="card" style={{textAlign:'center', padding:40, color:'#a0aec0'}}>Không có đặt bàn nào</div>
+        {!loading && filtered.length === 0 && (
+          <div className="card" style={{ textAlign: 'center', padding: 40, color: '#a0aec0' }}>Khong co dat ban nao</div>
         )}
-        {filtered.map(r => (
-          <div key={r.id} className="res-admin-card card">
-            {/* Header row */}
-            <div className="res-admin-row" onClick={() => setExpanded(expanded === r.id ? null : r.id)}>
-              <div className="res-col-id">
-                <span className="res-admin-id">{r.id}</span>
-                <span className={`res-status-badge ${statusMap[r.status].cls}`}>
-                  {statusMap[r.status].icon} {statusMap[r.status].label}
-                </span>
-              </div>
-              <div className="res-col-guest">
-                <strong>{r.name}</strong>
-                <span>{r.phone}</span>
-              </div>
-              <div className="res-col-time">
-                <span>📅 {r.date}</span>
-                <span>🕐 {r.time}</span>
-              </div>
-              <div className="res-col-info">
-                <span>👥 {r.guests} người</span>
-                {r.assignedTable && <span>🪑 {r.assignedTable}</span>}
-                {r.preOrder.length > 0 && <span className="preorder-tag">🍽️ {r.preOrder.length} món</span>}
-              </div>
-              <span className="expand-arrow">{expanded === r.id ? '▲' : '▼'}</span>
-            </div>
 
-            {/* Expanded detail */}
-            {expanded === r.id && (
-              <div className="res-admin-detail">
-                {r.note && <div className="res-note">📝 {r.note}</div>}
+        {filtered.map((reservation) => {
+          const status = statusMap[reservation.status] || statusMap.PENDING;
 
-                {r.preOrder.length > 0 && (
-                  <div className="res-preorder-section">
-                    <h4>🍽️ Món đặt trước</h4>
-                    {r.preOrder.map((item, i) => (
-                      <div key={i} className="preorder-item-row">
-                        <span>{item.name} × {item.qty}</span>
-                        <span>{(item.price * item.qty).toLocaleString('vi-VN')}đ</span>
-                      </div>
-                    ))}
-                    <div className="preorder-total-row">
-                      <span>Tổng dự kiến</span>
-                      <strong>{preOrderTotal(r.preOrder).toLocaleString('vi-VN')}đ</strong>
-                    </div>
-                  </div>
-                )}
-
-                {/* Actions */}
-                <div className="res-admin-actions">
-                  {r.status === 'pending' && (
-                    <>
-                      <div className="confirm-row">
-                        <select className="table-select"
-                          value={tableChoice[r.id] || ''}
-                          onChange={e => setTableChoice(prev => ({...prev, [r.id]: e.target.value}))}>
-                          <option value="">-- Chọn bàn --</option>
-                          {TABLES.map(t => <option key={t} value={t}>{t}</option>)}
-                        </select>
-                        <button className="action-btn confirm-btn"
-                          disabled={!tableChoice[r.id]}
-                          onClick={() => update(r.id, { status: 'confirmed', assignedTable: tableChoice[r.id] })}>
-                          ✅ Xác nhận
-                        </button>
-                      </div>
-                      <button className="action-btn cancel-btn"
-                        onClick={() => update(r.id, { status: 'cancelled' })}>
-                        ❌ Hủy đặt bàn
-                      </button>
-                    </>
-                  )}
-                  {r.status === 'confirmed' && (
-                    <div className="confirm-row">
-                      <button className="action-btn checkin-btn"
-                        onClick={() => update(r.id, { status: 'arrived' })}>
-                        🪑 Check-in khách
-                      </button>
-                      <button className="action-btn cancel-btn"
-                        onClick={() => update(r.id, { status: 'cancelled' })}>
-                        ❌ Hủy
-                      </button>
-                    </div>
-                  )}
-                  {(r.status === 'arrived' || r.status === 'cancelled') && (
-                    <button className="action-btn undo-btn"
-                      onClick={() => update(r.id, { status: 'pending', assignedTable: null })}>
-                      ↩ Hoàn tác
-                    </button>
-                  )}
+          return (
+            <div key={reservation.reservationId} className="res-admin-card card">
+              <div className="res-admin-row" onClick={() => setExpanded(expanded === reservation.reservationId ? null : reservation.reservationId)}>
+                <div className="res-col-id">
+                  <span className="res-admin-id">{reservation.reservationCode}</span>
+                  <span className={`res-status-badge ${status.cls}`}>{status.icon} {status.label}</span>
                 </div>
+                <div className="res-col-guest">
+                  <strong>{reservation.customerName}</strong>
+                  <span>{reservation.phone}</span>
+                </div>
+                <div className="res-col-time">
+                  <span>📅 {reservation.reservationDate}</span>
+                  <span>🕐 {String(reservation.reservationTime).slice(0, 5)}</span>
+                </div>
+                <div className="res-col-info">
+                  <span>👥 {reservation.guests} nguoi</span>
+                  {reservation.assignedTable && <span>🪑 {reservation.assignedTable}</span>}
+                  {reservation.preOrderItems?.length > 0 && <span className="preorder-tag">🍽 {reservation.preOrderItems.length} mon</span>}
+                </div>
+                <span className="expand-arrow">{expanded === reservation.reservationId ? '▲' : '▼'}</span>
               </div>
-            )}
-          </div>
-        ))}
+
+              {expanded === reservation.reservationId && (
+                <div className="res-admin-detail">
+                  {reservation.note && <div className="res-note">📝 {reservation.note}</div>}
+
+                  {reservation.preOrderItems?.length > 0 && (
+                    <div className="res-preorder-section">
+                      <h4>🍽 Mon dat truoc</h4>
+                      {reservation.preOrderItems.map((item) => (
+                        <div key={item.preOrderItemId} className="preorder-item-row">
+                          <span>{item.foodName} x {item.quantity}</span>
+                          <span>{Number(item.subtotal || 0).toLocaleString('vi-VN')}đ</span>
+                        </div>
+                      ))}
+                      <div className="preorder-total-row">
+                        <span>Tong du kien</span>
+                        <strong>{preOrderTotal(reservation.preOrderItems).toLocaleString('vi-VN')}đ</strong>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="res-admin-actions">
+                    {reservation.status === 'PENDING' && (
+                      <>
+                        <div className="confirm-row">
+                          <select
+                            className="table-select"
+                            value={tableChoice[reservation.reservationId] || ''}
+                            onChange={(event) => setTableChoice((prev) => ({ ...prev, [reservation.reservationId]: event.target.value }))}
+                          >
+                            <option value="">-- Chon ban --</option>
+                            {TABLES.map((table) => <option key={table} value={table}>{table}</option>)}
+                          </select>
+                          <button
+                            className="action-btn confirm-btn"
+                            disabled={!tableChoice[reservation.reservationId]}
+                            onClick={() => update(reservation, 'CONFIRMED', tableChoice[reservation.reservationId])}
+                          >
+                            ✅ Xac nhan
+                          </button>
+                        </div>
+                        <button className="action-btn cancel-btn" onClick={() => update(reservation, 'CANCELLED')}>✕ Huy dat ban</button>
+                      </>
+                    )}
+
+                    {reservation.status === 'CONFIRMED' && (
+                      <div className="confirm-row">
+                        <button className="action-btn checkin-btn" onClick={() => update(reservation, 'ARRIVED', reservation.assignedTable)}>🪑 Check-in khach</button>
+                        <button className="action-btn cancel-btn" onClick={() => update(reservation, 'CANCELLED')}>✕ Huy</button>
+                      </div>
+                    )}
+
+                    {(reservation.status === 'ARRIVED' || reservation.status === 'CANCELLED' || reservation.status === 'NO_SHOW') && (
+                      <button className="action-btn undo-btn" onClick={() => update(reservation, 'PENDING', '')}>↩ Hoan tac</button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

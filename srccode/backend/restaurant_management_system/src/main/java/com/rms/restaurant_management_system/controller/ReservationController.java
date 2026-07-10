@@ -4,7 +4,6 @@ import com.rms.restaurant_management_system.dto.request.ReservationRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateReservationStatusRequest;
 import com.rms.restaurant_management_system.dto.response.ReservationResponse;
 import com.rms.restaurant_management_system.service.interfaces.ReservationService;
-import com.rms.restaurant_management_system.dto.request.CheckInReservationRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -53,15 +52,8 @@ public class ReservationController {
     }
 
     @DeleteMapping("/{reservationId}")
-    public String cancelReservation(@PathVariable Long reservationId) {
-        reservationService.cancelReservation(reservationId);
-        return "Reservation cancelled successfully";
+    public String deleteReservation(@PathVariable Long reservationId) {
+        reservationService.deleteReservation(reservationId);
+        return "Reservation deleted successfully";
     }
-    @PutMapping("/{reservationId}/check-in")
-public ReservationResponse checkInReservation(
-        @PathVariable Long reservationId,
-        @Valid @RequestBody CheckInReservationRequest request
-) {
-    return reservationService.checkInReservation(reservationId, request);
-}
 }

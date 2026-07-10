@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -21,31 +21,25 @@ public class ReservationResponse {
 
     private Long userId;
 
-    private String username;
-
     private String customerName;
 
-    private String customerPhone;
-
-    private String customerEmail;
+    private String phone;
 
     private LocalDate reservationDate;
 
-    private String reservationTime;
+    private LocalTime reservationTime;
 
-    private Integer numberOfGuests;
+    private Integer guests;
 
     private ReservationStatus status;
 
-    private String note;
-
     private String assignedTable;
 
-    private BigDecimal preOrderTotal;
+    private String note;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private List<ReservationItemResponse> items;
+    private List<ReservationPreOrderItemResponse> preOrderItems;
 }

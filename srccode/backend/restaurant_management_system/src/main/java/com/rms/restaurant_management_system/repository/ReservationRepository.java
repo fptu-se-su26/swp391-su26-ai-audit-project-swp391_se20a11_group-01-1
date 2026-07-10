@@ -12,11 +12,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     Optional<Reservation> findByReservationCode(String reservationCode);
 
-    List<Reservation> findAllByOrderByCreatedAtDesc();
+    List<Reservation> findAllByOrderByReservationDateDescReservationTimeDesc();
 
-    List<Reservation> findByUserUserIdOrderByCreatedAtDesc(Long userId);
+    List<Reservation> findByStatusOrderByReservationDateAscReservationTimeAsc(ReservationStatus status);
 
-    List<Reservation> findByStatusOrderByCreatedAtDesc(ReservationStatus status);
+    List<Reservation> findByUserUserIdOrderByReservationDateDescReservationTimeDesc(Long userId);
 
     List<Reservation> findByReservationDateOrderByReservationTimeAsc(LocalDate reservationDate);
 }

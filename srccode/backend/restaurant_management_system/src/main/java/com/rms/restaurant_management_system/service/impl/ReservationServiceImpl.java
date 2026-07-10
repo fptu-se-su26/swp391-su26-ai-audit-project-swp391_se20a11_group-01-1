@@ -1,17 +1,14 @@
 package com.rms.restaurant_management_system.service.impl;
 
-import com.rms.restaurant_management_system.dto.request.CheckInReservationRequest;
-import com.rms.restaurant_management_system.dto.request.ReservationItemRequest;
+import com.rms.restaurant_management_system.dto.request.ReservationPreOrderItemRequest;
 import com.rms.restaurant_management_system.dto.request.ReservationRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateReservationStatusRequest;
-import com.rms.restaurant_management_system.dto.response.ReservationItemResponse;
+import com.rms.restaurant_management_system.dto.response.ReservationPreOrderItemResponse;
 import com.rms.restaurant_management_system.dto.response.ReservationResponse;
-import com.rms.restaurant_management_system.entity.Food;
 import com.rms.restaurant_management_system.entity.Reservation;
-import com.rms.restaurant_management_system.entity.ReservationItem;
+import com.rms.restaurant_management_system.entity.ReservationPreOrderItem;
 import com.rms.restaurant_management_system.entity.User;
 import com.rms.restaurant_management_system.enums.ReservationStatus;
-import com.rms.restaurant_management_system.repository.FoodRepository;
 import com.rms.restaurant_management_system.repository.ReservationRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import com.rms.restaurant_management_system.service.interfaces.ReservationService;
@@ -20,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +27,10 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
-    private final FoodRepository foodRepository;
 
     @Override
     @Transactional
     public ReservationResponse createReservation(ReservationRequest request) {
-        if (request.getReservationDate().isBefore(LocalDate.now())) {
-            throw new RuntimeException("Reservation date cannot be in the past");
-        }
-
         User user = null;
 
         if (request.getUserId() != null) {
@@ -49,55 +40,38 @@ public class ReservationServiceImpl implements ReservationService {
 
         Reservation reservation = Reservation.builder()
                 .reservationCode(generateReservationCode())
-                .user(user)
-                .customerName(request.getCustomerName())
-                .customerPhone(request.getCustomerPhone())
-                .customerEmail(
-                        request.getCustomerEmail() != null && !request.getCustomerEmail().isBlank()
-                                ? request.getCustomerEmail()
-                                : user != null ? user.getEmail() : null
-                )
+                .customerName(request.getCustomerName().trim())
+                .phone(request.getPhone().trim())
                 .reservationDate(request.getReservationDate())
                 .reservationTime(request.getReservationTime())
-                .numberOfGuests(request.getNumberOfGuests())
-                .note(request.getNote())
-                .assignedTable(null)
+                .guests(request.getGuests())
                 .status(ReservationStatus.PENDING)
-                .preOrderTotal(BigDecimal.ZERO)
-                .items(new ArrayList<>())
+                .note(request.getNote())
+                .user(user)
+                .preOrderItems(new ArrayList<>())
                 .build();
 
-        BigDecimal preOrderTotal = BigDecimal.ZERO;
-
-        if (request.getItems() != null && !request.getItems().isEmpty()) {
-            for (ReservationItemRequest itemRequest : request.getItems()) {
-                Food food = foodRepository.findById(itemRequest.getFoodId())
-                        .orElseThrow(() -> new RuntimeException("Food not found: " + itemRequest.getFoodId()));
-
-                if (!food.getIsAvailable()) {
-                    throw new RuntimeException("Food is not available: " + food.getFoodName());
+        if (request.getPreOrderItems() != null) {
+            for (ReservationPreOrderItemRequest itemRequest : request.getPreOrderItems()) {
+                if (itemRequest.getQuantity() == null || itemRequest.getQuantity() <= 0) {
+                    continue;
                 }
 
-                BigDecimal unitPrice = food.getPrice();
+                BigDecimal unitPrice = itemRequest.getUnitPrice() == null ? BigDecimal.ZERO : itemRequest.getUnitPrice();
                 BigDecimal subtotal = unitPrice.multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
 
-                ReservationItem reservationItem = ReservationItem.builder()
+                ReservationPreOrderItem item = ReservationPreOrderItem.builder()
                         .reservation(reservation)
-                        .foodId(food.getFoodId())
-                        .foodName(food.getFoodName())
-                        .unitPrice(unitPrice)
+                        .foodId(itemRequest.getFoodId())
+                        .foodName(itemRequest.getFoodName())
                         .quantity(itemRequest.getQuantity())
+                        .unitPrice(unitPrice)
                         .subtotal(subtotal)
-                        .imageUrl(food.getImageUrl())
-                        .emoji(food.getEmoji())
                         .build();
 
-                reservation.getItems().add(reservationItem);
-                preOrderTotal = preOrderTotal.add(subtotal);
+                reservation.getPreOrderItems().add(item);
             }
         }
-
-        reservation.setPreOrderTotal(preOrderTotal);
 
         Reservation savedReservation = reservationRepository.save(reservation);
 
@@ -106,7 +80,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationResponse> getAllReservations() {
-        return reservationRepository.findAllByOrderByCreatedAtDesc()
+        return reservationRepository.findAllByOrderByReservationDateDescReservationTimeDesc()
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -122,7 +96,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationResponse> getReservationsByCustomer(Long userId) {
-        return reservationRepository.findByUserUserIdOrderByCreatedAtDesc(userId)
+        return reservationRepository.findByUserUserIdOrderByReservationDateDescReservationTimeDesc(userId)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -138,7 +112,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new RuntimeException("Invalid reservation status: " + status);
         }
 
-        return reservationRepository.findByStatusOrderByCreatedAtDesc(reservationStatus)
+        return reservationRepository.findByStatusOrderByReservationDateAscReservationTimeAsc(reservationStatus)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
@@ -146,19 +120,17 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    public ReservationResponse updateReservationStatus(
-            Long reservationId,
-            UpdateReservationStatusRequest request
-    ) {
+    public ReservationResponse updateReservationStatus(Long reservationId, UpdateReservationStatusRequest request) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        validateStatusTransition(reservation.getStatus(), request.getStatus());
-
         reservation.setStatus(request.getStatus());
 
-        if (request.getStatus() == ReservationStatus.CANCELLED
-                || request.getStatus() == ReservationStatus.NO_SHOW) {
+        if (request.getAssignedTable() != null) {
+            reservation.setAssignedTable(request.getAssignedTable().isBlank() ? null : request.getAssignedTable());
+        }
+
+        if (request.getStatus() == ReservationStatus.PENDING) {
             reservation.setAssignedTable(null);
         }
 
@@ -169,130 +141,41 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Transactional
-    public ReservationResponse checkInReservation(
-            Long reservationId,
-            CheckInReservationRequest request
-    ) {
+    public void deleteReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        if (reservation.getStatus() == ReservationStatus.CANCELLED) {
-            throw new RuntimeException("Cancelled reservation cannot be checked in");
-        }
-
-        if (reservation.getStatus() == ReservationStatus.NO_SHOW) {
-            throw new RuntimeException("No-show reservation cannot be checked in");
-        }
-
-        if (reservation.getStatus() == ReservationStatus.COMPLETED) {
-            throw new RuntimeException("Completed reservation cannot be checked in");
-        }
-
-        if (request.getAssignedTable() == null || request.getAssignedTable().isBlank()) {
-            throw new RuntimeException("Assigned table is required");
-        }
-
-        reservation.setAssignedTable(request.getAssignedTable());
-        reservation.setStatus(ReservationStatus.SEATED);
-
-        Reservation savedReservation = reservationRepository.save(reservation);
-
-        return mapToResponse(savedReservation);
-    }
-
-    @Override
-    @Transactional
-    public void cancelReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-
-        if (reservation.getStatus() == ReservationStatus.COMPLETED) {
-            throw new RuntimeException("Completed reservation cannot be cancelled");
-        }
-
-        reservation.setStatus(ReservationStatus.CANCELLED);
-        reservation.setAssignedTable(null);
-
-        reservationRepository.save(reservation);
-    }
-
-    private void validateStatusTransition(
-            ReservationStatus currentStatus,
-            ReservationStatus newStatus
-    ) {
-        if (currentStatus == ReservationStatus.CANCELLED) {
-            throw new RuntimeException("Cancelled reservation cannot be updated");
-        }
-
-        if (currentStatus == ReservationStatus.COMPLETED) {
-            throw new RuntimeException("Completed reservation cannot be updated");
-        }
-
-        if (currentStatus == newStatus) {
-            return;
-        }
-
-        boolean valid = switch (currentStatus) {
-            case PENDING -> newStatus == ReservationStatus.CONFIRMED
-                    || newStatus == ReservationStatus.CANCELLED;
-            case CONFIRMED -> newStatus == ReservationStatus.SEATED
-                    || newStatus == ReservationStatus.CANCELLED
-                    || newStatus == ReservationStatus.NO_SHOW;
-            case SEATED -> newStatus == ReservationStatus.COMPLETED;
-            case COMPLETED, CANCELLED, NO_SHOW -> false;
-        };
-
-        if (!valid) {
-            throw new RuntimeException(
-                    "Invalid reservation status transition from "
-                            + currentStatus
-                            + " to "
-                            + newStatus
-            );
-        }
+        reservationRepository.delete(reservation);
     }
 
     private ReservationResponse mapToResponse(Reservation reservation) {
-        List<ReservationItemResponse> itemResponses = reservation.getItems()
+        List<ReservationPreOrderItemResponse> items = reservation.getPreOrderItems()
                 .stream()
-                .map(item -> new ReservationItemResponse(
-                        item.getReservationItemId(),
+                .map(item -> new ReservationPreOrderItemResponse(
+                        item.getPreOrderItemId(),
                         item.getFoodId(),
                         item.getFoodName(),
-                        item.getUnitPrice(),
                         item.getQuantity(),
-                        item.getSubtotal(),
-                        item.getImageUrl(),
-                        item.getEmoji()
+                        item.getUnitPrice(),
+                        item.getSubtotal()
                 ))
                 .toList();
-
-        Long userId = reservation.getUser() != null
-                ? reservation.getUser().getUserId()
-                : null;
-
-        String username = reservation.getUser() != null
-                ? reservation.getUser().getUsername()
-                : null;
 
         return new ReservationResponse(
                 reservation.getReservationId(),
                 reservation.getReservationCode(),
-                userId,
-                username,
+                reservation.getUser() == null ? null : reservation.getUser().getUserId(),
                 reservation.getCustomerName(),
-                reservation.getCustomerPhone(),
-                reservation.getCustomerEmail(),
+                reservation.getPhone(),
                 reservation.getReservationDate(),
                 reservation.getReservationTime(),
-                reservation.getNumberOfGuests(),
+                reservation.getGuests(),
                 reservation.getStatus(),
-                reservation.getNote(),
                 reservation.getAssignedTable(),
-                reservation.getPreOrderTotal(),
+                reservation.getNote(),
                 reservation.getCreatedAt(),
                 reservation.getUpdatedAt(),
-                itemResponses
+                items
         );
     }
 

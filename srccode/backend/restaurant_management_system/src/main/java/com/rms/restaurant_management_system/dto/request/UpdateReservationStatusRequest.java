@@ -11,4 +11,6 @@ public class UpdateReservationStatusRequest {
 
     @NotNull(message = "Reservation status is required")
     private ReservationStatus status;
+
+    private String assignedTable;
 }

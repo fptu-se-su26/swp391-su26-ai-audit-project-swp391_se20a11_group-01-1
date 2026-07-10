@@ -1,11 +1,14 @@
 package com.rms.restaurant_management_system.dto.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Getter
@@ -14,27 +17,24 @@ public class ReservationRequest {
 
     private Long userId;
 
-    @NotNull(message = "Reservation date is required")
-    private LocalDate reservationDate;
-
-    @NotBlank(message = "Reservation time is required")
-    private String reservationTime;
-
-    @NotNull(message = "Number of guests is required")
-    @Min(value = 1, message = "Number of guests must be at least 1")
-    @Max(value = 20, message = "Number of guests must not exceed 20")
-    private Integer numberOfGuests;
-
     @NotBlank(message = "Customer name is required")
     private String customerName;
 
-    @NotBlank(message = "Customer phone is required")
-    private String customerPhone;
+    @NotBlank(message = "Phone is required")
+    private String phone;
 
-    private String customerEmail;
+    @NotNull(message = "Reservation date is required")
+    private LocalDate reservationDate;
+
+    @NotNull(message = "Reservation time is required")
+    private LocalTime reservationTime;
+
+    @NotNull(message = "Guests is required")
+    @Min(value = 1, message = "Guests must be at least 1")
+    private Integer guests;
 
     private String note;
 
     @Valid
-    private List<ReservationItemRequest> items;
+    private List<ReservationPreOrderItemRequest> preOrderItems;
 }
