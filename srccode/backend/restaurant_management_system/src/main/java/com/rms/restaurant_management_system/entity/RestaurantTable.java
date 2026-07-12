@@ -19,31 +19,36 @@ public class RestaurantTable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tableId;
 
-    @Column(nullable = false, unique = true, columnDefinition = "NVARCHAR(50)")
+    @Column(nullable = false, columnDefinition = "NVARCHAR(50)")
     private String tableName;
 
     @Column(nullable = false)
     private Integer capacity;
 
+    @Builder.Default
+    @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
-    private TableStatus status;
-
-    @Column(columnDefinition = "NVARCHAR(100)")
-    private String currentOrderCode;
-
-    @Column(columnDefinition = "NVARCHAR(150)")
-    private String reservedBy;
-
-    @Column(columnDefinition = "NVARCHAR(100)")
-    private String mergedInto;
-
-    @Column(columnDefinition = "NVARCHAR(500)")
-    private String mergedWith;
+    private TableStatus status = TableStatus.EMPTY;
 
     @Builder.Default
     @Column(nullable = false)
     private Boolean isActive = true;
+
+    // Mã đơn hàng hiện tại (nếu bàn đang có khách)
+    @Column(length = 50)
+    private String currentOrderCode;
+
+    // Thông tin người đặt trước
+    @Column(columnDefinition = "NVARCHAR(200)")
+    private String reservedBy;
+
+    // Bàn này đang được gộp vào bàn nào (tên bàn chính)
+    @Column(columnDefinition = "NVARCHAR(50)")
+    private String mergedInto;
+
+    // Bàn chính đã gộp với những bàn nào (tên bàn phụ, phân cách bởi dấu phẩy)
+    @Column(columnDefinition = "NVARCHAR(200)")
+    private String mergedWith;
 
     @Builder.Default
     @Column(nullable = false)

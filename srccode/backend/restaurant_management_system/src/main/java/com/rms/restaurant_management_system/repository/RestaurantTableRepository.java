@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface RestaurantTableRepository extends JpaRepository<RestaurantTable, Long> {
 
-    Optional<RestaurantTable> findByTableName(String tableName);
-
     boolean existsByTableName(String tableName);
+
+    Optional<RestaurantTable> findByTableName(String tableName);
 
     List<RestaurantTable> findByIsActiveTrueOrderByTableIdAsc();
 
