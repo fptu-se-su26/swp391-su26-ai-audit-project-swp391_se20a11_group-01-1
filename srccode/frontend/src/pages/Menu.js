@@ -58,6 +58,39 @@ function Menu() {
     return fallback;
   };
 
+  const trimToEmpty = (value) => (value || '').trim();
+
+  const isValidImageUrl = (value) => {
+    if (!value) {
+      return true;
+    }
+
+    if (value.startsWith('data:image/')) {
+      return true;
+    }
+
+    try {
+      const url = new URL(value);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const getFoodSaveErrorMessage = (error) => {
+    const responseData = error?.response?.data;
+
+    if (typeof responseData === 'string' && responseData.trim()) {
+      return responseData;
+    }
+
+    if (responseData?.message) {
+      return responseData.message;
+    }
+
+    return 'Không thể lưu món ăn. Vui lòng kiểm tra dữ liệu hoặc backend.';
+  };
+
   const mapFoodFromApi = (food) => ({
     id: food.foodId,
     name: food.foodName || '',
@@ -77,7 +110,9 @@ function Menu() {
       setLoadingCategories(true);
 
       const data = await getAllCategories();
-      const activeCategories = (data || []).filter(cat => cat.isActive === true || cat.active === true);
+      const activeCategories = (data || []).filter(
+        cat => cat.isActive === true || cat.active === true
+      );
 
       setCategories(activeCategories);
 
@@ -159,28 +194,59 @@ function Menu() {
   const handleSave = async (e) => {
     e.preventDefault();
 
+    const foodName = trimToEmpty(form.name);
+    const description = trimToEmpty(form.desc);
+    const imageUrl = trimToEmpty(form.imageUrl);
+    const emoji = trimToEmpty(form.img);
+    const price = Number(form.price);
+
     if (!form.categoryId) {
       alert('Vui lòng chọn danh mục.');
       return;
     }
 
-    if (!form.name.trim()) {
+    if (!foodName) {
       alert('Vui lòng nhập tên món.');
       return;
     }
 
-    if (Number(form.price) <= 0) {
+    if (foodName.length > 150) {
+      alert('Tên món không được vượt quá 150 ký tự.');
+      return;
+    }
+
+    if (!Number.isFinite(price) || price <= 0) {
       alert('Giá món phải lớn hơn 0.');
+      return;
+    }
+
+    if (description.length > 500) {
+      alert('Mô tả món không được vượt quá 500 ký tự.');
+      return;
+    }
+
+    if (imageUrl.length > 500) {
+      alert('URL ảnh không được vượt quá 500 ký tự.');
+      return;
+    }
+
+    if (!isValidImageUrl(imageUrl)) {
+      alert('URL ảnh không hợp lệ. Vui lòng dùng liên kết http hoặc https.');
+      return;
+    }
+
+    if (emoji.length > 50) {
+      alert('Icon món không được vượt quá 50 ký tự.');
       return;
     }
 
     try {
       const foodData = {
-        foodName: form.name.trim(),
-        description: form.desc,
-        price: Number(form.price),
-        imageUrl: form.imageUrl,
-        emoji: form.img || '🍽️',
+        foodName,
+        description,
+        price,
+        imageUrl,
+        emoji: emoji || '🍽️',
         rating: editItem ? editItem.rating : 0,
         orders: editItem ? editItem.orders : 0,
         isAvailable: form.available,
@@ -199,7 +265,7 @@ function Menu() {
       setEditItem(null);
     } catch (error) {
       console.error('Lỗi khi lưu món ăn:', error);
-      alert(getApiMessage(error.response?.data, 'Không thể lưu món ăn. Vui lòng kiểm tra backend.'));
+      alert(getFoodSaveErrorMessage(error));
     }
   };
 
@@ -243,9 +309,16 @@ function Menu() {
     const reader = new FileReader();
 
     reader.onload = (ev) => {
+      const imageData = ev.target.result;
+
+      if (imageData.length > 500) {
+        alert('Ảnh upload quá lớn để lưu vào trường imageUrl hiện tại. Vui lòng dùng URL ảnh ngắn hơn 500 ký tự.');
+        return;
+      }
+
       setForm(f => ({
         ...f,
-        imageUrl: ev.target.result,
+        imageUrl: imageData,
         img: ''
       }));
     };
@@ -552,6 +625,23 @@ function Menu() {
                     ✕ Xóa ảnh
                   </button>
                 )}
+
+                <input
+                  className="form-input image-url-input"
+                  placeholder="Dán URL ảnh món ăn..."
+                  value={form.imageUrl.startsWith('data:') ? '' : form.imageUrl}
+                  onChange={e =>
+                    setForm({
+                      ...form,
+                      imageUrl: e.target.value,
+                      img: e.target.value ? '' : form.img
+                    })
+                  }
+                />
+
+                <p className="form-hint">
+                  Có thể bỏ trống ảnh hoặc dùng URL http/https ngắn hơn 500 ký tự.
+                </p>
               </div>
 
               <div className="form-row-2">
