@@ -160,3 +160,16 @@
 .form-input:focus { border-color: #e85d04; background: white; outline: none; }
 .modal-btns { display: flex; gap: 10px; margin-top: 16px; }
 .btn-cancel { padding: 10px 20px; background: #f5f6fa; color: #718096; border-radius: 8px; font-size: 14px; }
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}

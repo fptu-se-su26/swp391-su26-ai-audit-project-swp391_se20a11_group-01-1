@@ -45,17 +45,11 @@ import StaffOrders from './pages/staff/StaffOrders';
 import StaffReservations from './pages/staff/StaffReservations';
 import StaffCustomers from './pages/staff/StaffCustomers';
 import TableQRCode from './pages/staff/TableQRCode';
-<<<<<<< Updated upstream
-=======
 import StaffPayments from './pages/staff/StaffPayments';
->>>>>>> Stashed changes
 
 // Kitchen pages
 import KitchenQueue from './pages/kitchen/KitchenQueue';
 import KitchenHistory from './pages/kitchen/KitchenHistory';
-
-// AI
-import AIAnalytics from './pages/AIAnalytics';
 
 function App() {
   return (
@@ -117,27 +111,10 @@ function App() {
                   <Route path="vouchers" element={<AdminVouchers />} />
                   <Route path="feedback" element={<AdminFeedback />} />
                   <Route path="reservations" element={<AdminReservations />} />
-                  {/* <Route path="ai" element={<AIAnalytics />} /> */}
                 </Route>
 
                 {/* Staff */}
                 <Route
-<<<<<<< Updated upstream
-                    path="/staff"
-                    element={
-                      <PrivateRoute roles={['staff']}>
-                        <StaffLayout />
-                      </PrivateRoute>
-                    }
-                  >
-                    <Route index element={<Navigate to="/staff/tables" replace />} />
-                    <Route path="tables" element={<StaffTables />} />
-                    <Route path="reservations" element={<StaffReservations />} />
-                    <Route path="orders" element={<StaffOrders />} />
-                    <Route path="customers" element={<StaffCustomers />} />
-                    <Route path="table-qr" element={<TableQRCode />} />
-                  </Route>
-=======
                   path="/staff"
                   element={
                     <PrivateRoute roles={['staff']}>
@@ -153,7 +130,6 @@ function App() {
                   <Route path="table-qr" element={<TableQRCode />} />
                   <Route path="payments" element={<StaffPayments />} />
                 </Route>
->>>>>>> Stashed changes
 
                 {/* Kitchen */}
                 <Route
