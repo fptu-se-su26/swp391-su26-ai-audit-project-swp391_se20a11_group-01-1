@@ -44,18 +44,65 @@ function Menu() {
     fetchFoods();
   }, []);
 
+  const getApiMessage = (data, fallback) => {
+    if (!data) return fallback;
+
+    if (typeof data === 'string') {
+      return data;
+    }
+
+    if (typeof data === 'object') {
+      return data.message || data.error || data.detail || fallback;
+    }
+
+    return fallback;
+  };
+
+  const trimToEmpty = (value) => (value || '').trim();
+
+  const isValidImageUrl = (value) => {
+    if (!value) {
+      return true;
+    }
+
+    if (value.startsWith('data:image/')) {
+      return true;
+    }
+
+    try {
+      const url = new URL(value);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const getFoodSaveErrorMessage = (error) => {
+    const responseData = error?.response?.data;
+
+    if (typeof responseData === 'string' && responseData.trim()) {
+      return responseData;
+    }
+
+    if (responseData?.message) {
+      return responseData.message;
+    }
+
+    return 'Không thể lưu món ăn. Vui lòng kiểm tra dữ liệu hoặc backend.';
+  };
+
   const mapFoodFromApi = (food) => ({
     id: food.foodId,
-    name: food.foodName,
-    desc: food.description,
-    price: Number(food.price),
-    imageUrl: food.imageUrl,
+    name: food.foodName || '',
+    desc: food.description || '',
+    price: Number(food.price || 0),
+    imageUrl: food.imageUrl || '',
     img: food.emoji || '🍽️',
     rating: food.rating || 0,
     orders: food.orders || 0,
-    available: food.isAvailable,
+    available: food.isAvailable ?? food.available ?? true,
     categoryId: food.categoryId,
-    category: food.categoryName
+    category: food.categoryName || 'Chưa phân loại'
   });
 
   const fetchCategories = async () => {
@@ -63,7 +110,9 @@ function Menu() {
       setLoadingCategories(true);
 
       const data = await getAllCategories();
-      const activeCategories = data.filter(cat => cat.isActive === true);
+      const activeCategories = (data || []).filter(
+        cat => cat.isActive === true || cat.active === true
+      );
 
       setCategories(activeCategories);
 
@@ -75,7 +124,7 @@ function Menu() {
       }
     } catch (error) {
       console.error('Lỗi khi lấy danh mục:', error);
-      alert('Không thể tải danh mục từ backend.');
+      alert(getApiMessage(error.response?.data, 'Không thể tải danh mục từ backend.'));
     } finally {
       setLoadingCategories(false);
     }
@@ -86,10 +135,10 @@ function Menu() {
       setLoadingFoods(true);
 
       const data = await getAllFoods();
-      setItems(data.map(mapFoodFromApi));
+      setItems((data || []).map(mapFoodFromApi));
     } catch (error) {
       console.error('Lỗi khi lấy món ăn:', error);
-      alert('Không thể tải món ăn từ backend.');
+      alert(getApiMessage(error.response?.data, 'Không thể tải món ăn từ backend.'));
     } finally {
       setLoadingFoods(false);
     }
@@ -99,8 +148,18 @@ function Menu() {
   const allCategories = ['Tất cả', ...categoryNames];
 
   const filtered = items.filter(item => {
-    const matchCat = activeCategory === 'Tất cả' || item.category === activeCategory;
-    const matchSearch = item.name.toLowerCase().includes(search.toLowerCase());
+    const keyword = search.trim().toLowerCase();
+
+    const matchCat =
+      activeCategory === 'Tất cả' ||
+      item.category === activeCategory;
+
+    const matchSearch =
+      !keyword ||
+      item.name.toLowerCase().includes(keyword) ||
+      item.category.toLowerCase().includes(keyword) ||
+      item.desc.toLowerCase().includes(keyword);
+
     return matchCat && matchSearch;
   });
   const trimToEmpty = (value) => (value || '').trim();
@@ -219,7 +278,7 @@ function Menu() {
         description,
         price,
         imageUrl,
-        emoji,
+        emoji: emoji || '🍽️',
         rating: editItem ? editItem.rating : 0,
         orders: editItem ? editItem.orders : 0,
         isAvailable: form.available,
@@ -254,7 +313,7 @@ function Menu() {
       setItems(prev => prev.filter(i => i.id !== id));
     } catch (error) {
       console.error('Lỗi khi xóa món ăn:', error);
-      alert('Không thể xóa món ăn.');
+      alert(getApiMessage(error.response?.data, 'Không thể xóa món ăn.'));
     }
   };
 
@@ -268,7 +327,7 @@ function Menu() {
       );
     } catch (error) {
       console.error('Lỗi khi đổi trạng thái món:', error);
-      alert('Không thể đổi trạng thái món ăn.');
+      alert(getApiMessage(error.response?.data, 'Không thể đổi trạng thái món ăn.'));
     }
   };
 
@@ -308,7 +367,7 @@ function Menu() {
       return;
     }
 
-    if (categoryNames.includes(categoryName)) {
+    if (categoryNames.some(name => name.toLowerCase() === categoryName.toLowerCase())) {
       alert('Danh mục này đã tồn tại.');
       return;
     }
@@ -332,7 +391,7 @@ function Menu() {
       }
     } catch (error) {
       console.error('Lỗi khi thêm danh mục:', error);
-      alert('Không thể thêm danh mục. Vui lòng kiểm tra backend.');
+      alert(getApiMessage(error.response?.data, 'Không thể thêm danh mục. Vui lòng kiểm tra backend.'));
     }
   };
 
@@ -358,9 +417,11 @@ function Menu() {
     try {
       await deleteCategoryApi(selectedCategory.categoryId);
 
-      setCategories(prev =>
-        prev.filter(c => c.categoryId !== selectedCategory.categoryId)
+      const nextCategories = categories.filter(
+        c => c.categoryId !== selectedCategory.categoryId
       );
+
+      setCategories(nextCategories);
 
       if (activeCategory === cat) {
         setActiveCategory('Tất cả');
@@ -369,12 +430,12 @@ function Menu() {
       if (Number(form.categoryId) === selectedCategory.categoryId) {
         setForm(prev => ({
           ...prev,
-          categoryId: categories[0]?.categoryId || ''
+          categoryId: nextCategories[0]?.categoryId || ''
         }));
       }
     } catch (error) {
       console.error('Lỗi khi xóa danh mục:', error);
-      alert('Không thể xóa danh mục. Vui lòng kiểm tra backend.');
+      alert(getApiMessage(error.response?.data, 'Không thể xóa danh mục. Vui lòng kiểm tra backend.'));
     }
   };
 
@@ -461,7 +522,7 @@ function Menu() {
           <div className="menu-toolbar">
             <input
               className="search-input"
-              placeholder="🔍  Tìm món ăn..."
+              placeholder="🔍  Tìm món ăn, danh mục, mô tả..."
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
@@ -678,6 +739,8 @@ function Menu() {
                   <input
                     className="form-input"
                     type="number"
+                    min="1000"
+                    step="1000"
                     value={form.price}
                     onChange={e =>
                       setForm({

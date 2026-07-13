@@ -5,6 +5,8 @@ import com.rms.restaurant_management_system.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -12,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping
+    public List<UserResponse> getAllUsers() {
+        return userService.getAllUsers();
+    }
 
     @GetMapping("/profile")
     public UserResponse getProfileByEmail(@RequestParam String email) {
