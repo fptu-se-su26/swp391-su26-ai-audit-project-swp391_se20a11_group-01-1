@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from 'react';
 import API from '../services/api';
 
@@ -7,10 +6,10 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
-      const savedUser = localStorage.getItem('user');
+      const savedUser = sessionStorage.getItem('user');
       return savedUser ? JSON.parse(savedUser) : null;
     } catch (error) {
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('user');
       return null;
     }
   });
@@ -45,7 +44,7 @@ export function AuthProvider({ children }) {
       const userData = response.data;
 
       setUser(userData);
-      localStorage.setItem('user', JSON.stringify(userData));
+      sessionStorage.setItem('user', JSON.stringify(userData));
 
       return {
         success: true,
@@ -125,6 +124,11 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     setUser(null);
+
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('restaurant_user');
+
+    // Xóa thêm dữ liệu cũ trong localStorage để tránh bị đọc nhầm từ bản cũ
     localStorage.removeItem('user');
     localStorage.removeItem('restaurant_user');
   };
@@ -171,4 +175,3 @@ export function AuthProvider({ children }) {
 export function useAuth() {
   return useContext(AuthContext);
 }
-
