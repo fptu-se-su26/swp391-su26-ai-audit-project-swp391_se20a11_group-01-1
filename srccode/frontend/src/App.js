@@ -44,6 +44,7 @@ import StaffTables from './pages/staff/StaffTables';
 import StaffOrders from './pages/staff/StaffOrders';
 import StaffReservations from './pages/staff/StaffReservations';
 import StaffCustomers from './pages/staff/StaffCustomers';
+import TableQRCode from './pages/staff/TableQRCode';
 
 // Kitchen pages
 import KitchenQueue from './pages/kitchen/KitchenQueue';
@@ -103,6 +104,7 @@ function App() {
                   <Route index element={<Navigate to="/dashboard" replace />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="tables" element={<Tables />} />
+                  <Route path="table-qr" element={<TableQRCode />} />
                   <Route path="menu" element={<Menu />} />
                   <Route path="orders" element={<Orders />} />
                   <Route path="staff" element={<Staff />} />
@@ -116,19 +118,20 @@ function App() {
 
                 {/* Staff */}
                 <Route
-                  path="/staff"
-                  element={
-                    <PrivateRoute roles={['staff']}>
-                      <StaffLayout />
-                    </PrivateRoute>
-                  }
-                >
-                  <Route index element={<Navigate to="/staff/tables" replace />} />
-                  <Route path="tables" element={<StaffTables />} />
-                  <Route path="reservations" element={<StaffReservations />} />
-                  <Route path="orders" element={<StaffOrders />} />
-                  <Route path="customers" element={<StaffCustomers />} />
-                </Route>
+                    path="/staff"
+                    element={
+                      <PrivateRoute roles={['staff']}>
+                        <StaffLayout />
+                      </PrivateRoute>
+                    }
+                  >
+                    <Route index element={<Navigate to="/staff/tables" replace />} />
+                    <Route path="tables" element={<StaffTables />} />
+                    <Route path="reservations" element={<StaffReservations />} />
+                    <Route path="orders" element={<StaffOrders />} />
+                    <Route path="customers" element={<StaffCustomers />} />
+                    <Route path="table-qr" element={<TableQRCode />} />
+                  </Route>
 
                 {/* Kitchen */}
                 <Route

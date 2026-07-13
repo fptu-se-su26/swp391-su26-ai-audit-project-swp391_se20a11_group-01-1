@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { QRCodeCanvas } from 'qrcode.react';
 import API from '../../services/api';
 import './StaffOrders.css';
 
 const statusFlow = {
-  PENDING: 'CONFIRMED',
-  READY: 'COMPLETED'
+  PENDING: 'CONFIRMED'
 };
 
 const statusMap = {
@@ -81,7 +81,7 @@ function InvoiceModal({ order, onClose }) {
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="invoice-modal card" onClick={(e) => e.stopPropagation()}>
+      <div className="invoice-modal card" onClick={(event) => event.stopPropagation()}>
         <div className="invoice-header">
           <h2>🍜 Cái Gì Cũng Không Có</h2>
           <p>123 Đường ABC, Quận 1, TP.HCM</p>
@@ -182,10 +182,137 @@ function InvoiceModal({ order, onClose }) {
   );
 }
 
+function PaymentModal({
+  order,
+  actionLoadingId,
+  formatMoney,
+  onClose,
+  onPay,
+  payosPayment,
+  onOpenPayOS
+}) {
+  const isLoading = actionLoadingId === order.orderId;
+
+  const tableDisplay =
+    order.tableName ||
+    (order.tableId ? `Bàn ${order.tableId}` : 'Không có bàn');
+
+  const customerDisplay =
+    order.customerName ||
+    order.username ||
+    'Khách vãng lai';
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="invoice-modal card" onClick={(event) => event.stopPropagation()}>
+        <div className="invoice-header">
+          <h2>💳 Thanh toán đơn hàng</h2>
+
+          <p>
+            Mã đơn: <strong>{order.orderCode || `#${order.orderId}`}</strong>
+          </p>
+
+          <p>
+            Bàn: <strong>{tableDisplay}</strong>
+          </p>
+
+          <p>
+            Khách: <strong>{customerDisplay}</strong>
+          </p>
+
+          {order.customerPhone && (
+            <p>
+              SĐT: <strong>{order.customerPhone}</strong>
+            </p>
+          )}
+
+          <p>
+            Tổng tiền: <strong>{formatMoney(order.totalAmount)}đ</strong>
+          </p>
+        </div>
+
+        <div className="invoice-divider"></div>
+
+        {!payosPayment ? (
+          <div className="invoice-actions">
+            <button
+              className="print-real-btn"
+              disabled={isLoading}
+              onClick={() => onPay(order, 'CASH')}
+            >
+              {isLoading ? 'Đang xử lý...' : '💵 Tiền mặt'}
+            </button>
+
+            <button
+              className="print-real-btn"
+              disabled={isLoading}
+              onClick={() => onPay(order, 'QR')}
+            >
+              {isLoading ? 'Đang tạo QR...' : '📱 QR PayOS'}
+            </button>
+
+            <button
+              className="modal-cancel"
+              disabled={isLoading}
+              onClick={onClose}
+            >
+              Đóng
+            </button>
+          </div>
+        ) : (
+          <div className="payos-qr-box">
+            <h3>📱 Quét mã QR để thanh toán</h3>
+
+            <div className="qr-wrapper">
+              <QRCodeCanvas
+                value={payosPayment.qrCode || payosPayment.checkoutUrl}
+                size={250}
+                includeMargin={true}
+              />
+            </div>
+
+            <p className="qr-amount">
+              Số tiền: <strong>{formatMoney(payosPayment.amount)}đ</strong>
+            </p>
+
+            <p className="qr-status">
+              Trạng thái: <strong>{payosPayment.status}</strong>
+            </p>
+
+            <p className="qr-note">
+              Sau khi khách thanh toán thành công, PayOS webhook sẽ tự cập nhật đơn hàng.
+              Màn hình này sẽ tự kiểm tra trạng thái mỗi 3 giây.
+            </p>
+
+            <div className="invoice-actions">
+              <button
+                className="print-real-btn"
+                onClick={onOpenPayOS}
+              >
+                Mở trang PayOS
+              </button>
+
+              <button
+                className="modal-cancel"
+                onClick={onClose}
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function StaffOrders() {
   const [orders, setOrders] = useState([]);
   const [filter, setFilter] = useState('all');
+
   const [showInvoice, setShowInvoice] = useState(null);
+  const [paymentOrder, setPaymentOrder] = useState(null);
+  const [payosPayment, setPayosPayment] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [actionLoadingId, setActionLoadingId] = useState(null);
@@ -194,6 +321,37 @@ function StaffOrders() {
   useEffect(() => {
     fetchOrders();
   }, []);
+
+  useEffect(() => {
+    if (!payosPayment || !paymentOrder) {
+      return;
+    }
+
+    const intervalId = setInterval(async () => {
+      try {
+        const response = await API.get(`/orders/${paymentOrder.orderId}`);
+        const latestOrder = response.data;
+
+        setOrders((prev) =>
+          prev.map((item) =>
+            item.orderId === latestOrder.orderId ? latestOrder : item
+          )
+        );
+
+        if (latestOrder.status === 'COMPLETED') {
+          alert('Thanh toán thành công. Đơn hàng đã hoàn thành.');
+
+          setPaymentOrder(null);
+          setPayosPayment(null);
+          fetchOrders();
+        }
+      } catch (error) {
+        console.error('Check payment status error:', error);
+      }
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [payosPayment, paymentOrder]);
 
   const getApiMessage = (data, fallback) => {
     if (!data) return fallback;
@@ -255,6 +413,77 @@ function StaffOrders() {
       );
     } finally {
       setActionLoadingId(null);
+    }
+  };
+
+  const payOrder = async (order, method) => {
+    setActionLoadingId(order.orderId);
+    setError('');
+
+    try {
+      if (method === 'CASH') {
+        await API.post(`/payments/orders/${order.orderId}`, {
+          method: 'CASH',
+          transactionCode: `CASH-${order.orderCode || order.orderId}`,
+          note: 'Khách thanh toán tiền mặt tại quầy'
+        });
+
+        alert('Thanh toán tiền mặt thành công');
+
+        setOrders((prev) =>
+          prev.map((item) =>
+            item.orderId === order.orderId
+              ? {
+                  ...item,
+                  status: 'COMPLETED'
+                }
+              : item
+          )
+        );
+
+        setPaymentOrder(null);
+        setPayosPayment(null);
+        fetchOrders();
+        return;
+      }
+
+      if (method === 'QR') {
+        const response = await API.post(`/payments/orders/${order.orderId}/payos`);
+        const paymentData = response.data;
+
+        if (!paymentData?.qrCode && !paymentData?.checkoutUrl) {
+          alert('Không lấy được mã QR PayOS');
+          return;
+        }
+
+        setPayosPayment(paymentData);
+
+        alert(
+          'Đã tạo mã QR PayOS. Khách quét QR để thanh toán. Sau khi PayOS xác nhận tiền vào tài khoản, đơn sẽ tự chuyển hoàn thành.'
+        );
+      }
+    } catch (error) {
+      console.error('Payment error:', error);
+
+      setError(
+        getApiMessage(
+          error.response?.data,
+          'Không thể thanh toán đơn hàng'
+        )
+      );
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const closePaymentModal = () => {
+    setPaymentOrder(null);
+    setPayosPayment(null);
+  };
+
+  const openPayOSPage = () => {
+    if (payosPayment?.checkoutUrl) {
+      window.open(payosPayment.checkoutUrl, '_blank');
     }
   };
 
@@ -326,10 +555,6 @@ function StaffOrders() {
   const getActionLabel = (status) => {
     if (status === 'PENDING') {
       return '✓ Xác nhận';
-    }
-
-    if (status === 'READY') {
-      return '✓ Hoàn thành';
     }
 
     return '✓ Cập nhật';
@@ -468,6 +693,19 @@ function StaffOrders() {
                       </button>
                     )}
 
+                    {order.status === 'READY' && (
+                      <button
+                        className="advance-btn"
+                        disabled={isActionLoading}
+                        onClick={() => {
+                          setPaymentOrder(order);
+                          setPayosPayment(null);
+                        }}
+                      >
+                        💳 Thanh toán
+                      </button>
+                    )}
+
                     {order.status !== 'COMPLETED' && order.status !== 'CANCELLED' && (
                       <button
                         className="cancel-order-btn"
@@ -478,7 +716,10 @@ function StaffOrders() {
                       </button>
                     )}
 
-                    <button className="print-btn" onClick={() => setShowInvoice(order)}>
+                    <button
+                      className="print-btn"
+                      onClick={() => setShowInvoice(order)}
+                    >
                       🖨️ In HĐ
                     </button>
                   </div>
@@ -493,6 +734,18 @@ function StaffOrders() {
         <InvoiceModal
           order={showInvoice}
           onClose={() => setShowInvoice(null)}
+        />
+      )}
+
+      {paymentOrder && (
+        <PaymentModal
+          order={paymentOrder}
+          actionLoadingId={actionLoadingId}
+          formatMoney={formatMoney}
+          onClose={closePaymentModal}
+          onPay={payOrder}
+          payosPayment={payosPayment}
+          onOpenPayOS={openPayOSPage}
         />
       )}
     </div>
