@@ -21,6 +21,13 @@ function TableMenu() {
   const [createdOrder, setCreatedOrder] = useState(null);
   const [error, setError] = useState('');
 
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [feedbackRating, setFeedbackRating] = useState(5);
+  const [feedbackContent, setFeedbackContent] = useState('');
+  const [feedbackName, setFeedbackName] = useState('');
+  const [feedbackPhone, setFeedbackPhone] = useState('');
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
+
   useEffect(() => {
     fetchInitialData();
   }, [tableId]);
@@ -183,6 +190,60 @@ function TableMenu() {
     }
   };
 
+  const openFeedback = () => {
+    setFeedbackName(customerName || createdOrder?.customerName || '');
+    setFeedbackPhone(customerPhone || createdOrder?.customerPhone || '');
+    setShowFeedback(true);
+  };
+
+  const handleSubmitFeedback = async (e) => {
+    e.preventDefault();
+
+    if (!feedbackContent.trim()) {
+      alert('Vui lòng nhập nội dung phản hồi.');
+      return;
+    }
+
+    try {
+      setFeedbackLoading(true);
+
+      const tableName = table?.tableName || createdOrder?.tableName || `Bàn ${tableId}`;
+      const orderCode = createdOrder?.orderCode;
+
+      const prefix = orderCode
+        ? `[${tableName} - Đơn ${orderCode}]`
+        : `[${tableName}]`;
+
+      await API.post('/feedbacks', {
+        userId: null,
+        customerName: feedbackName.trim() || `Khách ${tableName}`,
+        customerEmail: feedbackPhone.trim()
+          ? `${feedbackPhone.trim()}@qr-customer.local`
+          : '',
+        rating: Number(feedbackRating),
+        content: `${prefix} ${feedbackContent.trim()}`
+      });
+
+      alert('Cảm ơn bạn đã gửi phản hồi.');
+
+      setFeedbackRating(5);
+      setFeedbackContent('');
+      setFeedbackName('');
+      setFeedbackPhone('');
+      setShowFeedback(false);
+    } catch (error) {
+      console.error('Submit QR feedback error:', error);
+      alert(
+        getApiMessage(
+          error.response?.data,
+          'Không thể gửi phản hồi. Vui lòng thử lại.'
+        )
+      );
+    } finally {
+      setFeedbackLoading(false);
+    }
+  };
+
   const formatMoney = (value) => {
     return Number(value || 0).toLocaleString('vi-VN');
   };
@@ -241,13 +302,87 @@ function TableMenu() {
             </div>
           </div>
 
-          <button
-            className="primary-btn"
-            onClick={() => setCreatedOrder(null)}
-          >
-            Đặt thêm món
-          </button>
+          <div className="success-actions">
+            <button
+              className="primary-btn"
+              onClick={() => setCreatedOrder(null)}
+            >
+              Đặt thêm món
+            </button>
+
+            <button
+              className="feedback-btn"
+              onClick={openFeedback}
+            >
+              💬 Gửi phản hồi
+            </button>
+          </div>
         </div>
+
+        {showFeedback && (
+          <div className="qr-feedback-overlay" onClick={() => setShowFeedback(false)}>
+            <div className="qr-feedback-modal" onClick={(e) => e.stopPropagation()}>
+              <div className="qr-feedback-header">
+                <h2>Gửi phản hồi</h2>
+                <button onClick={() => setShowFeedback(false)}>✕</button>
+              </div>
+
+              <form onSubmit={handleSubmitFeedback}>
+                <label>
+                  Tên khách
+                  <input
+                    type="text"
+                    placeholder="Tên của bạn"
+                    value={feedbackName}
+                    onChange={(e) => setFeedbackName(e.target.value)}
+                  />
+                </label>
+
+                <label>
+                  Số điện thoại
+                  <input
+                    type="tel"
+                    placeholder="Không bắt buộc"
+                    value={feedbackPhone}
+                    onChange={(e) => setFeedbackPhone(e.target.value)}
+                  />
+                </label>
+
+                <label>
+                  Đánh giá
+                  <select
+                    value={feedbackRating}
+                    onChange={(e) => setFeedbackRating(e.target.value)}
+                  >
+                    <option value="5">⭐⭐⭐⭐⭐ - Rất tốt</option>
+                    <option value="4">⭐⭐⭐⭐ - Tốt</option>
+                    <option value="3">⭐⭐⭐ - Bình thường</option>
+                    <option value="2">⭐⭐ - Chưa tốt</option>
+                    <option value="1">⭐ - Tệ</option>
+                  </select>
+                </label>
+
+                <label>
+                  Nội dung phản hồi
+                  <textarea
+                    rows={4}
+                    placeholder="Bạn muốn góp ý điều gì?"
+                    value={feedbackContent}
+                    onChange={(e) => setFeedbackContent(e.target.value)}
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  className="place-order-btn"
+                  disabled={feedbackLoading}
+                >
+                  {feedbackLoading ? 'Đang gửi...' : 'Gửi phản hồi'}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -263,8 +398,14 @@ function TableMenu() {
           </p>
         </div>
 
-        <div className="table-badge">
-          🪑 {table?.capacity || '?'} chỗ
+        <div className="table-header-actions">
+          <button className="feedback-header-btn" onClick={openFeedback}>
+            💬 Phản hồi
+          </button>
+
+          <div className="table-badge">
+            🪑 {table?.capacity || '?'} chỗ
+          </div>
         </div>
       </header>
 
@@ -437,6 +578,71 @@ function TableMenu() {
           </button>
         </aside>
       </div>
+
+      {showFeedback && (
+        <div className="qr-feedback-overlay" onClick={() => setShowFeedback(false)}>
+          <div className="qr-feedback-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="qr-feedback-header">
+              <h2>Gửi phản hồi</h2>
+              <button onClick={() => setShowFeedback(false)}>✕</button>
+            </div>
+
+            <form onSubmit={handleSubmitFeedback}>
+              <label>
+                Tên khách
+                <input
+                  type="text"
+                  placeholder="Tên của bạn"
+                  value={feedbackName}
+                  onChange={(e) => setFeedbackName(e.target.value)}
+                />
+              </label>
+
+              <label>
+                Số điện thoại
+                <input
+                  type="tel"
+                  placeholder="Không bắt buộc"
+                  value={feedbackPhone}
+                  onChange={(e) => setFeedbackPhone(e.target.value)}
+                />
+              </label>
+
+              <label>
+                Đánh giá
+                <select
+                  value={feedbackRating}
+                  onChange={(e) => setFeedbackRating(e.target.value)}
+                >
+                  <option value="5">⭐⭐⭐⭐⭐ - Rất tốt</option>
+                  <option value="4">⭐⭐⭐⭐ - Tốt</option>
+                  <option value="3">⭐⭐⭐ - Bình thường</option>
+                  <option value="2">⭐⭐ - Chưa tốt</option>
+                  <option value="1">⭐ - Tệ</option>
+                </select>
+              </label>
+
+              <label>
+                Nội dung phản hồi
+                <textarea
+                  rows={4}
+                  placeholder="Bạn muốn góp ý điều gì?"
+                  value={feedbackContent}
+                  onChange={(e) => setFeedbackContent(e.target.value)}
+                />
+              </label>
+
+              <button
+                type="submit"
+                className="place-order-btn"
+                disabled={feedbackLoading}
+              >
+                {feedbackLoading ? 'Đang gửi...' : 'Gửi phản hồi'}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 package com.rms.restaurant_management_system.controller;
 
+import com.rms.restaurant_management_system.dto.response.StaffCustomerResponse;
 import com.rms.restaurant_management_system.dto.response.UserResponse;
 import com.rms.restaurant_management_system.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,11 @@ public class UserController {
     @GetMapping
     public List<UserResponse> getAllUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/customers")
+    public List<StaffCustomerResponse> getStaffCustomers() {
+        return userService.getStaffCustomers();
     }
 
     @GetMapping("/profile")

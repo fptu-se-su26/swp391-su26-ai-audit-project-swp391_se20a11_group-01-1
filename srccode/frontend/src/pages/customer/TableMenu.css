@@ -391,3 +391,126 @@
     grid-template-columns: 1fr;
   }
 }
+.table-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feedback-header-btn,
+.feedback-btn {
+  border: none;
+  background: #fff7ed;
+  color: #ea580c;
+  padding: 11px 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid #fed7aa;
+  transition: all 0.2s ease;
+}
+
+.feedback-header-btn:hover,
+.feedback-btn:hover {
+  background: #f97316;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.success-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.qr-feedback-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.48);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.qr-feedback-modal {
+  width: min(460px, 100%);
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+}
+
+.qr-feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.qr-feedback-header h2 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.qr-feedback-header button {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.qr-feedback-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.qr-feedback-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.qr-feedback-modal input,
+.qr-feedback-modal select,
+.qr-feedback-modal textarea {
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  padding: 11px 13px;
+  font-size: 14px;
+  outline: none;
+  resize: vertical;
+}
+
+.qr-feedback-modal input:focus,
+.qr-feedback-modal select:focus,
+.qr-feedback-modal textarea:focus {
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+}
+
+@media (max-width: 768px) {
+  .table-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .feedback-header-btn,
+  .feedback-btn {
+    width: 100%;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+}
