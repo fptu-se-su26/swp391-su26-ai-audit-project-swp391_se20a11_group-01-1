@@ -162,6 +162,38 @@ function Menu() {
 
     return matchCat && matchSearch;
   });
+  const trimToEmpty = (value) => (value || '').trim();
+
+  const isValidImageUrl = (value) => {
+    if (!value) {
+      return true;
+    }
+
+    if (value.startsWith('data:image/')) {
+      return true;
+    }
+
+    try {
+      const url = new URL(value);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const getFoodSaveErrorMessage = (error) => {
+    const responseData = error?.response?.data;
+
+    if (typeof responseData === 'string' && responseData.trim()) {
+      return responseData;
+    }
+
+    if (responseData?.message) {
+      return responseData.message;
+    }
+
+    return 'Không thể lưu món ăn. Vui lòng kiểm tra dữ liệu hoặc backend.';
+  };
 
   const openAdd = () => {
     setEditItem(null);
@@ -625,7 +657,6 @@ function Menu() {
                     ✕ Xóa ảnh
                   </button>
                 )}
-
                 <input
                   className="form-input image-url-input"
                   placeholder="Dán URL ảnh món ăn..."

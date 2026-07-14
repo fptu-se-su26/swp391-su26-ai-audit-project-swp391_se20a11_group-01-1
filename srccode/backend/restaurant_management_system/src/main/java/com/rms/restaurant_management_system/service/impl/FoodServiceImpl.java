@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Service
@@ -55,8 +57,9 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public FoodResponse createFood(FoodRequest request) {
         validateFoodRequest(request);
+        String foodName = trimToNull(request.getFoodName());
 
-        if (foodRepository.existsByFoodName(request.getFoodName())) {
+        if (foodRepository.existsByFoodName(foodName)) {
             throw new RuntimeException("Tên món ăn đã tồn tại");
         }
 
@@ -64,11 +67,11 @@ public class FoodServiceImpl implements FoodService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy category với id: " + request.getCategoryId()));
 
         Food food = Food.builder()
-                .foodName(request.getFoodName().trim())
-                .description(request.getDescription())
+                .foodName(foodName)
+                .description(trimToNull(request.getDescription()))
                 .price(request.getPrice())
-                .imageUrl(request.getImageUrl())
-                .emoji(request.getEmoji())
+                .imageUrl(trimToNull(request.getImageUrl()))
+                .emoji(trimToNull(request.getEmoji()))
                 .rating(request.getRating() != null ? request.getRating() : 0.0)
                 .orders(request.getOrders() != null ? request.getOrders() : 0)
                 .isAvailable(request.getIsAvailable() != null ? request.getIsAvailable() : true)
@@ -90,11 +93,11 @@ public class FoodServiceImpl implements FoodService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy category với id: " + request.getCategoryId()));
 
-        food.setFoodName(request.getFoodName().trim());
-        food.setDescription(request.getDescription());
+        food.setFoodName(trimToNull(request.getFoodName()));
+        food.setDescription(trimToNull(request.getDescription()));
         food.setPrice(request.getPrice());
-        food.setImageUrl(request.getImageUrl());
-        food.setEmoji(request.getEmoji());
+        food.setImageUrl(trimToNull(request.getImageUrl()));
+        food.setEmoji(trimToNull(request.getEmoji()));
 
         if (request.getRating() != null) {
             food.setRating(request.getRating());
@@ -154,20 +157,77 @@ public class FoodServiceImpl implements FoodService {
     }
 
     private void validateFoodRequest(FoodRequest request) {
-        if (request.getFoodName() == null || request.getFoodName().trim().isEmpty()) {
+        if (request == null) {
+            throw new RuntimeException("Dữ liệu món ăn không được để trống");
+        }
+
+        String foodName = trimToNull(request.getFoodName());
+        String description = trimToNull(request.getDescription());
+        String imageUrl = trimToNull(request.getImageUrl());
+        String emoji = trimToNull(request.getEmoji());
+
+        if (foodName == null) {
             throw new RuntimeException("Tên món ăn không được để trống");
+        }
+
+        if (foodName.length() > 150) {
+            throw new RuntimeException("Tên món ăn không được vượt quá 150 ký tự");
         }
 
         if (request.getPrice() == null) {
             throw new RuntimeException("Giá món ăn không được để trống");
         }
 
-        if (request.getPrice().compareTo(BigDecimal.ZERO) < 0) {
-            throw new RuntimeException("Giá món ăn không được âm");
+        if (request.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("Giá món ăn phải lớn hơn 0");
         }
 
         if (request.getCategoryId() == null) {
             throw new RuntimeException("Category không được để trống");
+        }
+
+        if (description != null && description.length() > 500) {
+            throw new RuntimeException("Mô tả món ăn không được vượt quá 500 ký tự");
+        }
+
+        if (imageUrl != null) {
+            if (imageUrl.length() > 500) {
+                throw new RuntimeException("URL ảnh không được vượt quá 500 ký tự");
+            }
+
+            if (!isValidImageUrl(imageUrl)) {
+                throw new RuntimeException("URL ảnh không hợp lệ");
+            }
+        }
+
+        if (emoji != null && emoji.length() > 50) {
+            throw new RuntimeException("Icon món ăn không được vượt quá 50 ký tự");
+        }
+    }
+
+    private String trimToNull(String value) {
+        if (value == null) {
+            return null;
+        }
+
+        String trimmed = value.trim();
+
+        return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private boolean isValidImageUrl(String imageUrl) {
+        if (imageUrl.startsWith("data:image/")) {
+            return true;
+        }
+
+        try {
+            URI uri = new URI(imageUrl);
+            String scheme = uri.getScheme();
+
+            return uri.getHost() != null
+                    && ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme));
+        } catch (URISyntaxException e) {
+            return false;
         }
     }
 }
