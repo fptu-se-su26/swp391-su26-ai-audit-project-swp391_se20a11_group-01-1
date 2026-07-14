@@ -1,11 +1,15 @@
 package com.rms.restaurant_management_system.service.impl;
 
+import com.rms.restaurant_management_system.dto.request.UpdateUserRoleRequest;
+import com.rms.restaurant_management_system.dto.request.UpdateUserStatusRequest;
 import com.rms.restaurant_management_system.dto.response.StaffCustomerResponse;
 import com.rms.restaurant_management_system.dto.response.UserResponse;
 import com.rms.restaurant_management_system.entity.Order;
+import com.rms.restaurant_management_system.entity.Role;
 import com.rms.restaurant_management_system.entity.User;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.repository.OrderRepository;
+import com.rms.restaurant_management_system.repository.RoleRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import com.rms.restaurant_management_system.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public UserResponse getProfileByEmail(String email) {
@@ -113,6 +118,54 @@ public class UserServiceImpl implements UserService {
                         Comparator.nullsLast(Comparator.reverseOrder())
                 ))
                 .toList();
+    }
+
+    @Override
+    public UserResponse updateUserRole(Long userId, UpdateUserRoleRequest request) {
+        if (request.getCurrentUserId() != null && request.getCurrentUserId().equals(userId)) {
+            throw new RuntimeException("Bạn không thể tự đổi vai trò của chính mình.");
+        }
+
+        if (request.getRoleName() == null || request.getRoleName().isBlank()) {
+            throw new RuntimeException("Vai trò không được để trống.");
+        }
+
+        String roleName = request.getRoleName().trim().toUpperCase();
+
+        if (!roleName.equals("ADMIN")
+                && !roleName.equals("STAFF")
+                && !roleName.equals("KITCHEN")
+                && !roleName.equals("CUSTOMER")) {
+            throw new RuntimeException("Vai trò không hợp lệ.");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Role role = roleRepository.findByRoleName(roleName)
+                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+
+        user.setRole(role);
+
+        return mapToUserResponse(userRepository.save(user));
+    }
+
+    @Override
+    public UserResponse updateUserStatus(Long userId, UpdateUserStatusRequest request) {
+        if (request.getCurrentUserId() != null && request.getCurrentUserId().equals(userId)) {
+            throw new RuntimeException("Bạn không thể tự khóa tài khoản của chính mình.");
+        }
+
+        if (request.getIsActive() == null) {
+            throw new RuntimeException("Trạng thái không được để trống.");
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setIsActive(request.getIsActive());
+
+        return mapToUserResponse(userRepository.save(user));
     }
 
     private UserResponse mapToUserResponse(User user) {
