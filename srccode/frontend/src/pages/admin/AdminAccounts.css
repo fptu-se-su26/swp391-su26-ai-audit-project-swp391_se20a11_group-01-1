@@ -173,3 +173,33 @@
 .btn-primary:hover {
   background: var(--primary-dark);
 }
+.editable-role-select {
+  min-width: 135px;
+  color: #1a202c;
+}
+
+.editable-role-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.accounts-table {
+  overflow-x: auto;
+}
+
+.data-table {
+  min-width: 980px;
+}
+
+.ac-btn {
+  border: none;
+  cursor: pointer;
+}
+
+.ac-btn.ban-btn {
+  color: #9b2c2c;
+}
+
+.ac-btn.unban-btn {
+  color: #276749;
+}

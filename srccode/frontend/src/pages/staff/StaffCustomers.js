@@ -1,129 +1,471 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { getStaffCustomers } from '../../services/userService';
 import './StaffCustomers.css';
 
-const mockCustomers = [
-  { id: 1, name: 'Nguyễn Văn An',  phone: '0901-234-567', email: 'an@email.com',   visits: 8,  totalSpend: 4200000, lastVisit: '22/05/2026', tier: 'Kim Cương', note: 'Thích bàn cạnh cửa sổ' },
-  { id: 2, name: 'Trần Thị Bích',  phone: '0912-345-678', email: 'bich@email.com',  visits: 5,  totalSpend: 2800000, lastVisit: '20/05/2026', tier: 'Bạch Kim',  note: 'Dị ứng hải sản' },
-  { id: 3, name: 'Lê Minh Khoa',   phone: '0933-456-789', email: '',                visits: 12, totalSpend: 7500000, lastVisit: '22/05/2026', tier: 'Kim Cương', note: '' },
-  { id: 4, name: 'Phạm Thu Hà',    phone: '0944-567-890', email: 'ha@email.com',    visits: 3,  totalSpend: 1200000, lastVisit: '18/05/2026', tier: 'Vàng',      note: 'Sinh nhật 15/06' },
-  { id: 5, name: 'Hoàng Văn Nam',  phone: '0955-678-901', email: '',                visits: 1,  totalSpend: 450000,  lastVisit: '10/05/2026', tier: 'Bạc',       note: '' },
-];
-
-const TIER_COLOR = {
-  'Kim Cương': '#3182ce',
-  'Bạch Kim':  '#805ad5',
-  'Vàng':      '#d69e2e',
-  'Bạc':       '#a0aec0',
-  'Mới':       '#718096',
-};
-
 function StaffCustomers() {
-  const [customers, setCustomers] = useState(mockCustomers);
-  const [search, setSearch]       = useState('');
-  const [editingNote, setEditingNote] = useState(null); // id đang sửa ghi chú
-  const [noteInput, setNoteInput]     = useState('');
-  const [saved, setSaved]             = useState(null);  // id vừa lưu để hiện toast
+  const [customers, setCustomers] = useState([]);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [orderFilter, setOrderFilter] = useState('ALL');
+  const [sortBy, setSortBy] = useState('newest');
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const filtered = customers.filter(c =>
-    c.name.toLowerCase().includes(search.toLowerCase()) ||
-    c.phone.includes(search)
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true);
+
+      const data = await getStaffCustomers();
+      setCustomers(data || []);
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách khách hàng:', error);
+      alert('Không thể tải danh sách khách hàng từ backend.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatCurrency = (value) => {
+    return Number(value || 0).toLocaleString('vi-VN') + 'đ';
+  };
+
+  const formatDate = (value) => {
+    if (!value) {
+      return '-';
+    }
+
+    return new Date(value).toLocaleDateString('vi-VN');
+  };
+
+  const formatDateTime = (value) => {
+    if (!value) {
+      return '-';
+    }
+
+    return new Date(value).toLocaleString('vi-VN');
+  };
+
+  const statusLabel = {
+    PENDING: 'Chờ xác nhận',
+    CONFIRMED: 'Đã xác nhận',
+    PREPARING: 'Đang chế biến',
+    READY: 'Sẵn sàng',
+    COMPLETED: 'Hoàn thành',
+    CANCELLED: 'Đã hủy'
+  };
+
+  const filteredCustomers = useMemo(() => {
+    const keyword = search.trim().toLowerCase();
+
+    let result = customers.filter(customer => {
+      const isActive = customer.isActive ?? customer.active ?? true;
+      const totalOrders = Number(customer.totalOrders || 0);
+
+      const matchStatus =
+        statusFilter === 'ALL' ||
+        (statusFilter === 'ACTIVE' && isActive) ||
+        (statusFilter === 'INACTIVE' && !isActive);
+
+      const matchOrder =
+        orderFilter === 'ALL' ||
+        (orderFilter === 'HAS_ORDER' && totalOrders > 0) ||
+        (orderFilter === 'NO_ORDER' && totalOrders === 0);
+
+      const matchSearch =
+        !keyword ||
+        customer.username?.toLowerCase().includes(keyword) ||
+        customer.email?.toLowerCase().includes(keyword) ||
+        customer.lastCustomerPhone?.toLowerCase().includes(keyword) ||
+        String(customer.userId || '').includes(keyword);
+
+      return matchStatus && matchOrder && matchSearch;
+    });
+
+    result = [...result].sort((a, b) => {
+      if (sortBy === 'newest') {
+        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+      }
+
+      if (sortBy === 'oldest') {
+        return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+      }
+
+      if (sortBy === 'spent') {
+        return Number(b.totalSpent || 0) - Number(a.totalSpent || 0);
+      }
+
+      if (sortBy === 'orders') {
+        return Number(b.totalOrders || 0) - Number(a.totalOrders || 0);
+      }
+
+      if (sortBy === 'lastOrder') {
+        return new Date(b.lastOrderAt || 0) - new Date(a.lastOrderAt || 0);
+      }
+
+      return 0;
+    });
+
+    return result;
+  }, [customers, search, statusFilter, orderFilter, sortBy]);
+
+  const totalCustomers = customers.length;
+  const activeCustomers = customers.filter(c => c.isActive ?? c.active ?? true).length;
+  const inactiveCustomers = totalCustomers - activeCustomers;
+  const customersWithOrders = customers.filter(c => Number(c.totalOrders || 0) > 0).length;
+  const totalRevenue = customers.reduce(
+    (sum, c) => sum + Number(c.totalSpent || 0),
+    0
+  );
+  const totalOrders = customers.reduce(
+    (sum, c) => sum + Number(c.totalOrders || 0),
+    0
   );
 
-  const openNote = (c) => {
-    setEditingNote(c.id);
-    setNoteInput(c.note);
-  };
-
-  const saveNote = (id) => {
-    setCustomers(prev => prev.map(c => c.id === id ? { ...c, note: noteInput } : c));
-    setEditingNote(null);
-    setSaved(id);
-    setTimeout(() => setSaved(null), 2000);
-  };
-
   return (
-    <div className="staff-customers">
+    <div className="staff-customers-page">
       <div className="page-header">
-        <h1 className="page-title">Tra cứu khách hàng</h1>
+        <div>
+          <h1 className="page-title">Khách hàng</h1>
+          <p className="page-subtitle">
+            Theo dõi thông tin khách hàng, số đơn và tổng chi tiêu.
+          </p>
+        </div>
+
+        <button className="btn-primary" onClick={fetchCustomers}>
+          🔄 Làm mới
+        </button>
       </div>
 
-      <input
-        className="search-input"
-        placeholder="🔍 Tìm theo tên hoặc số điện thoại..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        style={{ marginBottom: 16 }}
-      />
-
-      {filtered.length === 0 && (
-        <div className="card" style={{ padding: 32, textAlign: 'center', color: '#a0aec0' }}>
-          Không tìm thấy khách hàng nào
+      <div className="customer-stats">
+        <div className="stat-card card">
+          <div className="stat-icon">👥</div>
+          <div>
+            <h3>{totalCustomers}</h3>
+            <p>Tổng khách hàng</p>
+          </div>
         </div>
-      )}
 
-      <div className="customers-list">
-        {filtered.map(c => (
-          <div key={c.id} className="customer-card card">
-            <div className="customer-info">
-              {/* Avatar */}
-              <div className="cust-avatar-lg">{c.name.charAt(0)}</div>
+        <div className="stat-card card">
+          <div className="stat-icon">✅</div>
+          <div>
+            <h3>{activeCustomers}</h3>
+            <p>Đang hoạt động</p>
+          </div>
+        </div>
 
-              {/* Details */}
-              <div className="cust-details">
-                <div className="cust-name-row">
-                  <h3>{c.name}</h3>
-                  <span
-                    className="tier-badge"
-                    style={{ background: TIER_COLOR[c.tier] || TIER_COLOR['Mới'] }}
-                  >
-                    ⭐ {c.tier}
-                  </span>
-                </div>
+        <div className="stat-card card">
+          <div className="stat-icon">🔒</div>
+          <div>
+            <h3>{inactiveCustomers}</h3>
+            <p>Đã khóa</p>
+          </div>
+        </div>
 
-                <div className="cust-meta">
-                  <span>📞 {c.phone}</span>
-                  {c.email && <span>✉️ {c.email}</span>}
-                  <span>🗓 Lần cuối: {c.lastVisit}</span>
-                </div>
+        <div className="stat-card card">
+          <div className="stat-icon">🧾</div>
+          <div>
+            <h3>{customersWithOrders}</h3>
+            <p>Có đơn hàng</p>
+          </div>
+        </div>
 
-                <div className="cust-stats">
-                  <span className="cust-stat">🔁 {c.visits} lần ghé</span>
-                  <span className="cust-stat">💰 {c.totalSpend.toLocaleString('vi-VN')}đ</span>
-                </div>
+        <div className="stat-card card revenue-card">
+          <div className="stat-icon">💰</div>
+          <div>
+            <h3>{formatCurrency(totalRevenue)}</h3>
+            <p>Tổng chi tiêu</p>
+          </div>
+        </div>
 
-                {/* Ghi chú phục vụ */}
-                {editingNote === c.id ? (
-                  <div className="note-edit-row">
-                    <input
-                      className="form-input note-input"
-                      placeholder="Dị ứng, sở thích chỗ ngồi, yêu cầu đặc biệt..."
-                      value={noteInput}
-                      onChange={e => setNoteInput(e.target.value)}
-                      autoFocus
-                    />
-                    <button className="save-btn-sm" onClick={() => saveNote(c.id)}>💾 Lưu</button>
-                    <button className="cancel-btn-sm" onClick={() => setEditingNote(null)}>Hủy</button>
-                  </div>
-                ) : (
-                  <div className="note-row">
-                    {c.note
-                      ? <p className="cust-note">📝 {c.note}</p>
-                      : <p className="cust-note-empty">Chưa có ghi chú phục vụ</p>
-                    }
-                    <button
-                      className="edit-note-btn"
-                      onClick={() => openNote(c)}
-                      title="Sửa ghi chú phục vụ"
-                    >
-                      ✏️ {c.note ? 'Sửa ghi chú' : 'Thêm ghi chú'}
-                    </button>
-                  </div>
-                )}
+        <div className="stat-card card">
+          <div className="stat-icon">📦</div>
+          <div>
+            <h3>{totalOrders}</h3>
+            <p>Tổng số đơn</p>
+          </div>
+        </div>
+      </div>
 
-                {saved === c.id && (
-                  <span className="note-saved">✅ Đã lưu ghi chú</span>
-                )}
+      <div className="customer-toolbar card">
+        <input
+          className="search-input"
+          placeholder="🔍 Tìm theo tên, email, SĐT hoặc ID..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+
+        <div className="toolbar-row">
+          <div className="filter-tabs">
+            <button
+              className={`filter-tab ${statusFilter === 'ALL' ? 'active' : ''}`}
+              onClick={() => setStatusFilter('ALL')}
+            >
+              Tất cả trạng thái
+            </button>
+
+            <button
+              className={`filter-tab ${statusFilter === 'ACTIVE' ? 'active' : ''}`}
+              onClick={() => setStatusFilter('ACTIVE')}
+            >
+              Hoạt động
+            </button>
+
+            <button
+              className={`filter-tab ${statusFilter === 'INACTIVE' ? 'active' : ''}`}
+              onClick={() => setStatusFilter('INACTIVE')}
+            >
+              Đã khóa
+            </button>
+          </div>
+
+          <div className="filter-tabs">
+            <button
+              className={`filter-tab ${orderFilter === 'ALL' ? 'active' : ''}`}
+              onClick={() => setOrderFilter('ALL')}
+            >
+              Tất cả đơn
+            </button>
+
+            <button
+              className={`filter-tab ${orderFilter === 'HAS_ORDER' ? 'active' : ''}`}
+              onClick={() => setOrderFilter('HAS_ORDER')}
+            >
+              Đã từng đặt
+            </button>
+
+            <button
+              className={`filter-tab ${orderFilter === 'NO_ORDER' ? 'active' : ''}`}
+              onClick={() => setOrderFilter('NO_ORDER')}
+            >
+              Chưa có đơn
+            </button>
+          </div>
+        </div>
+
+        <div className="sort-row">
+          <label>Sắp xếp:</label>
+
+          <select
+            className="sort-select"
+            value={sortBy}
+            onChange={e => setSortBy(e.target.value)}
+          >
+            <option value="newest">Khách mới nhất</option>
+            <option value="oldest">Khách cũ nhất</option>
+            <option value="spent">Chi tiêu cao nhất</option>
+            <option value="orders">Nhiều đơn nhất</option>
+            <option value="lastOrder">Đơn gần nhất</option>
+          </select>
+
+          <span className="result-count">
+            Hiển thị {filteredCustomers.length}/{totalCustomers} khách hàng
+          </span>
+        </div>
+      </div>
+
+      <div className="customers-table-card card">
+        {loading ? (
+          <div className="loading-box">Đang tải khách hàng...</div>
+        ) : (
+          <table className="customers-table">
+            <thead>
+              <tr>
+                <th>Khách hàng</th>
+                <th>Liên hệ</th>
+                <th>Đơn hàng</th>
+                <th>Chi tiêu</th>
+                <th>Đơn gần nhất</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {filteredCustomers.length > 0 ? (
+                filteredCustomers.map(customer => {
+                  const isActive = customer.isActive ?? customer.active ?? true;
+
+                  return (
+                    <tr key={customer.userId}>
+                      <td>
+                        <div className="customer-info">
+                          <div className="customer-avatar">
+                            {(customer.username || customer.email || 'C').charAt(0).toUpperCase()}
+                          </div>
+
+                          <div>
+                            <strong>{customer.username || 'Khách hàng'}</strong>
+                            <br />
+                            <small>ID #{customer.userId}</small>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div className="contact-cell">
+                          <span>{customer.email || '-'}</span>
+                          <small>{customer.lastCustomerPhone || 'Chưa có SĐT'}</small>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div className="order-metrics">
+                          <span>
+                            Tổng: <strong>{customer.totalOrders || 0}</strong>
+                          </span>
+                          <small>
+                            Hoàn thành: {customer.completedOrders || 0} · Hủy: {customer.cancelledOrders || 0}
+                          </small>
+                        </div>
+                      </td>
+
+                      <td>
+                        <strong className="money-text">
+                          {formatCurrency(customer.totalSpent)}
+                        </strong>
+                      </td>
+
+                      <td>
+                        {customer.lastOrderCode ? (
+                          <div className="last-order-cell">
+                            <strong>{customer.lastOrderCode}</strong>
+                            <small>
+                              {statusLabel[customer.lastOrderStatus] || customer.lastOrderStatus}
+                            </small>
+                            <small>{formatDate(customer.lastOrderAt)}</small>
+                          </div>
+                        ) : (
+                          <span className="empty-text">Chưa có đơn</span>
+                        )}
+                      </td>
+
+                      <td>
+                        <span className={`status-badge ${isActive ? 'active' : 'inactive'}`}>
+                          {isActive ? 'Hoạt động' : 'Đã khóa'}
+                        </span>
+                      </td>
+
+                      <td>
+                        <button
+                          className="view-btn"
+                          onClick={() => setSelectedCustomer(customer)}
+                        >
+                          Chi tiết
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td colSpan="7" className="empty-row">
+                    Không tìm thấy khách hàng phù hợp.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {selectedCustomer && (
+        <div className="modal-overlay" onClick={() => setSelectedCustomer(null)}>
+          <div className="customer-modal card" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Chi tiết khách hàng</h2>
+
+              <button
+                className="close-btn"
+                onClick={() => setSelectedCustomer(null)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="modal-customer-main">
+              <div className="customer-avatar large">
+                {(selectedCustomer.username || selectedCustomer.email || 'C').charAt(0).toUpperCase()}
               </div>
+
+              <div>
+                <h3>{selectedCustomer.username || 'Khách hàng'}</h3>
+                <p>{selectedCustomer.email}</p>
+                <span className={`status-badge ${(selectedCustomer.isActive ?? true) ? 'active' : 'inactive'}`}>
+                  {(selectedCustomer.isActive ?? true) ? 'Hoạt động' : 'Đã khóa'}
+                </span>
+              </div>
+            </div>
+
+            <div className="detail-grid">
+              <div className="detail-item">
+                <span>ID khách hàng</span>
+                <strong>#{selectedCustomer.userId}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Ngày tạo tài khoản</span>
+                <strong>{formatDateTime(selectedCustomer.createdAt)}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Số điện thoại gần nhất</span>
+                <strong>{selectedCustomer.lastCustomerPhone || '-'}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Tổng số đơn</span>
+                <strong>{selectedCustomer.totalOrders || 0}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Đơn đang xử lý</span>
+                <strong>{selectedCustomer.activeOrders || 0}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Đơn hoàn thành</span>
+                <strong>{selectedCustomer.completedOrders || 0}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Đơn đã hủy</span>
+                <strong>{selectedCustomer.cancelledOrders || 0}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Tổng chi tiêu</span>
+                <strong>{formatCurrency(selectedCustomer.totalSpent)}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Mã đơn gần nhất</span>
+                <strong>{selectedCustomer.lastOrderCode || '-'}</strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Trạng thái đơn gần nhất</span>
+                <strong>
+                  {statusLabel[selectedCustomer.lastOrderStatus] || selectedCustomer.lastOrderStatus || '-'}
+                </strong>
+              </div>
+
+              <div className="detail-item">
+                <span>Thời gian đơn gần nhất</span>
+                <strong>{formatDateTime(selectedCustomer.lastOrderAt)}</strong>
+              </div>
+            </div>
+
+            <div className="modal-actions">
+              <button
+                className="btn-cancel"
+                onClick={() => setSelectedCustomer(null)}
+              >
+                Đóng
+              </button>
             </div>
           </div>
         ))}

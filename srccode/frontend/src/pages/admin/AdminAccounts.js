@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import API from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
+import {
+  getAllUsers,
+  updateUserRole,
+  updateUserStatus
+} from '../../services/userService';
 import './AdminAccounts.css';
 
 const ROLES = ['ADMIN', 'STAFF', 'KITCHEN', 'CUSTOMER'];
@@ -35,8 +39,8 @@ function AdminAccounts() {
   const [statusFilter, setStatusFilter] = useState('all');
 
   const [loading, setLoading] = useState(true);
+  const [actionLoadingId, setActionLoadingId] = useState(null);
   const [error, setError] = useState('');
-
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
@@ -67,8 +71,8 @@ function AdminAccounts() {
     setError('');
 
     try {
-      const response = await API.get('/users');
-      setAccounts(response.data || []);
+      const data = await getAllUsers();
+      setAccounts(data || []);
     } catch (error) {
       console.error('Fetch accounts error:', error);
 
@@ -118,11 +122,26 @@ function AdminAccounts() {
     ).toUpperCase();
   };
 
+  const isActiveAccount = (account) => {
+    return account.isActive ?? account.active ?? true;
+  };
+
   const isBanned = (account) => {
-    return account.banned === true || account.isBanned === true || account.active === false;
+    return !isActiveAccount(account);
+  };
+
+  const getCurrentUserId = () => {
+    return currentUser?.userId || currentUser?.id || null;
   };
 
   const isSelf = (account) => {
+    const accountId = getUserId(account);
+    const currentUserId = getCurrentUserId();
+
+    if (accountId && currentUserId && Number(accountId) === Number(currentUserId)) {
+      return true;
+    }
+
     const accountUsername = getUsername(account);
     const accountEmail = getEmail(account);
 
@@ -130,6 +149,109 @@ function AdminAccounts() {
       accountUsername === currentUser?.username ||
       accountEmail === currentUser?.email
     );
+  };
+
+  const handleChangeRole = async (account, newRole) => {
+    const userId = getUserId(account);
+
+    if (!userId) {
+      showToast('Không tìm thấy ID tài khoản', false);
+      return;
+    }
+
+    if (isSelf(account)) {
+      showToast('Bạn không thể tự đổi vai trò của chính mình', false);
+      return;
+    }
+
+    const oldRole = getRole(account);
+
+    if (oldRole === newRole) {
+      return;
+    }
+
+    const ok = window.confirm(
+      `Đổi vai trò của "${getName(account)}" từ ${roleLabel[oldRole] || oldRole} sang ${roleLabel[newRole] || newRole}?`
+    );
+
+    if (!ok) {
+      return;
+    }
+
+    try {
+      setActionLoadingId(userId);
+
+      await updateUserRole(userId, newRole, getCurrentUserId());
+
+      setAccounts(prev =>
+        prev.map(item =>
+          getUserId(item) === userId
+            ? { ...item, roleName: newRole }
+            : item
+        )
+      );
+
+      showToast('Cập nhật vai trò thành công');
+    } catch (error) {
+      console.error('Update role error:', error);
+      showToast(
+        getApiMessage(error.response?.data, 'Không thể cập nhật vai trò'),
+        false
+      );
+    } finally {
+      setActionLoadingId(null);
+    }
+  };
+
+  const handleToggleStatus = async (account) => {
+    const userId = getUserId(account);
+
+    if (!userId) {
+      showToast('Không tìm thấy ID tài khoản', false);
+      return;
+    }
+
+    if (isSelf(account)) {
+      showToast('Bạn không thể tự khóa/mở khóa tài khoản của chính mình', false);
+      return;
+    }
+
+    const active = isActiveAccount(account);
+    const nextActive = !active;
+
+    const ok = window.confirm(
+      nextActive
+        ? `Mở khóa tài khoản "${getName(account)}"?`
+        : `Khóa tài khoản "${getName(account)}"?`
+    );
+
+    if (!ok) {
+      return;
+    }
+
+    try {
+      setActionLoadingId(userId);
+
+      await updateUserStatus(userId, nextActive, getCurrentUserId());
+
+      setAccounts(prev =>
+        prev.map(item =>
+          getUserId(item) === userId
+            ? { ...item, isActive: nextActive, active: nextActive }
+            : item
+        )
+      );
+
+      showToast(nextActive ? 'Đã mở khóa tài khoản' : 'Đã khóa tài khoản');
+    } catch (error) {
+      console.error('Update status error:', error);
+      showToast(
+        getApiMessage(error.response?.data, 'Không thể cập nhật trạng thái'),
+        false
+      );
+    } finally {
+      setActionLoadingId(null);
+    }
   };
 
   const filtered = accounts.filter((account) => {
@@ -305,6 +427,7 @@ function AdminAccounts() {
               <th>Vai trò</th>
               <th>SĐT</th>
               <th>Trạng thái</th>
+              <th>Thao tác</th>
             </tr>
           </thead>
 
@@ -312,7 +435,7 @@ function AdminAccounts() {
             {filtered.length === 0 && (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   style={{
                     textAlign: 'center',
                     color: '#a0aec0',
@@ -332,6 +455,8 @@ function AdminAccounts() {
               const phone = getPhone(account);
               const role = getRole(account);
               const banned = isBanned(account);
+              const self = isSelf(account);
+              const disabled = self || actionLoadingId === userId;
 
               return (
                 <tr key={userId || username || email} className={banned ? 'row-banned' : ''}>
@@ -344,7 +469,7 @@ function AdminAccounts() {
                       <div>
                         <strong>{name}</strong>
 
-                        {isSelf(account) && (
+                        {self && (
                           <span className="self-badge">Bạn</span>
                         )}
                       </div>
@@ -364,15 +489,21 @@ function AdminAccounts() {
                   </td>
 
                   <td>
-                    <span
-                      className="role-select"
+                    <select
+                      className="role-select editable-role-select"
+                      value={role}
+                      disabled={disabled}
+                      onChange={(e) => handleChangeRole(account, e.target.value)}
                       style={{
-                        background: roleColor[role] || '#e2e8f0',
-                        display: 'inline-block'
+                        background: roleColor[role] || '#e2e8f0'
                       }}
                     >
-                      {roleIcon[role] || '👤'} {roleLabel[role] || role}
-                    </span>
+                      {ROLES.map(item => (
+                        <option key={item} value={item}>
+                          {roleIcon[item]} {roleLabel[item]}
+                        </option>
+                      ))}
+                    </select>
                   </td>
 
                   <td>
@@ -385,6 +516,23 @@ function AdminAccounts() {
                     <span className={`status-pill ${banned ? 'pill-banned' : 'pill-active'}`}>
                       {banned ? '🔒 Đã khóa' : '✅ Hoạt động'}
                     </span>
+                  </td>
+
+                  <td>
+                    <div className="action-btns">
+                      <button
+                        className={`ac-btn ${banned ? 'unban-btn' : 'ban-btn'}`}
+                        disabled={disabled}
+                        title={self ? 'Không thể tự khóa/mở khóa chính mình' : banned ? 'Mở khóa' : 'Khóa'}
+                        onClick={() => handleToggleStatus(account)}
+                      >
+                        {actionLoadingId === userId
+                          ? '⏳'
+                          : banned
+                            ? '🔓'
+                            : '🔒'}
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

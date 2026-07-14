@@ -1,4 +1,3 @@
-
 package com.rms.restaurant_management_system.service.impl;
 
 import com.rms.restaurant_management_system.dto.request.ChangePasswordRequest;
@@ -71,8 +70,8 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email or password is incorrect"));
 
-        if (!user.getIsActive()) {
-            throw new RuntimeException("Account is locked");
+        if (user.getIsActive() == null || !user.getIsActive()) {
+            throw new RuntimeException("Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
         }
 
         boolean isPasswordCorrect = passwordEncoder.matches(
@@ -123,6 +122,10 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email not found"));
 
+        if (user.getIsActive() == null || !user.getIsActive()) {
+            throw new RuntimeException("Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+        }
+
         String otp = generateOtp();
 
         otpStorage.put(
@@ -143,6 +146,10 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Email not found"));
+
+        if (user.getIsActive() == null || !user.getIsActive()) {
+            throw new RuntimeException("Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+        }
 
         OtpData otpData = otpStorage.get(request.getEmail());
 
@@ -194,4 +201,3 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 }
-
