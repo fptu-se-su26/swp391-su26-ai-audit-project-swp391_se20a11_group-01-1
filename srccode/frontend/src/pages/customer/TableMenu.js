@@ -193,6 +193,8 @@ function TableMenu() {
   const openFeedback = () => {
     setFeedbackName(customerName || createdOrder?.customerName || '');
     setFeedbackPhone(customerPhone || createdOrder?.customerPhone || '');
+    setFeedbackContent('');
+    setFeedbackRating(5);
     setShowFeedback(true);
   };
 
@@ -208,20 +210,18 @@ function TableMenu() {
       setFeedbackLoading(true);
 
       const tableName = table?.tableName || createdOrder?.tableName || `Bàn ${tableId}`;
-      const orderCode = createdOrder?.orderCode;
-
-      const prefix = orderCode
-        ? `[${tableName} - Đơn ${orderCode}]`
-        : `[${tableName}]`;
+      const orderCode = createdOrder?.orderCode || '';
 
       await API.post('/feedbacks', {
         userId: null,
         customerName: feedbackName.trim() || `Khách ${tableName}`,
-        customerEmail: feedbackPhone.trim()
-          ? `${feedbackPhone.trim()}@qr-customer.local`
-          : '',
+        customerEmail: '',
+        customerPhone: feedbackPhone.trim(),
+        tableId: Number(tableId),
+        tableName,
+        orderCode,
         rating: Number(feedbackRating),
-        content: `${prefix} ${feedbackContent.trim()}`
+        content: feedbackContent.trim()
       });
 
       alert('Cảm ơn bạn đã gửi phản hồi.');
@@ -233,6 +233,7 @@ function TableMenu() {
       setShowFeedback(false);
     } catch (error) {
       console.error('Submit QR feedback error:', error);
+
       alert(
         getApiMessage(
           error.response?.data,
@@ -244,8 +245,94 @@ function TableMenu() {
     }
   };
 
+  const closeFeedbackModal = () => {
+    if (feedbackLoading) {
+      return;
+    }
+
+    setShowFeedback(false);
+  };
+
   const formatMoney = (value) => {
     return Number(value || 0).toLocaleString('vi-VN');
+  };
+
+  const renderFeedbackModal = () => {
+    if (!showFeedback) {
+      return null;
+    }
+
+    return (
+      <div className="qr-feedback-overlay" onClick={closeFeedbackModal}>
+        <div className="qr-feedback-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="qr-feedback-header">
+            <h2>Gửi phản hồi</h2>
+
+            <button
+              type="button"
+              onClick={closeFeedbackModal}
+              disabled={feedbackLoading}
+            >
+              ✕
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmitFeedback}>
+            <label>
+              Tên khách
+              <input
+                type="text"
+                placeholder="Tên của bạn"
+                value={feedbackName}
+                onChange={(e) => setFeedbackName(e.target.value)}
+              />
+            </label>
+
+            <label>
+              Số điện thoại
+              <input
+                type="tel"
+                placeholder="Không bắt buộc"
+                value={feedbackPhone}
+                onChange={(e) => setFeedbackPhone(e.target.value)}
+              />
+            </label>
+
+            <label>
+              Đánh giá
+              <select
+                value={feedbackRating}
+                onChange={(e) => setFeedbackRating(e.target.value)}
+              >
+                <option value="5">⭐⭐⭐⭐⭐ - Rất tốt</option>
+                <option value="4">⭐⭐⭐⭐ - Tốt</option>
+                <option value="3">⭐⭐⭐ - Bình thường</option>
+                <option value="2">⭐⭐ - Chưa tốt</option>
+                <option value="1">⭐ - Tệ</option>
+              </select>
+            </label>
+
+            <label>
+              Nội dung phản hồi
+              <textarea
+                rows={4}
+                placeholder="Bạn muốn góp ý điều gì?"
+                value={feedbackContent}
+                onChange={(e) => setFeedbackContent(e.target.value)}
+              />
+            </label>
+
+            <button
+              type="submit"
+              className="place-order-btn"
+              disabled={feedbackLoading}
+            >
+              {feedbackLoading ? 'Đang gửi...' : 'Gửi phản hồi'}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
   };
 
   if (loading) {
@@ -319,70 +406,7 @@ function TableMenu() {
           </div>
         </div>
 
-        {showFeedback && (
-          <div className="qr-feedback-overlay" onClick={() => setShowFeedback(false)}>
-            <div className="qr-feedback-modal" onClick={(e) => e.stopPropagation()}>
-              <div className="qr-feedback-header">
-                <h2>Gửi phản hồi</h2>
-                <button onClick={() => setShowFeedback(false)}>✕</button>
-              </div>
-
-              <form onSubmit={handleSubmitFeedback}>
-                <label>
-                  Tên khách
-                  <input
-                    type="text"
-                    placeholder="Tên của bạn"
-                    value={feedbackName}
-                    onChange={(e) => setFeedbackName(e.target.value)}
-                  />
-                </label>
-
-                <label>
-                  Số điện thoại
-                  <input
-                    type="tel"
-                    placeholder="Không bắt buộc"
-                    value={feedbackPhone}
-                    onChange={(e) => setFeedbackPhone(e.target.value)}
-                  />
-                </label>
-
-                <label>
-                  Đánh giá
-                  <select
-                    value={feedbackRating}
-                    onChange={(e) => setFeedbackRating(e.target.value)}
-                  >
-                    <option value="5">⭐⭐⭐⭐⭐ - Rất tốt</option>
-                    <option value="4">⭐⭐⭐⭐ - Tốt</option>
-                    <option value="3">⭐⭐⭐ - Bình thường</option>
-                    <option value="2">⭐⭐ - Chưa tốt</option>
-                    <option value="1">⭐ - Tệ</option>
-                  </select>
-                </label>
-
-                <label>
-                  Nội dung phản hồi
-                  <textarea
-                    rows={4}
-                    placeholder="Bạn muốn góp ý điều gì?"
-                    value={feedbackContent}
-                    onChange={(e) => setFeedbackContent(e.target.value)}
-                  />
-                </label>
-
-                <button
-                  type="submit"
-                  className="place-order-btn"
-                  disabled={feedbackLoading}
-                >
-                  {feedbackLoading ? 'Đang gửi...' : 'Gửi phản hồi'}
-                </button>
-              </form>
-            </div>
-          </div>
-        )}
+        {renderFeedbackModal()}
       </div>
     );
   }
@@ -392,7 +416,9 @@ function TableMenu() {
       <header className="table-menu-header">
         <div>
           <p className="header-subtitle">QR Ordering</p>
+
           <h1>{table?.tableName || `Bàn ${tableId}`}</h1>
+
           <p className="header-desc">
             Chọn món và gửi đơn trực tiếp đến nhà bếp
           </p>
@@ -500,6 +526,7 @@ function TableMenu() {
                 <div key={food.foodId} className="cart-item">
                   <div>
                     <strong>{food.foodName}</strong>
+
                     <p>
                       {formatMoney(food.price)}đ × {cart[food.foodId]}
                     </p>
@@ -579,70 +606,7 @@ function TableMenu() {
         </aside>
       </div>
 
-      {showFeedback && (
-        <div className="qr-feedback-overlay" onClick={() => setShowFeedback(false)}>
-          <div className="qr-feedback-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="qr-feedback-header">
-              <h2>Gửi phản hồi</h2>
-              <button onClick={() => setShowFeedback(false)}>✕</button>
-            </div>
-
-            <form onSubmit={handleSubmitFeedback}>
-              <label>
-                Tên khách
-                <input
-                  type="text"
-                  placeholder="Tên của bạn"
-                  value={feedbackName}
-                  onChange={(e) => setFeedbackName(e.target.value)}
-                />
-              </label>
-
-              <label>
-                Số điện thoại
-                <input
-                  type="tel"
-                  placeholder="Không bắt buộc"
-                  value={feedbackPhone}
-                  onChange={(e) => setFeedbackPhone(e.target.value)}
-                />
-              </label>
-
-              <label>
-                Đánh giá
-                <select
-                  value={feedbackRating}
-                  onChange={(e) => setFeedbackRating(e.target.value)}
-                >
-                  <option value="5">⭐⭐⭐⭐⭐ - Rất tốt</option>
-                  <option value="4">⭐⭐⭐⭐ - Tốt</option>
-                  <option value="3">⭐⭐⭐ - Bình thường</option>
-                  <option value="2">⭐⭐ - Chưa tốt</option>
-                  <option value="1">⭐ - Tệ</option>
-                </select>
-              </label>
-
-              <label>
-                Nội dung phản hồi
-                <textarea
-                  rows={4}
-                  placeholder="Bạn muốn góp ý điều gì?"
-                  value={feedbackContent}
-                  onChange={(e) => setFeedbackContent(e.target.value)}
-                />
-              </label>
-
-              <button
-                type="submit"
-                className="place-order-btn"
-                disabled={feedbackLoading}
-              >
-                {feedbackLoading ? 'Đang gửi...' : 'Gửi phản hồi'}
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      {renderFeedbackModal()}
     </div>
   );
 }

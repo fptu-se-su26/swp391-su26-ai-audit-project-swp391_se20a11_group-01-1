@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useProfile } from '../../context/ProfileContext';
 import { useAuth } from '../../context/AuthContext';
@@ -36,6 +35,7 @@ function Profile() {
   });
 
   const [pwMsg, setPwMsg] = useState(null);
+  const [pwLoading, setPwLoading] = useState(false);
 
   const tier = getCurrentTier();
   const nextTier = getNextTier();
@@ -107,15 +107,47 @@ function Profile() {
     }, 2000);
   };
 
+  const openPasswordModal = () => {
+    setPwForm({
+      old: '',
+      new: '',
+      confirm: ''
+    });
+    setPwMsg(null);
+    setShowChangePw(true);
+  };
+
+  const closePasswordModal = () => {
+    if (pwLoading) {
+      return;
+    }
+
+    setShowChangePw(false);
+    setPwMsg(null);
+    setPwForm({
+      old: '',
+      new: '',
+      confirm: ''
+    });
+  };
+
   const handleChangePw = async (e) => {
     e.preventDefault();
 
     setPwMsg(null);
 
+    if (!pwForm.old || !pwForm.new || !pwForm.confirm) {
+      setPwMsg({
+        ok: false,
+        text: 'Vui lòng nhập đầy đủ thông tin.'
+      });
+      return;
+    }
+
     if (pwForm.new !== pwForm.confirm) {
       setPwMsg({
         ok: false,
-        text: '❌ Mật khẩu xác nhận không khớp'
+        text: 'Mật khẩu xác nhận không khớp.'
       });
       return;
     }
@@ -123,34 +155,53 @@ function Profile() {
     if (pwForm.new.length < 6) {
       setPwMsg({
         ok: false,
-        text: '❌ Mật khẩu phải ít nhất 6 ký tự'
+        text: 'Mật khẩu mới phải ít nhất 6 ký tự.'
       });
       return;
     }
 
-    const result = await changePassword(pwForm.old, pwForm.new);
-
-    if (result.success) {
-      setPwMsg({
-        ok: true,
-        text: '✅ Đổi mật khẩu thành công!'
-      });
-
-      setPwForm({
-        old: '',
-        new: '',
-        confirm: ''
-      });
-
-      setTimeout(() => {
-        setShowChangePw(false);
-        setPwMsg(null);
-      }, 1500);
-    } else {
+    if (pwForm.old === pwForm.new) {
       setPwMsg({
         ok: false,
-        text: `❌ ${result.message || 'Đổi mật khẩu thất bại'}`
+        text: 'Mật khẩu mới không được trùng mật khẩu hiện tại.'
       });
+      return;
+    }
+
+    try {
+      setPwLoading(true);
+
+      const result = await changePassword(pwForm.old, pwForm.new);
+
+      if (result.success) {
+        setPwMsg({
+          ok: true,
+          text: 'Đổi mật khẩu thành công.'
+        });
+
+        setPwForm({
+          old: '',
+          new: '',
+          confirm: ''
+        });
+
+        setTimeout(() => {
+          setShowChangePw(false);
+          setPwMsg(null);
+        }, 1200);
+      } else {
+        setPwMsg({
+          ok: false,
+          text: result.message || 'Đổi mật khẩu thất bại.'
+        });
+      }
+    } catch (error) {
+      setPwMsg({
+        ok: false,
+        text: 'Không thể đổi mật khẩu. Vui lòng thử lại.'
+      });
+    } finally {
+      setPwLoading(false);
     }
   };
 
@@ -319,69 +370,10 @@ function Profile() {
                 <button
                   className="edit-btn"
                   style={{ marginTop: 8 }}
-                  onClick={() => {
-                    setShowChangePw(!showChangePw);
-                    setPwMsg(null);
-                  }}
+                  onClick={openPasswordModal}
                 >
                   🔑 Đổi mật khẩu
                 </button>
-
-                {showChangePw && (
-                  <form className="pw-form" onSubmit={handleChangePw}>
-                    <input
-                      className="form-input"
-                      type="password"
-                      placeholder="Mật khẩu hiện tại"
-                      value={pwForm.old}
-                      onChange={(e) =>
-                        setPwForm({
-                          ...pwForm,
-                          old: e.target.value
-                        })
-                      }
-                      required
-                    />
-
-                    <input
-                      className="form-input"
-                      type="password"
-                      placeholder="Mật khẩu mới"
-                      value={pwForm.new}
-                      onChange={(e) =>
-                        setPwForm({
-                          ...pwForm,
-                          new: e.target.value
-                        })
-                      }
-                      required
-                    />
-
-                    <input
-                      className="form-input"
-                      type="password"
-                      placeholder="Xác nhận mật khẩu mới"
-                      value={pwForm.confirm}
-                      onChange={(e) =>
-                        setPwForm({
-                          ...pwForm,
-                          confirm: e.target.value
-                        })
-                      }
-                      required
-                    />
-
-                    {pwMsg && (
-                      <p className={pwMsg.ok ? 'save-success' : 'pw-error'}>
-                        {pwMsg.text}
-                      </p>
-                    )}
-
-                    <button type="submit" className="save-btn">
-                      Xác nhận
-                    </button>
-                  </form>
-                )}
               </div>
             )}
           </div>
@@ -551,9 +543,109 @@ function Profile() {
           </div>
         </div>
       </div>
+
+      {showChangePw && (
+        <div className="profile-modal-overlay" onClick={closePasswordModal}>
+          <div className="password-modal card" onClick={(e) => e.stopPropagation()}>
+            <div className="password-modal-header">
+              <div>
+                <h2>Đổi mật khẩu</h2>
+                <p>Cập nhật mật khẩu để bảo vệ tài khoản của bạn.</p>
+              </div>
+
+              <button
+                type="button"
+                className="modal-close-btn"
+                onClick={closePasswordModal}
+                disabled={pwLoading}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form className="pw-form modal-pw-form" onSubmit={handleChangePw}>
+              <div className="form-group">
+                <label className="form-label">Mật khẩu hiện tại</label>
+                <input
+                  className="form-input"
+                  type="password"
+                  placeholder="Nhập mật khẩu hiện tại"
+                  value={pwForm.old}
+                  onChange={(e) =>
+                    setPwForm({
+                      ...pwForm,
+                      old: e.target.value
+                    })
+                  }
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Mật khẩu mới</label>
+                <input
+                  className="form-input"
+                  type="password"
+                  placeholder="Ít nhất 6 ký tự"
+                  value={pwForm.new}
+                  onChange={(e) =>
+                    setPwForm({
+                      ...pwForm,
+                      new: e.target.value
+                    })
+                  }
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Xác nhận mật khẩu mới</label>
+                <input
+                  className="form-input"
+                  type="password"
+                  placeholder="Nhập lại mật khẩu mới"
+                  value={pwForm.confirm}
+                  onChange={(e) =>
+                    setPwForm({
+                      ...pwForm,
+                      confirm: e.target.value
+                    })
+                  }
+                  required
+                />
+              </div>
+
+              {pwMsg && (
+                <p className={pwMsg.ok ? 'save-success' : 'pw-error'}>
+                  {pwMsg.ok ? '✅ ' : '❌ '}
+                  {pwMsg.text}
+                </p>
+              )}
+
+              <div className="modal-btns">
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={closePasswordModal}
+                  disabled={pwLoading}
+                >
+                  Hủy
+                </button>
+
+                <button
+                  type="submit"
+                  className="save-btn"
+                  disabled={pwLoading}
+                >
+                  {pwLoading ? 'Đang xử lý...' : 'Xác nhận'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
 export default Profile;
-

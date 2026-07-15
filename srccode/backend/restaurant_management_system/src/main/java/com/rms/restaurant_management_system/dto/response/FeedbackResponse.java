@@ -22,6 +22,14 @@ public class FeedbackResponse {
 
     private String customerEmail;
 
+    private String customerPhone;
+
+    private Long tableId;
+
+    private String tableName;
+
+    private String orderCode;
+
     private Integer rating;
 
     private String content;

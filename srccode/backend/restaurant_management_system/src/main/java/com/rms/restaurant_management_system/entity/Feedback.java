@@ -25,6 +25,18 @@ public class Feedback {
     @Column(columnDefinition = "NVARCHAR(255)")
     private String customerEmail;
 
+    @Column(columnDefinition = "NVARCHAR(30)")
+    private String customerPhone;
+
+    @Column(name = "table_id")
+    private Long tableId;
+
+    @Column(name = "table_name", columnDefinition = "NVARCHAR(50)")
+    private String tableName;
+
+    @Column(name = "order_code", columnDefinition = "NVARCHAR(50)")
+    private String orderCode;
+
     @Column(nullable = false)
     private Integer rating;
 
