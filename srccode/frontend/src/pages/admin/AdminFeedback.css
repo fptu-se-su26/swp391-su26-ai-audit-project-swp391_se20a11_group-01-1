@@ -298,3 +298,19 @@
     min-width: 900px;
   }
 }
+.page-subtitle {
+  margin-top: 4px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.qr-feedback-tag {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fff7ed;
+  color: #c2410c;
+  font-size: 11px;
+  font-weight: 700;
+}

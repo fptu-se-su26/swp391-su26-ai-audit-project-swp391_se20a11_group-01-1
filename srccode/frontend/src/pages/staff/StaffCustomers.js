@@ -130,8 +130,9 @@ function StaffCustomers() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Khách hàng</h1>
+
           <p className="page-subtitle">
-            Theo dõi thông tin khách hàng, số đơn và tổng chi tiêu.
+            Theo dõi khách hàng đã đăng ký tài khoản. Khách quét QR không đăng nhập vẫn được lưu trong đơn hàng.
           </p>
         </div>
 
@@ -140,12 +141,17 @@ function StaffCustomers() {
         </button>
       </div>
 
+      <div className="customer-note card">
+        <strong>Ghi chú nghiệp vụ:</strong>{' '}
+        Danh sách này chỉ bao gồm tài khoản có vai trò CUSTOMER. Khách vãng lai đặt món bằng QR sẽ được ghi nhận qua tên và số điện thoại trong đơn hàng, nhưng không tự động tạo tài khoản khách hàng.
+      </div>
+
       <div className="customer-stats">
         <div className="stat-card card">
           <div className="stat-icon">👥</div>
           <div>
             <h3>{totalCustomers}</h3>
-            <p>Tổng khách hàng</p>
+            <p>Khách có tài khoản</p>
           </div>
         </div>
 
@@ -177,7 +183,7 @@ function StaffCustomers() {
           <div className="stat-icon">💰</div>
           <div>
             <h3>{formatCurrency(totalRevenue)}</h3>
-            <p>Tổng chi tiêu</p>
+            <p>Chi tiêu từ tài khoản</p>
           </div>
         </div>
 
@@ -185,7 +191,7 @@ function StaffCustomers() {
           <div className="stat-icon">📦</div>
           <div>
             <h3>{totalOrders}</h3>
-            <p>Tổng số đơn</p>
+            <p>Đơn từ tài khoản</p>
           </div>
         </div>
       </div>
@@ -193,7 +199,7 @@ function StaffCustomers() {
       <div className="customer-toolbar card">
         <input
           className="search-input"
-          placeholder="🔍 Tìm theo tên, email, SĐT hoặc ID..."
+          placeholder="🔍 Tìm theo tên, email, SĐT gần nhất hoặc ID..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -262,7 +268,7 @@ function StaffCustomers() {
           </select>
 
           <span className="result-count">
-            Hiển thị {filteredCustomers.length}/{totalCustomers} khách hàng
+            Hiển thị {filteredCustomers.length}/{totalCustomers} khách hàng có tài khoản
           </span>
         </div>
       </div>
@@ -308,7 +314,9 @@ function StaffCustomers() {
                       <td>
                         <div className="contact-cell">
                           <span>{customer.email || '-'}</span>
-                          <small>{customer.lastCustomerPhone || 'Chưa có SĐT'}</small>
+                          <small>
+                            SĐT gần nhất: {customer.lastCustomerPhone || 'Chưa có'}
+                          </small>
                         </div>
                       </td>
 
@@ -317,6 +325,7 @@ function StaffCustomers() {
                           <span>
                             Tổng: <strong>{customer.totalOrders || 0}</strong>
                           </span>
+
                           <small>
                             Hoàn thành: {customer.completedOrders || 0} · Hủy: {customer.cancelledOrders || 0}
                           </small>
@@ -333,9 +342,11 @@ function StaffCustomers() {
                         {customer.lastOrderCode ? (
                           <div className="last-order-cell">
                             <strong>{customer.lastOrderCode}</strong>
+
                             <small>
                               {statusLabel[customer.lastOrderStatus] || customer.lastOrderStatus}
                             </small>
+
                             <small>{formatDate(customer.lastOrderAt)}</small>
                           </div>
                         ) : (
@@ -394,10 +405,15 @@ function StaffCustomers() {
               <div>
                 <h3>{selectedCustomer.username || 'Khách hàng'}</h3>
                 <p>{selectedCustomer.email}</p>
+
                 <span className={`status-badge ${(selectedCustomer.isActive ?? true) ? 'active' : 'inactive'}`}>
                   {(selectedCustomer.isActive ?? true) ? 'Hoạt động' : 'Đã khóa'}
                 </span>
               </div>
+            </div>
+
+            <div className="customer-note modal-note">
+              Đây là khách hàng có tài khoản. Các đơn vãng lai từ QR không đăng nhập được quản lý ở mục đơn hàng.
             </div>
 
             <div className="detail-grid">
@@ -412,12 +428,12 @@ function StaffCustomers() {
               </div>
 
               <div className="detail-item">
-                <span>Số điện thoại gần nhất</span>
+                <span>Số điện thoại gần nhất từ đơn hàng</span>
                 <strong>{selectedCustomer.lastCustomerPhone || '-'}</strong>
               </div>
 
               <div className="detail-item">
-                <span>Tổng số đơn</span>
+                <span>Tổng số đơn từ tài khoản</span>
                 <strong>{selectedCustomer.totalOrders || 0}</strong>
               </div>
 
@@ -437,7 +453,7 @@ function StaffCustomers() {
               </div>
 
               <div className="detail-item">
-                <span>Tổng chi tiêu</span>
+                <span>Tổng chi tiêu từ tài khoản</span>
                 <strong>{formatCurrency(selectedCustomer.totalSpent)}</strong>
               </div>
 

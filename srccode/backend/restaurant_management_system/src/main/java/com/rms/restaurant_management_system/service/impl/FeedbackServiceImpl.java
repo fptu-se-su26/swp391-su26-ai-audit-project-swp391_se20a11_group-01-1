@@ -47,6 +47,10 @@ public class FeedbackServiceImpl implements FeedbackService {
                 .user(user)
                 .customerName(customerName)
                 .customerEmail(customerEmail)
+                .customerPhone(request.getCustomerPhone())
+                .tableId(request.getTableId())
+                .tableName(request.getTableName())
+                .orderCode(request.getOrderCode())
                 .rating(request.getRating())
                 .content(request.getContent())
                 .status(FeedbackStatus.NEW)
@@ -102,6 +106,10 @@ public class FeedbackServiceImpl implements FeedbackService {
                 user != null ? user.getUsername() : null,
                 feedback.getCustomerName(),
                 feedback.getCustomerEmail(),
+                feedback.getCustomerPhone(),
+                feedback.getTableId(),
+                feedback.getTableName(),
+                feedback.getOrderCode(),
                 feedback.getRating(),
                 feedback.getContent(),
                 feedback.getStatus(),

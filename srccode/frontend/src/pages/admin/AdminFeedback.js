@@ -61,6 +61,22 @@ function AdminFeedback() {
     RESOLVED: 'Đã xử lý'
   };
 
+  const getCustomerDisplayName = (item) => {
+    return item.customerName || item.username || 'Khách hàng';
+  };
+
+  const getCustomerContact = (item) => {
+    if (item.customerEmail) {
+      return item.customerEmail;
+    }
+
+    if (item.customerPhone) {
+      return item.customerPhone;
+    }
+
+    return '-';
+  };
+
   const filteredFeedbacks = feedbacks.filter(item => {
     const keyword = search.trim().toLowerCase();
 
@@ -72,7 +88,10 @@ function AdminFeedback() {
       !keyword ||
       item.customerName?.toLowerCase().includes(keyword) ||
       item.customerEmail?.toLowerCase().includes(keyword) ||
+      item.customerPhone?.toLowerCase().includes(keyword) ||
       item.username?.toLowerCase().includes(keyword) ||
+      item.tableName?.toLowerCase().includes(keyword) ||
+      item.orderCode?.toLowerCase().includes(keyword) ||
       item.content?.toLowerCase().includes(keyword);
 
     return matchStatus && matchSearch;
@@ -90,7 +109,12 @@ function AdminFeedback() {
   return (
     <div className="admin-feedback-page">
       <div className="page-header">
-        <h1 className="page-title">Quản lý phản hồi</h1>
+        <div>
+          <h1 className="page-title">Quản lý phản hồi</h1>
+          <p className="page-subtitle">
+            Theo dõi phản hồi từ khách hàng đăng nhập và khách quét QR tại bàn.
+          </p>
+        </div>
 
         <button className="btn-primary" onClick={fetchFeedbacks}>
           🔄 Làm mới
@@ -127,7 +151,7 @@ function AdminFeedback() {
       <div className="feedback-toolbar">
         <input
           className="search-input"
-          placeholder="🔍 Tìm theo tên, email hoặc nội dung..."
+          placeholder="🔍 Tìm theo tên, email, SĐT, bàn, mã đơn hoặc nội dung..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -184,9 +208,39 @@ function AdminFeedback() {
                 filteredFeedbacks.map(item => (
                   <tr key={item.feedbackId}>
                     <td>
-                      <strong>{item.customerName || item.username || 'Khách hàng'}</strong>
+                      <strong>{getCustomerDisplayName(item)}</strong>
+
                       <br />
-                      <small>{item.customerEmail || '-'}</small>
+
+                      <small>
+                        {getCustomerContact(item)}
+                      </small>
+
+                      {item.customerPhone && item.customerEmail && (
+                        <>
+                          <br />
+                          <small>📞 {item.customerPhone}</small>
+                        </>
+                      )}
+
+                      {(item.tableName || item.orderCode) && (
+                        <>
+                          <br />
+                          <small>
+                            {item.tableName ? `🪑 ${item.tableName}` : ''}
+                            {item.orderCode ? ` · 🧾 ${item.orderCode}` : ''}
+                          </small>
+                        </>
+                      )}
+
+                      {!item.userId && (
+                        <>
+                          <br />
+                          <small className="qr-feedback-tag">
+                            QR Guest
+                          </small>
+                        </>
+                      )}
                     </td>
 
                     <td>
@@ -205,9 +259,9 @@ function AdminFeedback() {
                         value={item.status}
                         onChange={e => handleChangeStatus(item.feedbackId, e.target.value)}
                       >
-                        <option value="NEW">Mới</option>
-                        <option value="REVIEWED">Đã xem</option>
-                        <option value="RESOLVED">Đã xử lý</option>
+                        <option value="NEW">{statusMap.NEW}</option>
+                        <option value="REVIEWED">{statusMap.REVIEWED}</option>
+                        <option value="RESOLVED">{statusMap.RESOLVED}</option>
                       </select>
                     </td>
 
@@ -221,6 +275,7 @@ function AdminFeedback() {
                       <button
                         className="action-btn del-btn"
                         onClick={() => handleDelete(item.feedbackId)}
+                        title="Xóa phản hồi"
                       >
                         🗑️
                       </button>
