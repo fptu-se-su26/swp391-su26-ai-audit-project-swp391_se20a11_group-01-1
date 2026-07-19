@@ -234,8 +234,11 @@ public class ReservationServiceImpl implements ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        if (reservation.getStatus() == ReservationStatus.COMPLETED) {
-            throw new RuntimeException("Completed reservation cannot be cancelled");
+        if (reservation.getStatus() != ReservationStatus.PENDING
+                && reservation.getStatus() != ReservationStatus.CONFIRMED) {
+            throw new RuntimeException(
+                    "Only PENDING or CONFIRMED reservations can be cancelled"
+            );
         }
 
         reservation.setStatus(ReservationStatus.CANCELLED);
