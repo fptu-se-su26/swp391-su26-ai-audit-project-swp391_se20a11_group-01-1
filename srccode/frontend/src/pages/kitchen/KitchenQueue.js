@@ -66,7 +66,14 @@ function KitchenQueue() {
       setClock(new Date());
     }, 1000);
 
-    return () => clearInterval(timer);
+    const refreshTimer = setInterval(() => {
+      fetchKitchenOrders(false);
+    }, 8000);
+
+    return () => {
+      clearInterval(timer);
+      clearInterval(refreshTimer);
+    };
   }, []);
 
   const getApiMessage = (data, fallback) => {
@@ -83,8 +90,10 @@ function KitchenQueue() {
     return fallback;
   };
 
-  const fetchKitchenOrders = async () => {
-    setLoading(true);
+  const fetchKitchenOrders = async (showLoading = true) => {
+    if (showLoading) {
+      setLoading(true);
+    }
     setError('');
 
     try {
@@ -111,7 +120,9 @@ function KitchenQueue() {
         )
       );
     } finally {
-      setLoading(false);
+      if (showLoading) {
+        setLoading(false);
+      }
     }
   };
 
