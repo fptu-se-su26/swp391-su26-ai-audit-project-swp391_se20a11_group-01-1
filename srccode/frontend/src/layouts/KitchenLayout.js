@@ -12,8 +12,11 @@ function KitchenLayout() {
       <header className="kitchen-header">
         <div className="kitchen-brand">🍳 Kitchen Display</div>
         <nav className="kitchen-nav">
+          <NavLink to="/kitchen/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>
+            🍳 Bếp trưởng (Món)
+          </NavLink>
           <NavLink to="/kitchen/queue" className={({ isActive }) => isActive ? 'active' : ''}>
-            📋 Hàng chờ
+            📋 Đơn hàng chờ
           </NavLink>
           <NavLink to="/kitchen/history" className={({ isActive }) => isActive ? 'active' : ''}>
             ✅ Hoàn thành
