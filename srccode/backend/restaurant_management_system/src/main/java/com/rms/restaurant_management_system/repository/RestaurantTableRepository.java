@@ -19,6 +19,10 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
     @Query("select restaurantTable from RestaurantTable restaurantTable where restaurantTable.tableName = :tableName")
     Optional<RestaurantTable> findByTableNameForUpdate(@Param("tableName") String tableName);
 
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select restaurantTable from RestaurantTable restaurantTable where restaurantTable.tableId = :tableId")
+    Optional<RestaurantTable> findByTableIdForUpdate(@Param("tableId") Long tableId);
+
     boolean existsByTableName(String tableName);
 
     List<RestaurantTable> findByIsActiveTrueOrderByTableIdAsc();
