@@ -7,12 +7,19 @@ import com.rms.restaurant_management_system.dto.request.UpdateReservationStatusR
 import com.rms.restaurant_management_system.dto.response.ReservationItemResponse;
 import com.rms.restaurant_management_system.dto.response.ReservationResponse;
 import com.rms.restaurant_management_system.entity.Food;
+import com.rms.restaurant_management_system.entity.Order;
+import com.rms.restaurant_management_system.entity.OrderItem;
 import com.rms.restaurant_management_system.entity.Reservation;
 import com.rms.restaurant_management_system.entity.ReservationItem;
+import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.User;
+import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.ReservationStatus;
+import com.rms.restaurant_management_system.enums.TableStatus;
 import com.rms.restaurant_management_system.repository.FoodRepository;
+import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.ReservationRepository;
+import com.rms.restaurant_management_system.repository.RestaurantTableRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import com.rms.restaurant_management_system.service.interfaces.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +39,8 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final FoodRepository foodRepository;
+    private final OrderRepository orderRepository;
+    private final RestaurantTableRepository restaurantTableRepository;
 
     @Override
     @Transactional
@@ -173,27 +182,46 @@ public class ReservationServiceImpl implements ReservationService {
             Long reservationId,
             CheckInReservationRequest request
     ) {
-        Reservation reservation = reservationRepository.findById(reservationId)
+        Reservation reservation = reservationRepository.findByReservationId(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
-        if (reservation.getStatus() == ReservationStatus.CANCELLED) {
-            throw new RuntimeException("Cancelled reservation cannot be checked in");
-        }
-
-        if (reservation.getStatus() == ReservationStatus.NO_SHOW) {
-            throw new RuntimeException("No-show reservation cannot be checked in");
-        }
-
-        if (reservation.getStatus() == ReservationStatus.COMPLETED) {
-            throw new RuntimeException("Completed reservation cannot be checked in");
+        if (reservation.getStatus() != ReservationStatus.CONFIRMED) {
+            throw new RuntimeException("Only CONFIRMED reservations can be checked in");
         }
 
         if (request.getAssignedTable() == null || request.getAssignedTable().isBlank()) {
             throw new RuntimeException("Assigned table is required");
         }
 
-        reservation.setAssignedTable(request.getAssignedTable());
+        RestaurantTable table = restaurantTableRepository.findByTableNameForUpdate(request.getAssignedTable().trim())
+                .orElseThrow(() -> new RuntimeException("Table not found: " + request.getAssignedTable()));
+
+        if (table.getIsActive() == null || !table.getIsActive()) {
+            throw new RuntimeException("Table is inactive");
+        }
+
+        if (table.getStatus() != TableStatus.EMPTY) {
+            throw new RuntimeException("Assigned table must be EMPTY");
+        }
+
+        reservation.setAssignedTable(table.getTableName());
         reservation.setStatus(ReservationStatus.SEATED);
+
+        Order createdOrder = null;
+
+        if (reservation.getItems() != null && !reservation.getItems().isEmpty()) {
+            createdOrder = createOrderFromReservation(reservation, table);
+
+            table.setStatus(TableStatus.OCCUPIED);
+            table.setCurrentOrderCode(createdOrder.getOrderCode());
+            table.setReservedBy(reservation.getCustomerName());
+        } else {
+            table.setStatus(TableStatus.OCCUPIED);
+            table.setCurrentOrderCode(null);
+            table.setReservedBy(reservation.getCustomerName());
+        }
+
+        restaurantTableRepository.save(table);
 
         Reservation savedReservation = reservationRepository.save(reservation);
 
@@ -214,6 +242,61 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setAssignedTable(null);
 
         reservationRepository.save(reservation);
+    }
+
+    private Order createOrderFromReservation(Reservation reservation, RestaurantTable table) {
+        Order order = Order.builder()
+                .orderCode(generateOrderCode())
+                .status(OrderStatus.CONFIRMED)
+                .totalAmount(
+                        reservation.getPreOrderTotal() != null
+                                ? reservation.getPreOrderTotal()
+                                : BigDecimal.ZERO
+                )
+                .note(buildReservationOrderNote(reservation))
+                .tableId(table.getTableId())
+                .tableName(table.getTableName())
+                .customerName(reservation.getCustomerName())
+                .customerPhone(reservation.getCustomerPhone())
+                .user(reservation.getUser())
+                .items(new ArrayList<>())
+                .build();
+
+        BigDecimal totalAmount = BigDecimal.ZERO;
+
+        for (ReservationItem reservationItem : reservation.getItems()) {
+            OrderItem orderItem = OrderItem.builder()
+                    .order(order)
+                    .foodId(reservationItem.getFoodId())
+                    .foodName(reservationItem.getFoodName())
+                    .unitPrice(reservationItem.getUnitPrice())
+                    .quantity(reservationItem.getQuantity())
+                    .subtotal(reservationItem.getSubtotal())
+                    .imageUrl(reservationItem.getImageUrl())
+                    .emoji(reservationItem.getEmoji())
+                    .build();
+
+            order.getItems().add(orderItem);
+            totalAmount = totalAmount.add(reservationItem.getSubtotal());
+        }
+
+        order.setTotalAmount(totalAmount);
+
+        return orderRepository.save(order);
+    }
+
+    private String buildReservationOrderNote(Reservation reservation) {
+        StringBuilder note = new StringBuilder();
+
+        note.append("Pre-order từ đặt bàn ")
+                .append(reservation.getReservationCode());
+
+        if (reservation.getNote() != null && !reservation.getNote().isBlank()) {
+            note.append(" | Ghi chú đặt bàn: ")
+                    .append(reservation.getNote());
+        }
+
+        return note.toString();
     }
 
     private void validateStatusTransition(
@@ -303,5 +386,14 @@ public class ReservationServiceImpl implements ReservationService {
         int random = (int) (Math.random() * 9000) + 1000;
 
         return "RES-" + timestamp + "-" + random;
+    }
+
+    private String generateOrderCode() {
+        String timestamp = java.time.LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+
+        int random = (int) (Math.random() * 9000) + 1000;
+
+        return "ORD-RES-" + timestamp + "-" + random;
     }
 }
