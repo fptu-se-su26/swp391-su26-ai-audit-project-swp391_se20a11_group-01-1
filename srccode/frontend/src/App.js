@@ -53,6 +53,7 @@ import StaffPayments from './pages/staff/StaffPayments';
 // Kitchen pages
 import KitchenQueue from './pages/kitchen/KitchenQueue';
 import KitchenHistory from './pages/kitchen/KitchenHistory';
+import KitchenDashboard from './pages/staff/KitchenDashboard';
 
 function App() {
   return (
@@ -144,9 +145,10 @@ function App() {
                     </PrivateRoute>
                   }
                 >
-                  <Route index element={<Navigate to="/kitchen/queue" replace />} />
+                  <Route index element={<Navigate to="/kitchen/dashboard" replace />} />
                   <Route path="queue" element={<KitchenQueue />} />
                   <Route path="history" element={<KitchenHistory />} />
+                  <Route path="dashboard" element={<KitchenDashboard />} />
                 </Route>
 
                 {/* Customer */}
