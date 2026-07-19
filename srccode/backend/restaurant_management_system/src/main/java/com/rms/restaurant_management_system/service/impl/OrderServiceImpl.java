@@ -14,10 +14,12 @@ import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.User;
 
 import com.rms.restaurant_management_system.enums.OrderStatus;
+import com.rms.restaurant_management_system.enums.PaymentStatus;
 import com.rms.restaurant_management_system.enums.TableStatus;
 
 import com.rms.restaurant_management_system.repository.FoodRepository;
 import com.rms.restaurant_management_system.repository.OrderRepository;
+import com.rms.restaurant_management_system.repository.PaymentRepository;
 import com.rms.restaurant_management_system.repository.RestaurantTableRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 
@@ -49,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
     private final FoodRepository foodRepository;
 
     private final RestaurantTableRepository restaurantTableRepository;
+
+    private final PaymentRepository paymentRepository;
 
     @Override
     @Transactional
@@ -254,6 +258,9 @@ public class OrderServiceImpl implements OrderService {
                                 "Order not found"
                         )
                 );
+        if (request.getStatus() == OrderStatus.CANCELLED) {
+            validateOrderCanBeCancelled(order);
+        }
         validateStatusTransition(
 
                 order.getStatus(),
@@ -288,6 +295,8 @@ public class OrderServiceImpl implements OrderService {
                                 "Order not found"
                         )
                 );
+
+        validateOrderCanBeCancelled(order);
 
         order.setStatus(
                 OrderStatus.CANCELLED
@@ -325,6 +334,25 @@ public class OrderServiceImpl implements OrderService {
         restaurantTableRepository.save(table);
     }
 
+    private void validateOrderCanBeCancelled(Order order) {
+        if (order.getStatus() != OrderStatus.PENDING
+                && order.getStatus() != OrderStatus.CONFIRMED) {
+            throw new RuntimeException(
+                    "Only PENDING or CONFIRMED orders can be cancelled"
+            );
+        }
+
+        boolean alreadyPaid = paymentRepository.findByOrderOrderId(order.getOrderId())
+                .map(payment -> payment.getStatus() == PaymentStatus.PAID)
+                .orElse(false);
+
+        if (alreadyPaid) {
+            throw new RuntimeException(
+                    "Cannot cancel an order that has already been paid"
+            );
+        }
+    }
+
     private java.util.Optional<Order> findOrderForStatusUpdate(Long orderId) {
         Order orderSnapshot = orderRepository.findById(orderId)
                 .orElse(null);
@@ -356,9 +384,7 @@ public class OrderServiceImpl implements OrderService {
                             ||
                             next == OrderStatus.CANCELLED;
                     case PREPARING ->
-                            next == OrderStatus.READY
-                            ||
-                            next == OrderStatus.CANCELLED;
+                            next == OrderStatus.READY;
                     case READY ->
                             next == OrderStatus.COMPLETED;
                     default -> false;
