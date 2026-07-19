@@ -53,222 +53,141 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderResponse createOrder(OrderRequest request) {
-
         User user = null;
 
         // Customer QR không cần đăng nhập
-        if(request.getUserId() != null){
-
+        if (request.getUserId() != null) {
             user = userRepository.findById(request.getUserId())
-
-                    .orElseThrow(() ->
-                            new RuntimeException(
-                                    "User not found"
-                            )
-                    );
+                    .orElseThrow(() -> new RuntimeException("User not found"));
         }
 
         RestaurantTable table = null;
 
-        if(request.getTableId() != null){
+        if (request.getTableId() != null) {
+            table = restaurantTableRepository.findByTableIdForUpdate(request.getTableId())
+                    .orElseThrow(() -> new RuntimeException("Table not found"));
 
-
-            table =
-                    restaurantTableRepository
-                            .findById(request.getTableId())
-
-                            .orElseThrow(() ->
-                                    new RuntimeException(
-                                            "Table not found"
-                                    )
-                            );
-
-            if(!table.getIsActive()){
-
-                throw new RuntimeException(
-                        "Table is inactive"
-                );
+            if (table.getIsActive() == null || !table.getIsActive()) {
+                throw new RuntimeException("Table is inactive");
             }
-
-
-            /*
-             * KHÔNG CHECK OCCUPIED
-             *
-             * Vì QR ordering:
-             * - khách đang ngồi vẫn gọi thêm món
-             * - bàn có khách vẫn order tiếp được
-             */
-
         }
 
-        String customerName =
-                request.getCustomerName();
+        Order activeOrder = findAppendableActiveOrder(table);
 
-
-        if(
-                (customerName == null
-                || customerName.isBlank())
-
-                && user != null
-        ){
-
-            customerName =
-                    user.getUsername();
-
+        if (activeOrder != null) {
+            appendItems(activeOrder, request.getItems());
+            recalculateTotalAmount(activeOrder);
+            return mapToResponse(orderRepository.save(activeOrder));
         }
 
+        String customerName = request.getCustomerName();
 
-        if(
-                (customerName == null
-                || customerName.isBlank())
-
-                && table != null
-        ){
-
-            customerName =
-                    "Khách " + table.getTableName();
-
+        if ((customerName == null || customerName.isBlank()) && user != null) {
+            customerName = user.getUsername();
         }
 
-        Order order =
-                Order.builder()
+        if ((customerName == null || customerName.isBlank()) && table != null) {
+            customerName = "Khách " + table.getTableName();
+        }
 
-                .orderCode(
-                        generateOrderCode()
-                )
-
+        Order order = Order.builder()
+                .orderCode(generateOrderCode())
                 .user(user)
-
-                .tableId(
-                        table != null
-                        ? table.getTableId()
-                        : null
-                )
-
-                .tableName(
-                        table != null
-                        ? table.getTableName()
-                        : null
-                )
-
-                .customerName(
-                        customerName
-                )
-
-
-                .customerPhone(
-                        request.getCustomerPhone()
-                )
-
-
-                .status(
-                        OrderStatus.PENDING
-                )
-
-
-                .note(
-                        request.getNote()
-                )
-
-
-                .totalAmount(
-                        BigDecimal.ZERO
-                )
-
-
-                .items(
-                        new ArrayList<>()
-                )
-
+                .tableId(table != null ? table.getTableId() : null)
+                .tableName(table != null ? table.getTableName() : null)
+                .customerName(customerName)
+                .customerPhone(request.getCustomerPhone())
+                .status(OrderStatus.PENDING)
+                .note(request.getNote())
+                .totalAmount(BigDecimal.ZERO)
+                .items(new ArrayList<>())
                 .build();
 
+        appendItems(order, request.getItems());
+        recalculateTotalAmount(order);
 
-        BigDecimal totalAmount =
-                BigDecimal.ZERO;
+        Order savedOrder = orderRepository.save(order);
 
-
-        for(OrderItemRequest itemRequest :
-                request.getItems()) {
-
-            Food food =
-                    foodRepository
-                            .findById(
-                                    itemRequest.getFoodId()
-                            )
-                            .orElseThrow(() ->
-                                    new RuntimeException(
-                                            "Food not found"
-                                    )
-                            );
-            if(!food.getIsAvailable()){
-
-
-                throw new RuntimeException(
-                        "Food unavailable"
-                );
-
-            }
-            BigDecimal subtotal =
-
-                    food.getPrice()
-
-                    .multiply(
-                            BigDecimal.valueOf(
-                                    itemRequest.getQuantity()
-                            )
-                    );
-            OrderItem item =
-
-                    OrderItem.builder()
-
-                    .order(order)
-
-                    .foodId(
-                            food.getFoodId()
-                    )
-                    .foodName(
-                            food.getFoodName()
-                    )
-                    .unitPrice(
-                            food.getPrice()
-                    )
-                    .quantity(
-                            itemRequest.getQuantity()
-                    )
-                    .subtotal(
-                            subtotal
-                    )
-                    .imageUrl(
-                            food.getImageUrl()
-                    )
-                    .emoji(
-                            food.getEmoji()
-                    )
-                    .build();
-            order.getItems()
-                    .add(item);
-            totalAmount =
-                    totalAmount.add(subtotal);
-        }
-        order.setTotalAmount(
-                totalAmount
-        );
-        Order savedOrder =
-                orderRepository.save(order);
-        if(table != null){
-            table.setStatus(
-                    TableStatus.OCCUPIED
-            );
-            table.setCurrentOrderCode(
-                    savedOrder.getOrderCode()
-            );
-            table.setReservedBy(
-                    customerName
-            );
+        if (table != null) {
+            table.setStatus(TableStatus.OCCUPIED);
+            table.setCurrentOrderCode(savedOrder.getOrderCode());
+            table.setReservedBy(customerName);
             restaurantTableRepository.save(table);
         }
+
         return mapToResponse(savedOrder);
     }
+
+    private Order findAppendableActiveOrder(RestaurantTable table) {
+        if (table == null
+                || table.getCurrentOrderCode() == null
+                || table.getCurrentOrderCode().isBlank()) {
+            return null;
+        }
+
+        Order activeOrder = orderRepository
+                .findByOrderCode(table.getCurrentOrderCode().trim())
+                .orElse(null);
+
+        if (activeOrder == null
+                || activeOrder.getStatus() == OrderStatus.COMPLETED
+                || activeOrder.getStatus() == OrderStatus.CANCELLED) {
+            return null;
+        }
+
+        if (activeOrder.getStatus() == OrderStatus.PREPARING
+                || activeOrder.getStatus() == OrderStatus.READY) {
+            throw new RuntimeException(
+                    "Cannot add items while the active table order is PREPARING or READY"
+            );
+        }
+
+        if (activeOrder.getStatus() != OrderStatus.PENDING
+                && activeOrder.getStatus() != OrderStatus.CONFIRMED) {
+            throw new RuntimeException(
+                    "Cannot add items to the active table order in status "
+                            + activeOrder.getStatus()
+            );
+        }
+
+        return activeOrder;
+    }
+
+    private void appendItems(Order order, List<OrderItemRequest> itemRequests) {
+        for (OrderItemRequest itemRequest : itemRequests) {
+            Food food = foodRepository.findById(itemRequest.getFoodId())
+                    .orElseThrow(() -> new RuntimeException("Food not found"));
+
+            if (food.getIsAvailable() == null || !food.getIsAvailable()) {
+                throw new RuntimeException("Food unavailable");
+            }
+
+            BigDecimal subtotal = food.getPrice()
+                    .multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
+
+            OrderItem item = OrderItem.builder()
+                    .order(order)
+                    .foodId(food.getFoodId())
+                    .foodName(food.getFoodName())
+                    .unitPrice(food.getPrice())
+                    .quantity(itemRequest.getQuantity())
+                    .subtotal(subtotal)
+                    .imageUrl(food.getImageUrl())
+                    .emoji(food.getEmoji())
+                    .build();
+
+            order.getItems().add(item);
+        }
+    }
+
+    private void recalculateTotalAmount(Order order) {
+        BigDecimal totalAmount = order.getItems().stream()
+                .map(OrderItem::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        order.setTotalAmount(totalAmount);
+    }
+
     @Override
     public List<OrderResponse> getAllOrders(){
 
@@ -329,7 +248,7 @@ public class OrderServiceImpl implements OrderService {
 
     ){
         Order order =
-                orderRepository.findById(orderId)
+                findOrderForStatusUpdate(orderId)
                 .orElseThrow(() ->
                         new RuntimeException(
                                 "Order not found"
@@ -363,7 +282,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void cancelOrder(Long orderId){
         Order order =
-                orderRepository.findById(orderId)
+                findOrderForStatusUpdate(orderId)
                 .orElseThrow(() ->
                         new RuntimeException(
                                 "Order not found"
@@ -388,6 +307,12 @@ public class OrderServiceImpl implements OrderService {
         if(table == null)
 
             return;
+
+        if (table.getCurrentOrderCode() == null
+                || !table.getCurrentOrderCode().equals(order.getOrderCode())) {
+            return;
+        }
+
         table.setStatus(
                 TableStatus.EMPTY
         );
@@ -399,6 +324,23 @@ public class OrderServiceImpl implements OrderService {
         );
         restaurantTableRepository.save(table);
     }
+
+    private java.util.Optional<Order> findOrderForStatusUpdate(Long orderId) {
+        Order orderSnapshot = orderRepository.findById(orderId)
+                .orElse(null);
+
+        if (orderSnapshot == null) {
+            return java.util.Optional.empty();
+        }
+
+        if (orderSnapshot.getTableId() != null) {
+            restaurantTableRepository.findByTableIdForUpdate(orderSnapshot.getTableId())
+                    .orElseThrow(() -> new RuntimeException("Table not found"));
+        }
+
+        return orderRepository.findByOrderId(orderId);
+    }
+
     private void validateStatusTransition(
             OrderStatus current,
             OrderStatus next
