@@ -176,22 +176,11 @@ function StaffReservations() {
     setError('');
 
     try {
-      const response = await API.put(`/reservations/${reservation.reservationId}/check-in`, {
+      await API.put(`/reservations/${reservation.reservationId}/check-in`, {
         assignedTable: tableChoice
       });
 
-      updateReservationInState(response.data);
-
-      const selectedTable = tables.find((table) => table.tableName === tableChoice);
-
-      if (selectedTable?.tableId) {
-        await API.put(`/tables/${selectedTable.tableId}/status`, {
-          status: 'OCCUPIED',
-          reservedBy: `${reservation.customerName} - ${reservation.reservationTime}`
-        });
-
-        await fetchTables();
-      }
+      await Promise.all([fetchReservations(), fetchTables()]);
 
       setTableChoice('');
     } catch (error) {
@@ -262,20 +251,6 @@ function StaffReservations() {
       });
 
       updateReservationInState(response.data);
-
-      if (reservation.assignedTable) {
-        const assignedTable = tables.find(
-          (table) => table.tableName === reservation.assignedTable
-        );
-
-        if (assignedTable?.tableId) {
-          await API.put(`/tables/${assignedTable.tableId}/status`, {
-            status: 'EMPTY'
-          });
-
-          await fetchTables();
-        }
-      }
     } catch (error) {
       console.error('Complete reservation error:', error);
 
@@ -283,49 +258,6 @@ function StaffReservations() {
         getApiMessage(
           error.response?.data,
           'Không thể hoàn tất đặt bàn'
-        )
-      );
-    } finally {
-      setActionLoadingId(null);
-    }
-  };
-
-  const undoCheckin = async (reservation) => {
-    setActionLoadingId(reservation.reservationId);
-    setError('');
-
-    try {
-      const response = await API.put(`/reservations/${reservation.reservationId}/status`, {
-        status: 'CONFIRMED'
-      });
-
-      updateReservationInState({
-        ...response.data,
-        assignedTable: null
-      });
-
-      if (reservation.assignedTable) {
-        const assignedTable = tables.find(
-          (table) => table.tableName === reservation.assignedTable
-        );
-
-        if (assignedTable?.tableId) {
-          await API.put(`/tables/${assignedTable.tableId}/status`, {
-            status: 'EMPTY'
-          });
-
-          await fetchTables();
-        }
-      }
-
-      await fetchReservations();
-    } catch (error) {
-      console.error('Undo check-in error:', error);
-
-      setError(
-        getApiMessage(
-          error.response?.data,
-          'Không thể hoàn tác check-in'
         )
       );
     } finally {
@@ -631,13 +563,6 @@ function StaffReservations() {
                         🏁 Hoàn tất
                       </button>
 
-                      <button
-                        className="action-sm"
-                        disabled={isActionLoading}
-                        onClick={() => undoCheckin(reservation)}
-                      >
-                        ↩ Hoàn tác
-                      </button>
                     </div>
                   )}
 
