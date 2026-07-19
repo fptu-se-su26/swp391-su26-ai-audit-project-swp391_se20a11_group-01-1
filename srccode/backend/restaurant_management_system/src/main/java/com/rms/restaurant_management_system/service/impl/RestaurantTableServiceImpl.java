@@ -91,7 +91,34 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public TableResponse updateTableStatus(Long tableId, UpdateTableStatusRequest request) {
-        RestaurantTable table = findTable(tableId);
+        RestaurantTable table = findTableForUpdate(tableId);
+        String currentOrderCode = table.getCurrentOrderCode();
+        Order currentOrder = null;
+
+        if (currentOrderCode != null && !currentOrderCode.isBlank()) {
+            currentOrder = orderRepository.findByOrderCode(currentOrderCode.trim())
+                    .orElseThrow(() -> new RuntimeException(
+                            "Current order not found: " + currentOrderCode
+                    ));
+        }
+
+        boolean hasActiveOrder = currentOrder != null
+                && currentOrder.getStatus() != OrderStatus.COMPLETED
+                && currentOrder.getStatus() != OrderStatus.CANCELLED;
+
+        if (request.getStatus() == TableStatus.EMPTY && hasActiveOrder) {
+            throw new RuntimeException(
+                    "Cannot set table to EMPTY while its current order is still active"
+            );
+        }
+
+        if (hasActiveOrder
+                && request.getCurrentOrderCode() != null
+                && !currentOrderCode.equals(request.getCurrentOrderCode())) {
+            throw new RuntimeException(
+                    "Cannot change or clear currentOrderCode while its order is still active"
+            );
+        }
 
         table.setStatus(request.getStatus());
 
