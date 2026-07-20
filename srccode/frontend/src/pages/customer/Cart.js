@@ -5,6 +5,7 @@ import API from '../../services/api';
 import { useCart } from '../../context/CartContext';
 import { useProfile } from '../../context/ProfileContext';
 import { useAuth } from '../../context/AuthContext';
+import { validateVoucher } from '../../services/voucherService';
 import './Cart.css';
 
 const PAYMENT_METHODS = [
@@ -26,6 +27,12 @@ function Cart() {
   const [orderLoading, setOrderLoading] = useState(false);
   const [orderError, setOrderError] = useState('');
   const [createdOrder, setCreatedOrder] = useState(null);
+
+  const [voucherCode, setVoucherCode] = useState('');
+  const [activeVoucher, setActiveVoucher] = useState(null);
+  const [voucherMsg, setVoucherMsg] = useState({ type: '', text: '' });
+  
+  const finalTotal = activeVoucher ? activeVoucher.finalTotal : totalPrice;
 
   const getItemId = (item) => {
     return item.foodId || item.id;
@@ -86,19 +93,25 @@ function Cart() {
     try {
       const noteParts = [];
 
+      const selectedPayment = PAYMENT_METHODS.find(m => m.id === payMethod);
       if (selectedPayment) {
         noteParts.push(`Payment method: ${selectedPayment.label}`);
       }
 
       if (orderNote.trim()) noteParts.push(orderNote.trim());
 
-      const response = await API.post('/orders', {
+      const payload = {
         userId: user.userId,
         note: noteParts.join(' | '),
         items: orderItems
-      });
+      };
+
+      if (activeVoucher && activeVoucher.code) {
+        payload.voucherCode = activeVoucher.code;
+      }
+
+      const response = await API.post('/orders', payload);
       
-      if (activeVoucher) useVoucher(activeVoucher.code);
       addSpend(finalTotal);
       clearCart();
 
@@ -112,6 +125,32 @@ function Cart() {
     } finally {
       setOrderLoading(false);
     }
+  };
+
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) {
+      setVoucherMsg({ type: 'error', text: 'Vui lòng nhập mã giảm giá' });
+      return;
+    }
+    try {
+      const response = await validateVoucher(voucherCode, totalPrice);
+      if (response.valid) {
+        setActiveVoucher({ ...response, code: voucherCode.toUpperCase() });
+        setVoucherMsg({ type: 'success', text: response.message });
+      } else {
+        setActiveVoucher(null);
+        setVoucherMsg({ type: 'error', text: response.message });
+      }
+    } catch (err) {
+      setActiveVoucher(null);
+      setVoucherMsg({ type: 'error', text: err.response?.data?.message || 'Lỗi kiểm tra mã giảm giá' });
+    }
+  };
+
+  const handleRemoveVoucher = () => {
+    setVoucherCode('');
+    setActiveVoucher(null);
+    setVoucherMsg({ type: '', text: '' });
   };
 
   // ── Empty cart ──────────────────────────────────────────
@@ -351,6 +390,40 @@ function Cart() {
           <div className="summary-row summary-total">
             <span>Tạm tính theo giỏ hàng</span>
             <span>{totalPrice.toLocaleString('vi-VN')}đ</span>
+          </div>
+
+          <div className="voucher-section">
+            <div className="voucher-input-group">
+              <input
+                type="text"
+                placeholder="Nhập mã giảm giá..."
+                value={voucherCode}
+                onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                disabled={activeVoucher != null}
+              />
+              {!activeVoucher ? (
+                <button className="btn-apply" onClick={handleApplyVoucher}>Áp dụng</button>
+              ) : (
+                <button className="btn-remove" onClick={handleRemoveVoucher}>Hủy</button>
+              )}
+            </div>
+            {voucherMsg.text && (
+              <p className={`voucher-msg ${voucherMsg.type}`}>
+                {voucherMsg.type === 'success' ? '✅' : '❌'} {voucherMsg.text}
+              </p>
+            )}
+          </div>
+
+          {activeVoucher && (
+            <div className="summary-row summary-discount">
+              <span>Giảm giá</span>
+              <span>-{activeVoucher.discountAmount.toLocaleString('vi-VN')}đ</span>
+            </div>
+          )}
+
+          <div className="summary-row final-total">
+            <span>Thành tiền</span>
+            <span>{finalTotal.toLocaleString('vi-VN')}đ</span>
           </div>
 
           <div className="form-group" style={{ marginTop: 8 }}>

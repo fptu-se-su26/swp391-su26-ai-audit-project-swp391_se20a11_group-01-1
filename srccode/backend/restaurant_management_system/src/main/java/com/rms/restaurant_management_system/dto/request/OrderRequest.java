@@ -21,6 +21,8 @@ public class OrderRequest {
 
     private String note;
 
+    private String voucherCode;
+
     @Valid
     @NotEmpty(message = "Order must have at least one item")
     private List<OrderItemRequest> items;

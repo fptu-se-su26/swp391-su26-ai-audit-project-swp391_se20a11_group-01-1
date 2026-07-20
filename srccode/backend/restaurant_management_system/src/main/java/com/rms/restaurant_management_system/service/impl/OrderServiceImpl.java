@@ -12,6 +12,8 @@ import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.OrderItem;
 import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.User;
+import com.rms.restaurant_management_system.dto.request.ValidateVoucherRequest;
+import com.rms.restaurant_management_system.dto.response.ValidateVoucherResponse;
 
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.PaymentStatus;
@@ -24,6 +26,7 @@ import com.rms.restaurant_management_system.repository.RestaurantTableRepository
 import com.rms.restaurant_management_system.repository.UserRepository;
 
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
+import com.rms.restaurant_management_system.service.interfaces.VoucherService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -53,6 +56,8 @@ public class OrderServiceImpl implements OrderService {
     private final RestaurantTableRepository restaurantTableRepository;
 
     private final PaymentRepository paymentRepository;
+
+    private final VoucherService voucherService;
 
     @Override
     @Transactional
@@ -109,6 +114,24 @@ public class OrderServiceImpl implements OrderService {
 
         appendItems(order, request.getItems());
         recalculateTotalAmount(order);
+
+        if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
+            ValidateVoucherResponse validation = voucherService.validateVoucher(
+                    ValidateVoucherRequest.builder()
+                            .code(request.getVoucherCode())
+                            .orderTotal(order.getTotalAmount())
+                            .build()
+            );
+
+            if (validation.isValid()) {
+                order.setVoucherCode(request.getVoucherCode());
+                order.setVoucherDiscountAmount(validation.getDiscountAmount());
+                order.setTotalAmount(validation.getFinalTotal());
+                voucherService.applyVoucher(request.getVoucherCode());
+            } else {
+                throw new RuntimeException("Lỗi mã giảm giá: " + validation.getMessage());
+            }
+        }
 
         Order savedOrder = orderRepository.save(order);
 
@@ -188,6 +211,13 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal totalAmount = order.getItems().stream()
                 .map(OrderItem::getSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (order.getVoucherDiscountAmount() != null) {
+            totalAmount = totalAmount.subtract(order.getVoucherDiscountAmount());
+            if (totalAmount.compareTo(BigDecimal.ZERO) < 0) {
+                totalAmount = BigDecimal.ZERO;
+            }
+        }
 
         order.setTotalAmount(totalAmount);
     }

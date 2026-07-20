@@ -1,26 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AdminVouchers.css';
-
-const initialVouchers = [
-  { id: 1, code: 'WELCOME', discount: 50000, type: 'fixed',   minOrder: 200000, used: 12, total: 100, active: true,  expiry: '2026-12-31' },
-  { id: 2, code: 'CGKC5',   discount: 5,     type: 'percent', minOrder: 500000, used: 34, total: 999, active: true,  expiry: '2026-12-31' },
-  { id: 3, code: 'CGKC10',  discount: 10,    type: 'percent', minOrder: 1500000,used: 18, total: 999, active: true,  expiry: '2026-12-31' },
-  { id: 4, code: 'SUMMER20',discount: 20,    type: 'percent', minOrder: 300000, used: 5,  total: 50,  active: false, expiry: '2026-06-30' },
-];
+import { getAllVouchers, createVoucher, updateVoucher, deleteVoucher } from '../../services/voucherService';
 
 function AdminVouchers() {
-  const [vouchers, setVouchers] = useState(initialVouchers);
+  const [vouchers, setVouchers] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  const [form, setForm] = useState({ code:'', discount:'', type:'percent', minOrder:'', total:'', expiry:'' });
+  const [form, setForm] = useState({ code:'', discount:'', type:'PERCENT', minOrder:'', total:'', expiry:'' });
 
-  const toggleActive = (id) => setVouchers(prev => prev.map(v => v.id === id ? {...v, active: !v.active} : v));
-  const deleteVoucher = (id) => setVouchers(prev => prev.filter(v => v.id !== id));
+  useEffect(() => {
+    fetchVouchers();
+  }, []);
 
-  const handleAdd = (e) => {
+  const fetchVouchers = async () => {
+    try {
+      const data = await getAllVouchers();
+      setVouchers(data);
+    } catch (error) {
+      console.error('Error fetching vouchers:', error);
+    }
+  };
+
+  const toggleActive = async (id) => {
+    const voucher = vouchers.find(v => v.id === id);
+    if (!voucher) return;
+    try {
+      const updated = await updateVoucher(id, { ...voucher, active: !voucher.active });
+      setVouchers(prev => prev.map(v => v.id === id ? updated : v));
+    } catch (error) {
+      console.error('Error toggling voucher:', error);
+      alert('Lỗi cập nhật mã giảm giá');
+    }
+  };
+
+  const handleDeleteVoucher = async (id) => {
+    if (!window.confirm("Bạn có chắc chắn muốn xóa mã giảm giá này?")) return;
+    try {
+      await deleteVoucher(id);
+      setVouchers(prev => prev.filter(v => v.id !== id));
+    } catch (error) {
+      console.error('Error deleting voucher:', error);
+      alert('Lỗi xóa mã giảm giá');
+    }
+  };
+
+  const handleAdd = async (e) => {
     e.preventDefault();
-    setVouchers(prev => [...prev, { ...form, id: Date.now(), used: 0, active: true, discount: Number(form.discount), minOrder: Number(form.minOrder), total: Number(form.total) }]);
-    setShowAdd(false);
-    setForm({ code:'', discount:'', type:'percent', minOrder:'', total:'', expiry:'' });
+    try {
+      const payload = {
+        code: form.code,
+        discount: Number(form.discount),
+        type: form.type,
+        minOrder: Number(form.minOrder),
+        total: Number(form.total),
+        expiry: form.expiry,
+        active: true
+      };
+      const created = await createVoucher(payload);
+      setVouchers(prev => [...prev, created]);
+      setShowAdd(false);
+      setForm({ code:'', discount:'', type:'PERCENT', minOrder:'', total:'', expiry:'' });
+    } catch (error) {
+      console.error('Error creating voucher:', error);
+      alert(error.response?.data?.message || 'Lỗi tạo mã giảm giá');
+    }
   };
 
   return (
@@ -41,7 +83,7 @@ function AdminVouchers() {
               </label>
             </div>
             <div className="vac-discount">
-              {v.type === 'percent' ? `-${v.discount}%` : `-${v.discount.toLocaleString('vi-VN')}đ`}
+              {v.type === 'PERCENT' ? `-${v.discount}%` : `-${v.discount.toLocaleString('vi-VN')}đ`}
             </div>
             <div className="vac-details">
               <span>Đơn tối thiểu: {v.minOrder.toLocaleString('vi-VN')}đ</span>
@@ -51,7 +93,7 @@ function AdminVouchers() {
             <div className="vac-progress">
               <div className="vac-bar" style={{width: `${(v.used/v.total)*100}%`}}></div>
             </div>
-            <button className="vac-del" onClick={() => deleteVoucher(v.id)}>🗑️ Xóa</button>
+            <button className="vac-del" onClick={() => handleDeleteVoucher(v.id)}>🗑️ Xóa</button>
           </div>
         ))}
       </div>
@@ -70,8 +112,8 @@ function AdminVouchers() {
                 <div className="form-group">
                   <label className="form-label">Loại giảm</label>
                   <select className="form-input" value={form.type} onChange={e => setForm({...form, type: e.target.value})}>
-                    <option value="percent">Phần trăm (%)</option>
-                    <option value="fixed">Số tiền cố định (đ)</option>
+                    <option value="PERCENT">Phần trăm (%)</option>
+                    <option value="FIXED">Số tiền cố định (đ)</option>
                   </select>
                 </div>
               </div>

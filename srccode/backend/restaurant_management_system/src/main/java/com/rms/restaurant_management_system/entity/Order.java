@@ -47,6 +47,12 @@ public class Order {
     @Column(name = "customer_phone", columnDefinition = "NVARCHAR(30)")
     private String customerPhone;
 
+    @Column(name = "voucher_code", columnDefinition = "NVARCHAR(50)")
+    private String voucherCode;
+
+    @Column(name = "voucher_discount_amount", precision = 12, scale = 2)
+    private BigDecimal voucherDiscountAmount;
+
     @Builder.Default
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
