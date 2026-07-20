@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import API from '../../services/api';
+import { validateVoucher } from '../../services/voucherService';
 import './TableMenu.css';
 
 function TableMenu() {
@@ -20,6 +21,10 @@ function TableMenu() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [createdOrder, setCreatedOrder] = useState(null);
   const [error, setError] = useState('');
+
+  const [voucherCode, setVoucherCode] = useState('');
+  const [activeVoucher, setActiveVoucher] = useState(null);
+  const [voucherMsg, setVoucherMsg] = useState({ type: '', text: '' });
 
   const [showFeedback, setShowFeedback] = useState(false);
   const [feedbackRating, setFeedbackRating] = useState(5);
@@ -140,6 +145,8 @@ function TableMenu() {
     return sum + cart[food.foodId];
   }, 0);
 
+  const finalTotal = activeVoucher ? activeVoucher.finalTotal : totalAmount;
+
   const filteredFoods =
     activeCategory === 'Tất cả'
       ? foods
@@ -163,13 +170,19 @@ function TableMenu() {
     setSubmitLoading(true);
 
     try {
-      const response = await API.post('/orders', {
+      const payload = {
         tableId: Number(tableId),
         customerName: customerName.trim() || `Khách ${table?.tableName || `Bàn ${tableId}`}`,
         customerPhone: customerPhone.trim(),
         note: note.trim(),
         items: buildOrderItems()
-      });
+      };
+
+      if (activeVoucher && activeVoucher.code) {
+        payload.voucherCode = activeVoucher.code;
+      }
+
+      const response = await API.post('/orders', payload);
 
       setCreatedOrder(response.data);
       setCart({});
@@ -188,6 +201,32 @@ function TableMenu() {
     } finally {
       setSubmitLoading(false);
     }
+  };
+
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) {
+      setVoucherMsg({ type: 'error', text: 'Vui lòng nhập mã giảm giá' });
+      return;
+    }
+    try {
+      const response = await validateVoucher(voucherCode, totalAmount);
+      if (response.valid) {
+        setActiveVoucher({ ...response, code: voucherCode.toUpperCase() });
+        setVoucherMsg({ type: 'success', text: response.message });
+      } else {
+        setActiveVoucher(null);
+        setVoucherMsg({ type: 'error', text: response.message });
+      }
+    } catch (err) {
+      setActiveVoucher(null);
+      setVoucherMsg({ type: 'error', text: err.response?.data?.message || 'Lỗi kiểm tra mã giảm giá' });
+    }
+  };
+
+  const handleRemoveVoucher = () => {
+    setVoucherCode('');
+    setActiveVoucher(null);
+    setVoucherMsg({ type: '', text: '' });
   };
 
   const openFeedback = () => {
@@ -591,9 +630,46 @@ function TableMenu() {
             <strong>{totalQuantity}</strong>
           </div>
 
-          <div className="cart-total final">
-            <span>Tổng tiền:</span>
+          </div>
+
+          <div className="voucher-section" style={{ marginTop: '1rem' }}>
+            <div className="voucher-input-group" style={{ display: 'flex', gap: '8px' }}>
+              <input
+                type="text"
+                placeholder="Nhập mã giảm giá..."
+                value={voucherCode}
+                onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                disabled={activeVoucher != null}
+                style={{ flex: 1, padding: '8px' }}
+              />
+              {!activeVoucher ? (
+                <button style={{ padding: '8px 12px', background: '#3b82f6', color: '#fff', border: 'none', borderRadius: '4px' }} onClick={handleApplyVoucher}>Áp dụng</button>
+              ) : (
+                <button style={{ padding: '8px 12px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: '4px' }} onClick={handleRemoveVoucher}>Hủy</button>
+              )}
+            </div>
+            {voucherMsg.text && (
+              <p style={{ marginTop: '4px', fontSize: '0.9rem', color: voucherMsg.type === 'success' ? 'green' : 'red' }}>
+                {voucherMsg.type === 'success' ? '✅' : '❌'} {voucherMsg.text}
+              </p>
+            )}
+          </div>
+
+          <div className="cart-total" style={{ marginTop: '1rem' }}>
+            <span>Tạm tính:</span>
             <strong>{formatMoney(totalAmount)}đ</strong>
+          </div>
+
+          {activeVoucher && (
+            <div className="cart-total" style={{ color: 'green' }}>
+              <span>Giảm giá:</span>
+              <strong>-{formatMoney(activeVoucher.discountAmount)}đ</strong>
+            </div>
+          )}
+
+          <div className="cart-total final">
+            <span>Thành tiền:</span>
+            <strong>{formatMoney(finalTotal)}đ</strong>
           </div>
 
           <button
