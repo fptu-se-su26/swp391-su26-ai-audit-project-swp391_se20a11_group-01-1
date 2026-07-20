@@ -22,7 +22,6 @@ function Cart() {
   const [payMethod, setPayMethod] = useState('cod');
   const [step, setStep] = useState('cart'); // cart | payment | success
   
-  const [step, setStep] = useState('cart'); // cart | success
   const [orderNote, setOrderNote] = useState('');
   const [orderLoading, setOrderLoading] = useState(false);
   const [orderError, setOrderError] = useState('');
@@ -91,9 +90,7 @@ function Cart() {
         noteParts.push(`Payment method: ${selectedPayment.label}`);
       }
 
-      const response = await API.post('/orders', {
       if (orderNote.trim()) noteParts.push(orderNote.trim());
-      
 
       const response = await API.post('/orders', {
         userId: user.userId,

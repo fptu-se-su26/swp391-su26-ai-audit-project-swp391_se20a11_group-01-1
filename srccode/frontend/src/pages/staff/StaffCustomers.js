@@ -484,8 +484,8 @@ function StaffCustomers() {
               </button>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
