@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import com.rms.restaurant_management_system.enums.OrderItemStatus;
 
 @Entity
 @Table(name = "order_items")
@@ -38,6 +39,11 @@ public class OrderItem {
 
     @Column(columnDefinition = "NVARCHAR(50)")
     private String emoji;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    @Builder.Default
+    private OrderItemStatus status = OrderItemStatus.PENDING;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
