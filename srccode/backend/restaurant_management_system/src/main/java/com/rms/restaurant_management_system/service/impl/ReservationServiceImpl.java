@@ -13,6 +13,8 @@ import com.rms.restaurant_management_system.entity.Reservation;
 import com.rms.restaurant_management_system.entity.ReservationItem;
 import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.User;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.ReservationStatus;
 import com.rms.restaurant_management_system.enums.TableStatus;
@@ -41,6 +43,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final FoodRepository foodRepository;
     private final OrderRepository orderRepository;
     private final RestaurantTableRepository restaurantTableRepository;
+    private final com.rms.restaurant_management_system.service.interfaces.VoucherService voucherService;
 
     @Override
     @Transactional
@@ -51,8 +54,14 @@ public class ReservationServiceImpl implements ReservationService {
 
         User user = null;
 
-        if (request.getUserId() != null) {
-            user = userRepository.findById(request.getUserId())
+        Long authUserId = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            authUserId = ((User) authentication.getPrincipal()).getUserId();
+        }
+
+        if (authUserId != null) {
+            user = userRepository.findById(authUserId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
         }
 
@@ -73,6 +82,8 @@ public class ReservationServiceImpl implements ReservationService {
                 .assignedTable(null)
                 .status(ReservationStatus.PENDING)
                 .preOrderTotal(BigDecimal.ZERO)
+                .voucherCode(request.getVoucherCode())
+                .voucherDiscountAmount(BigDecimal.ZERO)
                 .items(new ArrayList<>())
                 .build();
 
@@ -107,6 +118,28 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         reservation.setPreOrderTotal(preOrderTotal);
+
+        if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
+            com.rms.restaurant_management_system.dto.request.ValidateVoucherRequest validateRequest = com.rms.restaurant_management_system.dto.request.ValidateVoucherRequest.builder()
+                    .code(request.getVoucherCode())
+                    .orderTotal(preOrderTotal)
+                    .build();
+            com.rms.restaurant_management_system.dto.response.ValidateVoucherResponse validateResponse = voucherService.validateVoucher(validateRequest, authUserId);
+            if (!validateResponse.isValid()) {
+                throw new RuntimeException("Invalid voucher: " + validateResponse.getMessage());
+            }
+            reservation.setVoucherDiscountAmount(validateResponse.getDiscountAmount());
+            
+            Reservation savedReservation = reservationRepository.save(reservation);
+            voucherService.applyVoucher(
+                    request.getVoucherCode(), 
+                    authUserId, 
+                    null, 
+                    savedReservation.getReservationId(), 
+                    validateResponse.getDiscountAmount()
+            );
+            return mapToResponse(savedReservation);
+        }
 
         Reservation savedReservation = reservationRepository.save(reservation);
 
@@ -245,6 +278,10 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setAssignedTable(null);
 
         reservationRepository.save(reservation);
+        
+        if (reservation.getVoucherCode() != null && !reservation.getVoucherCode().isBlank()) {
+            voucherService.reverseVoucher(reservation.getVoucherCode(), null, reservation.getReservationId());
+        }
     }
 
     private Order createOrderFromReservation(Reservation reservation, RestaurantTable table) {
@@ -262,6 +299,8 @@ public class ReservationServiceImpl implements ReservationService {
                 .customerName(reservation.getCustomerName())
                 .customerPhone(reservation.getCustomerPhone())
                 .user(reservation.getUser())
+                .voucherCode(reservation.getVoucherCode())
+                .voucherDiscountAmount(reservation.getVoucherDiscountAmount())
                 .items(new ArrayList<>())
                 .build();
 
@@ -376,6 +415,8 @@ public class ReservationServiceImpl implements ReservationService {
                 reservation.getNote(),
                 reservation.getAssignedTable(),
                 reservation.getPreOrderTotal(),
+                reservation.getVoucherCode(),
+                reservation.getVoucherDiscountAmount(),
                 reservation.getCreatedAt(),
                 reservation.getUpdatedAt(),
                 itemResponses

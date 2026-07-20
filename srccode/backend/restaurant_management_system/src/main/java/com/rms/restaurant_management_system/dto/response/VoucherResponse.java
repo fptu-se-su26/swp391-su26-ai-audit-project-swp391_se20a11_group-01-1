@@ -1,12 +1,13 @@
 package com.rms.restaurant_management_system.dto.response;
 
+import com.rms.restaurant_management_system.enums.DiscountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,11 +16,19 @@ import java.time.LocalDate;
 public class VoucherResponse {
     private Long id;
     private String code;
-    private BigDecimal discount;
-    private String type;
-    private BigDecimal minOrder;
-    private Integer used;
-    private Integer total;
+    private String name;
+    private String description;
+    private DiscountType discountType;
+    private BigDecimal discountValue;
+    private BigDecimal maxDiscountAmount;
+    private BigDecimal minOrderAmount;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
+    private Integer usageLimit;
+    private Integer usageLimitPerUser;
+    private Integer usedCount;
     private Boolean active;
-    private LocalDate expiry;
+    private Long version;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

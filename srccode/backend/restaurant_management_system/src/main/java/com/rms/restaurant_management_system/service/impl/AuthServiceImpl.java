@@ -12,6 +12,7 @@ import com.rms.restaurant_management_system.repository.RoleRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import com.rms.restaurant_management_system.service.interfaces.AuthService;
 import com.rms.restaurant_management_system.service.interfaces.EmailService;
+import com.rms.restaurant_management_system.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ public class AuthServiceImpl implements AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final JwtUtil jwtUtil;
 
     private final ConcurrentHashMap<String, OtpData> otpStorage = new ConcurrentHashMap<>();
 
@@ -55,11 +57,14 @@ public class AuthServiceImpl implements AuthService {
 
         User savedUser = userRepository.save(user);
 
+        String token = jwtUtil.generateToken(savedUser.getEmail(), savedUser.getRole().getRoleName());
+
         return new AuthResponse(
                 savedUser.getUserId(),
                 savedUser.getUsername(),
                 savedUser.getEmail(),
                 savedUser.getRole().getRoleName(),
+                token,
                 "Register successfully"
         );
     }
@@ -83,11 +88,14 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Email or password is incorrect");
         }
 
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole().getRoleName());
+
         return new AuthResponse(
                 user.getUserId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getRole().getRoleName(),
+                token,
                 "Login successfully"
         );
     }

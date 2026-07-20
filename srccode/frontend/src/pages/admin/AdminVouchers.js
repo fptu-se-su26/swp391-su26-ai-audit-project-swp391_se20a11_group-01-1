@@ -1,67 +1,123 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminVouchers.css';
-import { getAllVouchers, createVoucher, updateVoucher, deleteVoucher } from '../../services/voucherService';
+import {
+  changeVoucherStatus,
+  createVoucher,
+  deleteVoucher,
+  getAllVouchers,
+  updateVoucher,
+} from '../../services/voucherService';
+
+const emptyForm = {
+  code: '', name: '', description: '', discountType: 'PERCENT', discountValue: '',
+  maxDiscountAmount: '', minOrderAmount: '', usageLimit: '', usageLimitPerUser: '1',
+  startAt: '', endAt: '',
+};
+
+const toDateTimeLocal = (value) => value ? new Date(value).toISOString().slice(0, 16) : '';
+const money = (value) => Number(value || 0).toLocaleString('vi-VN');
 
 function AdminVouchers() {
   const [vouchers, setVouchers] = useState([]);
-  const [showAdd, setShowAdd] = useState(false);
-  const [form, setForm] = useState({ code:'', discount:'', type:'PERCENT', minOrder:'', total:'', expiry:'' });
-
-  useEffect(() => {
-    fetchVouchers();
-  }, []);
+  const [form, setForm] = useState(emptyForm);
+  const [editingId, setEditingId] = useState(null);
+  const [showForm, setShowForm] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   const fetchVouchers = async () => {
+    setLoading(true);
+    setError('');
     try {
-      const data = await getAllVouchers();
-      setVouchers(data);
-    } catch (error) {
-      console.error('Error fetching vouchers:', error);
+      setVouchers(await getAllVouchers());
+    } catch (err) {
+      setError(err.response?.data?.message || 'Không thể tải danh sách voucher');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const toggleActive = async (id) => {
-    const voucher = vouchers.find(v => v.id === id);
-    if (!voucher) return;
+  useEffect(() => { fetchVouchers(); }, []);
+
+  const updateForm = (field, value) => setForm(prev => ({ ...prev, [field]: value }));
+
+  const openCreate = () => {
+    setEditingId(null);
+    setForm(emptyForm);
+    setShowForm(true);
+  };
+
+  const openEdit = (voucher) => {
+    setEditingId(voucher.id);
+    setForm({
+      code: voucher.code,
+      name: voucher.name || '',
+      description: voucher.description || '',
+      discountType: voucher.discountType,
+      discountValue: String(voucher.discountValue ?? ''),
+      maxDiscountAmount: voucher.maxDiscountAmount == null ? '' : String(voucher.maxDiscountAmount),
+      minOrderAmount: String(voucher.minOrderAmount ?? ''),
+      usageLimit: String(voucher.usageLimit ?? ''),
+      usageLimitPerUser: String(voucher.usageLimitPerUser ?? 1),
+      startAt: toDateTimeLocal(voucher.startAt),
+      endAt: toDateTimeLocal(voucher.endAt),
+    });
+    setShowForm(true);
+  };
+
+  const buildPayload = () => ({
+    ...(editingId ? {} : { code: form.code.trim().toUpperCase() }),
+    name: form.name.trim(),
+    description: form.description.trim(),
+    discountType: form.discountType,
+    discountValue: Number(form.discountValue),
+    maxDiscountAmount: form.maxDiscountAmount ? Number(form.maxDiscountAmount) : null,
+    minOrderAmount: Number(form.minOrderAmount),
+    usageLimit: Number(form.usageLimit),
+    usageLimitPerUser: Number(form.usageLimitPerUser),
+    startAt: `${form.startAt}:00`,
+    endAt: `${form.endAt}:00`,
+  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSaving(true);
     try {
-      const updated = await updateVoucher(id, { ...voucher, active: !voucher.active });
-      setVouchers(prev => prev.map(v => v.id === id ? updated : v));
-    } catch (error) {
-      console.error('Error toggling voucher:', error);
-      alert('Lỗi cập nhật mã giảm giá');
+      const payload = buildPayload();
+      if (editingId) {
+        const updated = await updateVoucher(editingId, payload);
+        setVouchers(prev => prev.map(item => item.id === editingId ? updated : item));
+      } else {
+        const created = await createVoucher(payload);
+        setVouchers(prev => [...prev, created]);
+      }
+      setShowForm(false);
+      setEditingId(null);
+      setForm(emptyForm);
+    } catch (err) {
+      alert(err.response?.data?.message || err.response?.data || 'Không thể lưu voucher');
+    } finally {
+      setSaving(false);
     }
   };
 
-  const handleDeleteVoucher = async (id) => {
-    if (!window.confirm("Bạn có chắc chắn muốn xóa mã giảm giá này?")) return;
+  const toggleActive = async (voucher) => {
     try {
-      await deleteVoucher(id);
-      setVouchers(prev => prev.filter(v => v.id !== id));
-    } catch (error) {
-      console.error('Error deleting voucher:', error);
-      alert('Lỗi xóa mã giảm giá');
+      const updated = await changeVoucherStatus(voucher.id, !voucher.active);
+      setVouchers(prev => prev.map(item => item.id === voucher.id ? updated : item));
+    } catch (err) {
+      alert(err.response?.data?.message || 'Không thể cập nhật trạng thái voucher');
     }
   };
 
-  const handleAdd = async (e) => {
-    e.preventDefault();
+  const handleDelete = async (voucher) => {
+    if (!window.confirm(`Xóa hoặc vô hiệu hóa voucher ${voucher.code}?`)) return;
     try {
-      const payload = {
-        code: form.code,
-        discount: Number(form.discount),
-        type: form.type,
-        minOrder: Number(form.minOrder),
-        total: Number(form.total),
-        expiry: form.expiry,
-        active: true
-      };
-      const created = await createVoucher(payload);
-      setVouchers(prev => [...prev, created]);
-      setShowAdd(false);
-      setForm({ code:'', discount:'', type:'PERCENT', minOrder:'', total:'', expiry:'' });
-    } catch (error) {
-      console.error('Error creating voucher:', error);
-      alert(error.response?.data?.message || 'Lỗi tạo mã giảm giá');
+      await deleteVoucher(voucher.id);
+      await fetchVouchers();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Không thể xóa voucher');
     }
   };
 
@@ -69,81 +125,71 @@ function AdminVouchers() {
     <div className="admin-vouchers">
       <div className="page-header">
         <h1 className="page-title">Quản lý mã giảm giá</h1>
-        <button className="btn-primary" onClick={() => setShowAdd(true)}>+ Tạo voucher</button>
+        <button className="btn-primary" onClick={openCreate}>+ Tạo voucher</button>
       </div>
 
+      {loading && <p>Đang tải danh sách voucher...</p>}
+      {error && <div className="voucher-msg error">{error} <button onClick={fetchVouchers}>Thử lại</button></div>}
+      {!loading && !error && vouchers.length === 0 && <p>Chưa có voucher nào.</p>}
+
       <div className="vouchers-grid">
-        {vouchers.map(v => (
-          <div key={v.id} className={`voucher-admin-card card ${!v.active ? 'inactive' : ''}`}>
+        {vouchers.map(voucher => (
+          <div key={voucher.id} className={`voucher-admin-card card ${!voucher.active ? 'inactive' : ''}`}>
             <div className="vac-header">
-              <span className="vac-code">{v.code}</span>
+              <div><span className="vac-code">{voucher.code}</span><div>{voucher.name}</div></div>
               <label className="toggle-switch">
-                <input type="checkbox" checked={v.active} onChange={() => toggleActive(v.id)} />
-                <span className="toggle-slider"></span>
+                <input type="checkbox" checked={Boolean(voucher.active)} onChange={() => toggleActive(voucher)} />
+                <span className="toggle-slider" />
               </label>
             </div>
             <div className="vac-discount">
-              {v.type === 'PERCENT' ? `-${v.discount}%` : `-${v.discount.toLocaleString('vi-VN')}đ`}
+              {voucher.discountType === 'PERCENT' ? `-${voucher.discountValue}%` : `-${money(voucher.discountValue)}đ`}
             </div>
             <div className="vac-details">
-              <span>Đơn tối thiểu: {v.minOrder.toLocaleString('vi-VN')}đ</span>
-              <span>Đã dùng: {v.used}/{v.total}</span>
-              <span>HSD: {v.expiry}</span>
+              <span>Đơn tối thiểu: {money(voucher.minOrderAmount)}đ</span>
+              <span>Đã dùng: {voucher.usedCount}/{voucher.usageLimit}</span>
+              <span>HSD: {new Date(voucher.endAt).toLocaleString('vi-VN')}</span>
             </div>
             <div className="vac-progress">
-              <div className="vac-bar" style={{width: `${(v.used/v.total)*100}%`}}></div>
+              <div className="vac-bar" style={{ width: `${Math.min(100, (voucher.usedCount / voucher.usageLimit) * 100)}%` }} />
             </div>
-            <button className="vac-del" onClick={() => handleDeleteVoucher(v.id)}>🗑️ Xóa</button>
+            <div className="modal-btns">
+              <button className="btn-cancel" onClick={() => openEdit(voucher)}>Sửa</button>
+              <button className="vac-del" onClick={() => handleDelete(voucher)}>Xóa</button>
+            </div>
           </div>
         ))}
       </div>
 
-      {showAdd && (
-        <div className="modal-overlay" onClick={() => setShowAdd(false)}>
-          <div className="add-modal card" onClick={e => e.stopPropagation()}>
-            <h2>Tạo voucher mới</h2>
-            <form onSubmit={handleAdd}>
+      {showForm && (
+        <div className="modal-overlay" onClick={() => setShowForm(false)}>
+          <div className="add-modal card" onClick={event => event.stopPropagation()}>
+            <h2>{editingId ? 'Cập nhật voucher' : 'Tạo voucher mới'}</h2>
+            <form onSubmit={handleSubmit}>
               <div className="form-row-2">
-                <div className="form-group">
-                  <label className="form-label">Mã voucher</label>
-                  <input className="form-input" placeholder="VD: SUMMER30" value={form.code}
-                    onChange={e => setForm({...form, code: e.target.value.toUpperCase()})} required />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Loại giảm</label>
-                  <select className="form-input" value={form.type} onChange={e => setForm({...form, type: e.target.value})}>
-                    <option value="PERCENT">Phần trăm (%)</option>
-                    <option value="FIXED">Số tiền cố định (đ)</option>
-                  </select>
-                </div>
+                <Field label="Mã voucher"><input className="form-input" value={form.code} disabled={Boolean(editingId)} onChange={e => updateForm('code', e.target.value.toUpperCase())} required /></Field>
+                <Field label="Tên voucher"><input className="form-input" value={form.name} onChange={e => updateForm('name', e.target.value)} required /></Field>
+              </div>
+              <Field label="Mô tả"><input className="form-input" value={form.description} onChange={e => updateForm('description', e.target.value)} /></Field>
+              <div className="form-row-2">
+                <Field label="Loại giảm"><select className="form-input" value={form.discountType} onChange={e => updateForm('discountType', e.target.value)}><option value="PERCENT">Phần trăm (%)</option><option value="FIXED">Số tiền cố định</option></select></Field>
+                <Field label="Giá trị giảm"><input className="form-input" type="number" min="0.01" step="0.01" value={form.discountValue} onChange={e => updateForm('discountValue', e.target.value)} required /></Field>
               </div>
               <div className="form-row-2">
-                <div className="form-group">
-                  <label className="form-label">Giá trị giảm</label>
-                  <input className="form-input" type="number" placeholder={form.type === 'percent' ? '10' : '50000'}
-                    value={form.discount} onChange={e => setForm({...form, discount: e.target.value})} required />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Đơn tối thiểu (đ)</label>
-                  <input className="form-input" type="number" placeholder="200000"
-                    value={form.minOrder} onChange={e => setForm({...form, minOrder: e.target.value})} required />
-                </div>
+                <Field label="Đơn tối thiểu"><input className="form-input" type="number" min="0" value={form.minOrderAmount} onChange={e => updateForm('minOrderAmount', e.target.value)} required /></Field>
+                <Field label="Giảm tối đa"><input className="form-input" type="number" min="0.01" disabled={form.discountType === 'FIXED'} value={form.maxDiscountAmount} onChange={e => updateForm('maxDiscountAmount', e.target.value)} /></Field>
               </div>
               <div className="form-row-2">
-                <div className="form-group">
-                  <label className="form-label">Số lượng</label>
-                  <input className="form-input" type="number" placeholder="100"
-                    value={form.total} onChange={e => setForm({...form, total: e.target.value})} required />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Hạn sử dụng</label>
-                  <input className="form-input" type="date" value={form.expiry}
-                    onChange={e => setForm({...form, expiry: e.target.value})} required />
-                </div>
+                <Field label="Tổng lượt dùng"><input className="form-input" type="number" min="1" value={form.usageLimit} onChange={e => updateForm('usageLimit', e.target.value)} required /></Field>
+                <Field label="Giới hạn mỗi khách"><input className="form-input" type="number" min="1" value={form.usageLimitPerUser} onChange={e => updateForm('usageLimitPerUser', e.target.value)} required /></Field>
+              </div>
+              <div className="form-row-2">
+                <Field label="Bắt đầu"><input className="form-input" type="datetime-local" value={form.startAt} onChange={e => updateForm('startAt', e.target.value)} required /></Field>
+                <Field label="Kết thúc"><input className="form-input" type="datetime-local" value={form.endAt} onChange={e => updateForm('endAt', e.target.value)} required /></Field>
               </div>
               <div className="modal-btns">
-                <button type="submit" className="btn-primary">Tạo voucher</button>
-                <button type="button" className="btn-cancel" onClick={() => setShowAdd(false)}>Hủy</button>
+                <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Đang lưu...' : editingId ? 'Lưu thay đổi' : 'Tạo voucher'}</button>
+                <button type="button" className="btn-cancel" onClick={() => setShowForm(false)}>Hủy</button>
               </div>
             </form>
           </div>
@@ -151,6 +197,10 @@ function AdminVouchers() {
       )}
     </div>
   );
+}
+
+function Field({ label, children }) {
+  return <div className="form-group"><label className="form-label">{label}</label>{children}</div>;
 }
 
 export default AdminVouchers;

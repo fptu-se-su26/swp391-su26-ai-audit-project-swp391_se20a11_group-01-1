@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
+import { validateVoucher } from '../../services/voucherService';
 import './Reservation.css';
 
 const TIME_SLOTS = [
@@ -43,6 +44,10 @@ function Reservation() {
   const [menuLoading, setMenuLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const [voucherCode, setVoucherCode] = useState('');
+  const [activeVoucher, setActiveVoucher] = useState(null);
+  const [voucherMsg, setVoucherMsg] = useState({ type: '', text: '' });
 
   useEffect(() => {
     fetchMenuData();
@@ -163,6 +168,9 @@ function Reservation() {
     setSubmitted(false);
     setCreatedReservation(null);
     setError('');
+    setVoucherCode('');
+    setActiveVoucher(null);
+    setVoucherMsg({ type: '', text: '' });
 
     setForm({
       date: '',
@@ -194,6 +202,23 @@ function Reservation() {
     }));
   };
 
+  const handleApplyVoucher = async () => {
+    if (!voucherCode.trim()) return;
+    try {
+      const response = await validateVoucher(voucherCode, preOrderTotal);
+      if (response.valid) {
+        setActiveVoucher({ ...response, code: voucherCode.toUpperCase() });
+        setVoucherMsg({ type: 'success', text: response.message });
+      } else {
+        setActiveVoucher(null);
+        setVoucherMsg({ type: 'error', text: response.message });
+      }
+    } catch (err) {
+      setActiveVoucher(null);
+      setVoucherMsg({ type: 'error', text: err.response?.data?.message || 'Lỗi kiểm tra mã giảm giá' });
+    }
+  };
+
   const handleConfirm = async () => {
     setError('');
 
@@ -215,6 +240,7 @@ function Reservation() {
         customerPhone: form.phone.trim(),
         customerEmail: form.email?.trim() || user?.email || '',
         note: form.note?.trim() || '',
+        voucherCode: activeVoucher ? activeVoucher.code : null,
         items: buildReservationItems()
       });
 
@@ -689,6 +715,56 @@ function Reservation() {
                   </div>
                 </div>
               )}
+
+              <div className="confirm-section" style={{ marginTop: '1rem' }}>
+                <h4>Mã giảm giá</h4>
+                <div className="voucher-input-group" style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="Nhập mã voucher"
+                    value={voucherCode}
+                    onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                    style={{ flex: 1 }}
+                    disabled={activeVoucher !== null || preOrderTotal === 0}
+                  />
+                  {activeVoucher ? (
+                    <button 
+                      className="remove-voucher-btn" 
+                      onClick={() => {
+                        setActiveVoucher(null);
+                        setVoucherCode('');
+                        setVoucherMsg({ type: '', text: '' });
+                      }}
+                      style={{ padding: '8px 16px', background: '#dc2626', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    >
+                      Bỏ
+                    </button>
+                  ) : (
+                    <button 
+                      className="apply-voucher-btn" 
+                      onClick={handleApplyVoucher}
+                      disabled={!voucherCode.trim() || preOrderTotal === 0}
+                      style={{ padding: '8px 16px', background: '#2563eb', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    >
+                      Áp dụng
+                    </button>
+                  )}
+                </div>
+                {voucherMsg.text && (
+                  <div className={`voucher-msg ${voucherMsg.type}`} style={{ fontSize: '0.9rem', color: voucherMsg.type === 'success' ? '#16a34a' : '#dc2626' }}>
+                    {voucherMsg.text}
+                  </div>
+                )}
+                {activeVoucher && (
+                  <div className="confirm-row confirm-total" style={{ marginTop: '12px', borderTop: '1px dashed #ccc', paddingTop: '12px' }}>
+                    <span>Tổng thanh toán sau giảm giá</span>
+                    <strong style={{ color: '#dc2626', fontSize: '1.2rem' }}>
+                      {Math.max(0, preOrderTotal - activeVoucher.discountAmount).toLocaleString('vi-VN')}đ
+                    </strong>
+                  </div>
+                )}
+              </div>
 
               {error && (
                 <div className="card" style={{ padding: 12, marginBottom: 12, color: '#dc2626' }}>

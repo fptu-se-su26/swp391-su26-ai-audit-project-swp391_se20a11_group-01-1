@@ -6,6 +6,7 @@ import com.rms.restaurant_management_system.dto.response.OrderResponse;
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +20,20 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public OrderResponse createOrder(@Valid @RequestBody OrderRequest request) {
+    public OrderResponse createOrder(@Valid @RequestBody OrderRequest request, Authentication authentication) {
+        applyAuthenticatedUser(request, authentication);
         return orderService.createOrder(request);
+    }
+
+    private void applyAuthenticatedUser(OrderRequest request, Authentication authentication) {
+        if (authentication == null || !(authentication.getPrincipal() instanceof com.rms.restaurant_management_system.entity.User user)) {
+            request.setUserId(null);
+            return;
+        }
+        String role = user.getRole().getRoleName();
+        if ("CUSTOMER".equalsIgnoreCase(role)) {
+            request.setUserId(user.getUserId());
+        }
     }
 
     @GetMapping

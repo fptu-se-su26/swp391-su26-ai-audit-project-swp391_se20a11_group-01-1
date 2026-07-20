@@ -12,6 +12,8 @@ import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.OrderItem;
 import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.User;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import com.rms.restaurant_management_system.dto.request.ValidateVoucherRequest;
 import com.rms.restaurant_management_system.dto.response.ValidateVoucherResponse;
 
@@ -64,9 +66,15 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse createOrder(OrderRequest request) {
         User user = null;
 
+        Long authUserId = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            authUserId = ((User) authentication.getPrincipal()).getUserId();
+        }
+
         // Customer QR không cần đăng nhập
-        if (request.getUserId() != null) {
-            user = userRepository.findById(request.getUserId())
+        if (authUserId != null) {
+            user = userRepository.findById(authUserId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
         }
 
@@ -88,6 +96,12 @@ public class OrderServiceImpl implements OrderService {
             recalculateTotalAmount(activeOrder);
             
             if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
+                
+                String oldVoucher = activeOrder.getVoucherCode();
+                if (oldVoucher != null && !oldVoucher.equals(request.getVoucherCode())) {
+                    voucherService.reverseVoucher(oldVoucher, activeOrder.getOrderId(), null);
+                }
+
                 // To validate new voucher, we need the RAW total amount
                 BigDecimal rawTotal = activeOrder.getItems().stream()
                         .map(OrderItem::getSubtotal)
@@ -97,14 +111,24 @@ public class OrderServiceImpl implements OrderService {
                         ValidateVoucherRequest.builder()
                                 .code(request.getVoucherCode())
                                 .orderTotal(rawTotal)
-                                .build()
+                                .build(),
+                        authUserId
                 );
 
                 if (validation.isValid()) {
                     activeOrder.setVoucherCode(request.getVoucherCode());
                     activeOrder.setVoucherDiscountAmount(validation.getDiscountAmount());
                     activeOrder.setTotalAmount(validation.getFinalTotal());
-                    voucherService.applyVoucher(request.getVoucherCode());
+                    
+                    Order savedActiveOrder = orderRepository.save(activeOrder);
+                    voucherService.applyVoucher(
+                            request.getVoucherCode(),
+                            authUserId,
+                            savedActiveOrder.getOrderId(),
+                            null,
+                            validation.getDiscountAmount()
+                    );
+                    return mapToResponse(savedActiveOrder);
                 } else {
                     throw new RuntimeException("Lỗi mã giảm giá: " + validation.getMessage());
                 }
@@ -144,20 +168,32 @@ public class OrderServiceImpl implements OrderService {
                     ValidateVoucherRequest.builder()
                             .code(request.getVoucherCode())
                             .orderTotal(order.getTotalAmount())
-                            .build()
+                            .build(),
+                    authUserId
             );
 
             if (validation.isValid()) {
                 order.setVoucherCode(request.getVoucherCode());
                 order.setVoucherDiscountAmount(validation.getDiscountAmount());
                 order.setTotalAmount(validation.getFinalTotal());
-                voucherService.applyVoucher(request.getVoucherCode());
+                
+                Order savedOrder = orderRepository.save(order);
+                voucherService.applyVoucher(
+                        request.getVoucherCode(),
+                        authUserId,
+                        savedOrder.getOrderId(),
+                        null,
+                        validation.getDiscountAmount()
+                );
+                order = savedOrder;
             } else {
                 throw new RuntimeException("Lỗi mã giảm giá: " + validation.getMessage());
             }
+        } else {
+            order = orderRepository.save(order);
         }
 
-        Order savedOrder = orderRepository.save(order);
+        Order savedOrder = order;
 
         if (table != null) {
             table.setStatus(TableStatus.OCCUPIED);
@@ -358,6 +394,10 @@ public class OrderServiceImpl implements OrderService {
         Order savedOrder =
                 orderRepository.save(order);
         releaseTable(savedOrder);
+        
+        if (savedOrder.getVoucherCode() != null && !savedOrder.getVoucherCode().isBlank()) {
+            voucherService.reverseVoucher(savedOrder.getVoucherCode(), savedOrder.getOrderId(), null);
+        }
     }
     private void releaseTable(Order order){
         if(order.getTableId() == null)
@@ -365,7 +405,6 @@ public class OrderServiceImpl implements OrderService {
         RestaurantTable table =
                 restaurantTableRepository
                         .findById(order.getTableId())
-
                         .orElse(null);
         if(table == null)
 

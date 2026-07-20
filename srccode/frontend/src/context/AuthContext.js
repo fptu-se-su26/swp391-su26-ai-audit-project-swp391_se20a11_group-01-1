@@ -45,6 +45,9 @@ export function AuthProvider({ children }) {
 
       setUser(userData);
       sessionStorage.setItem('user', JSON.stringify(userData));
+      if (userData.token) {
+        localStorage.setItem('token', userData.token);
+      }
 
       return {
         success: true,
@@ -68,6 +71,10 @@ export function AuthProvider({ children }) {
         email,
         password
       });
+
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token);
+      }
 
       return {
         success: true,
@@ -131,6 +138,7 @@ export function AuthProvider({ children }) {
     // Xóa thêm dữ liệu cũ trong localStorage để tránh bị đọc nhầm từ bản cũ
     localStorage.removeItem('user');
     localStorage.removeItem('restaurant_user');
+    localStorage.removeItem('token');
   };
 
   const isAuthenticated = () => {

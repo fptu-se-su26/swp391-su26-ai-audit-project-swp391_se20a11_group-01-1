@@ -25,7 +25,7 @@ public class KitchenServiceImpl implements KitchenService {
     public List<KitchenItemResponse> getActiveKitchenItems() {
         List<OrderItemStatus> activeStatuses = Arrays.asList(OrderItemStatus.PENDING, OrderItemStatus.PREPARING);
         List<OrderItem> items = orderItemRepository.findByStatusIn(activeStatuses);
-        
+
         return items.stream().map(item -> KitchenItemResponse.builder()
                 .orderItemId(item.getOrderItemId())
                 .orderId(item.getOrder().getOrderId())
@@ -45,7 +45,7 @@ public class KitchenServiceImpl implements KitchenService {
     public void updateItemStatus(Long orderItemId, UpdateOrderItemStatusRequest request) {
         OrderItem item = orderItemRepository.findById(orderItemId)
                 .orElseThrow(() -> new RuntimeException("OrderItem not found"));
-        
+
         item.setStatus(request.getStatus());
         orderItemRepository.save(item);
     }

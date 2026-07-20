@@ -43,6 +43,10 @@ public class ReservationResponse {
 
     private BigDecimal preOrderTotal;
 
+    private String voucherCode;
+
+    private BigDecimal voucherDiscountAmount;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

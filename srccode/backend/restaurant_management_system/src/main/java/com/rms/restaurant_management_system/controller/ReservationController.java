@@ -7,6 +7,7 @@ import com.rms.restaurant_management_system.service.interfaces.ReservationServic
 import com.rms.restaurant_management_system.dto.request.CheckInReservationRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +21,20 @@ public class ReservationController {
     private final ReservationService reservationService;
 
     @PostMapping
-    public ReservationResponse createReservation(@Valid @RequestBody ReservationRequest request) {
+    public ReservationResponse createReservation(@Valid @RequestBody ReservationRequest request, Authentication authentication) {
+        applyAuthenticatedUser(request, authentication);
         return reservationService.createReservation(request);
+    }
+
+    private void applyAuthenticatedUser(ReservationRequest request, Authentication authentication) {
+        if (authentication == null || !(authentication.getPrincipal() instanceof com.rms.restaurant_management_system.entity.User user)) {
+            request.setUserId(null);
+            return;
+        }
+        String role = user.getRole().getRoleName();
+        if ("CUSTOMER".equalsIgnoreCase(role)) {
+            request.setUserId(user.getUserId());
+        }
     }
 
     @GetMapping

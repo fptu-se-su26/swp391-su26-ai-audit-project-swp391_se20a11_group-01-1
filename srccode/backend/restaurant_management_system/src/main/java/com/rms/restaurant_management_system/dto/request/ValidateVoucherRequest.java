@@ -22,4 +22,5 @@ public class ValidateVoucherRequest {
     @NotNull(message = "Tổng tiền đơn hàng không được để trống")
     @Min(value = 0, message = "Tổng tiền đơn hàng không được âm")
     private BigDecimal orderTotal;
+
 }

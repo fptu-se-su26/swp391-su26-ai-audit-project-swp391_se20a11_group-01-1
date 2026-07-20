@@ -15,6 +15,11 @@ export const updateVoucher = async (id, voucherData) => {
   return response.data;
 };
 
+export const changeVoucherStatus = async (id, active) => {
+  const response = await API.patch(`/vouchers/${id}/status`, { active });
+  return response.data;
+};
+
 export const deleteVoucher = async (id) => {
   const response = await API.delete(`/vouchers/${id}`);
   return response.data;

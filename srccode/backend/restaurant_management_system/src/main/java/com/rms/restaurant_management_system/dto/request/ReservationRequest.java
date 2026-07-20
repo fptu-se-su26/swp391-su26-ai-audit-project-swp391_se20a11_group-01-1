@@ -35,6 +35,8 @@ public class ReservationRequest {
 
     private String note;
 
+    private String voucherCode;
+
     @Valid
     private List<ReservationItemRequest> items;
 }
