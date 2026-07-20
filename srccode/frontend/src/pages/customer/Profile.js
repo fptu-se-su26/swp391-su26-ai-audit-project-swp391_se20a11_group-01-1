@@ -55,18 +55,16 @@ function Profile() {
       setProfileError('');
 
       try {
-        const response = await API.get('/users/profile', {
-          params: {
-            email: user.email
-          }
-        });
+        const response = await API.get('/users/me');
 
         setBackendUser(response.data);
 
         setForm((prev) => ({
           ...prev,
-          name: response.data.username || prev.name,
-          email: response.data.email || prev.email
+          name: response.data.fullName || response.data.username || prev.name,
+          email: response.data.email || prev.email,
+          phone: response.data.phone || '',
+          avatar: response.data.avatarUrl || prev.avatar
         }));
       } catch (error) {
         console.error('Fetch profile error:', error);
@@ -97,14 +95,21 @@ function Profile() {
   const displayJoinDate = formatDate(backendUser?.createdAt);
   const displayStatus = backendUser?.isActive ? 'Đang hoạt động' : 'Đã khóa';
 
-  const handleSave = () => {
-    updateProfile(form);
-    setEditing(false);
-    setSaved(true);
-
-    setTimeout(() => {
-      setSaved(false);
-    }, 2000);
+  const handleSave = async () => {
+    try {
+      const response = await API.put('/users/me', {
+        fullName: form.name,
+        phone: form.phone || '',
+        avatarUrl: form.avatar || ''
+      });
+      setBackendUser(response.data);
+      updateProfile(form);
+      setEditing(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2000);
+    } catch (error) {
+      setProfileError(error.response?.data?.message || 'Không thể cập nhật hồ sơ');
+    }
   };
 
   const openPasswordModal = () => {
