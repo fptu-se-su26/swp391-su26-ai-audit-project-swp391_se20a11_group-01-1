@@ -86,6 +86,30 @@ public class OrderServiceImpl implements OrderService {
         if (activeOrder != null) {
             appendItems(activeOrder, request.getItems());
             recalculateTotalAmount(activeOrder);
+            
+            if (request.getVoucherCode() != null && !request.getVoucherCode().isBlank()) {
+                // To validate new voucher, we need the RAW total amount
+                BigDecimal rawTotal = activeOrder.getItems().stream()
+                        .map(OrderItem::getSubtotal)
+                        .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                ValidateVoucherResponse validation = voucherService.validateVoucher(
+                        ValidateVoucherRequest.builder()
+                                .code(request.getVoucherCode())
+                                .orderTotal(rawTotal)
+                                .build()
+                );
+
+                if (validation.isValid()) {
+                    activeOrder.setVoucherCode(request.getVoucherCode());
+                    activeOrder.setVoucherDiscountAmount(validation.getDiscountAmount());
+                    activeOrder.setTotalAmount(validation.getFinalTotal());
+                    voucherService.applyVoucher(request.getVoucherCode());
+                } else {
+                    throw new RuntimeException("Lỗi mã giảm giá: " + validation.getMessage());
+                }
+            }
+            
             return mapToResponse(orderRepository.save(activeOrder));
         }
 
