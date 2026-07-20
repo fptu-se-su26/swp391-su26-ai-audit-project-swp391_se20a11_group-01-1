@@ -45,9 +45,6 @@ const FILTERS = [
 ];
 
 function InvoiceModal({ order, onClose }) {
-  const serviceFee = Math.round(Number(order.totalAmount || 0) * 0.05);
-  const grandTotal = Number(order.totalAmount || 0) + serviceFee;
-
   const formatMoney = (value) => {
     return Number(value || 0).toLocaleString('vi-VN');
   };
@@ -144,14 +141,9 @@ function InvoiceModal({ order, onClose }) {
             <span>{formatMoney(order.totalAmount)}đ</span>
           </div>
 
-          <div className="inv-row">
-            <span>Phí dịch vụ dự kiến (5%)</span>
-            <span>{formatMoney(serviceFee)}đ</span>
-          </div>
-
           <div className="inv-row inv-grand">
             <span>TỔNG CỘNG</span>
-            <strong>{formatMoney(grandTotal)}đ</strong>
+            <strong>{formatMoney(order.totalAmount)}đ</strong>
           </div>
         </div>
 
@@ -272,7 +264,7 @@ function PaymentModal({
             </div>
 
             <p className="qr-amount">
-              Số tiền: <strong>{formatMoney(payosPayment.amount)}đ</strong>
+              Số tiền: <strong>{formatMoney(order.totalAmount)}đ</strong>
             </p>
 
             <p className="qr-status">
