@@ -630,8 +630,6 @@ function TableMenu() {
             <strong>{totalQuantity}</strong>
           </div>
 
-          </div>
-
           <div className="voucher-section" style={{ marginTop: '1rem' }}>
             <div className="voucher-input-group" style={{ display: 'flex', gap: '8px' }}>
               <input
