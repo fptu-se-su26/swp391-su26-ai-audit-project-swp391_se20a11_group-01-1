@@ -30,7 +30,7 @@ public class VoucherServiceImpl implements VoucherService {
             throw new RuntimeException("Mã voucher đã tồn tại");
         }
 
-        Voucher voucher = Voucher.Builder()
+        Voucher voucher = Voucher.builder()
                 .code(request.getCode().toUpperCase())
                 .discount(request.getDiscount())
                 .type(request.getType())
