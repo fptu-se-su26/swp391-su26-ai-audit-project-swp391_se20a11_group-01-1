@@ -8,7 +8,9 @@ on:
       - "db_migration_*.sql"
       - ".github/workflows/backend-tests.yml"
   push:
-    branches: [main]
+    branches:
+      - main
+      - "fix/**"
     paths:
       - "srccode/backend/restaurant_management_system/**"
       - "db_migration_*.sql"
