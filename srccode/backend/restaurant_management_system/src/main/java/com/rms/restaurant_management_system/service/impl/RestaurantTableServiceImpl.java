@@ -7,6 +7,9 @@ import com.rms.restaurant_management_system.dto.request.UpdateTableStatusRequest
 import com.rms.restaurant_management_system.dto.response.TableResponse;
 import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.RestaurantTable;
+import com.rms.restaurant_management_system.error.BusinessRuleException;
+import com.rms.restaurant_management_system.error.ResourceConflictException;
+import com.rms.restaurant_management_system.error.ResourceNotFoundException;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.TableStatus;
 import com.rms.restaurant_management_system.repository.OrderRepository;
@@ -29,7 +32,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Transactional
     public TableResponse createTable(TableRequest request) {
         if (tableRepository.existsByTableName(request.getTableName())) {
-            throw new RuntimeException("Table name already exists");
+            throw new ResourceConflictException("Table name already exists");
         }
 
         RestaurantTable table = RestaurantTable.builder()
@@ -64,7 +67,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         try {
             tableStatus = TableStatus.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException exception) {
-            throw new RuntimeException("Invalid table status: " + status);
+            throw new BusinessRuleException("Invalid table status: " + status);
         }
 
         return tableRepository.findByStatusAndIsActiveTrueOrderByTableIdAsc(tableStatus)
@@ -80,7 +83,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         if (!table.getTableName().equals(request.getTableName())
                 && tableRepository.existsByTableName(request.getTableName())) {
-            throw new RuntimeException("Table name already exists");
+            throw new ResourceConflictException("Table name already exists");
         }
 
         table.setTableName(request.getTableName());
@@ -106,7 +109,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         if (currentOrderCode != null && !currentOrderCode.isBlank()) {
             currentOrder = orderRepository.findByOrderCode(currentOrderCode.trim())
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new ResourceNotFoundException(
                             "Current order not found: " + currentOrderCode
                     ));
         }
@@ -207,7 +210,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         if (currentOrderCode != null && !currentOrderCode.isBlank()) {
             Order activeOrder = orderRepository.findByOrderCode(currentOrderCode.trim())
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new ResourceNotFoundException(
                             "Active order not found: " + currentOrderCode
                     ));
 
@@ -237,7 +240,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
     private RestaurantTable findTableForUpdate(Long tableId) {
         RestaurantTable table = tableRepository.findByTableIdForUpdate(tableId)
-                .orElseThrow(() -> new RuntimeException("Table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Table not found"));
 
         if (table.getIsActive() == null || !table.getIsActive()) {
             throw new RuntimeException("Table is inactive");
@@ -335,7 +338,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
     private RestaurantTable findTable(Long tableId) {
         RestaurantTable table = tableRepository.findById(tableId)
-                .orElseThrow(() -> new RuntimeException("Table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Table not found"));
 
         if (!table.getIsActive()) {
             throw new RuntimeException("Table is inactive");

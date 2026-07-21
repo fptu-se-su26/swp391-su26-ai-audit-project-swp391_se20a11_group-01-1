@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HexFormat;
 import java.util.UUID;
+import com.rms.restaurant_management_system.error.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -40,21 +41,21 @@ public class SessionService {
     @Transactional(noRollbackFor = SessionRejectedException.class)
     public AuthResult rotate(String rawToken, String ip, String userAgent) {
         RefreshToken current = refreshTokenRepository.findLockedByTokenHash(hash(rawToken))
-                .orElseThrow(() -> new RuntimeException("Refresh token không hợp lệ"));
+                .orElseThrow(() -> new SessionRejectedException("Refresh token không hợp lệ"));
         LocalDateTime now = LocalDateTime.now();
         if (current.getRevokedAt() != null) {
             refreshTokenRepository.revokeFamily(current.getFamilyId(), now);
-            throw new SessionRejectedException("Refresh token has been revoked");
+            throw new SessionRejectedException("Refresh token đã bị thu hồi");
         }
         if (current.getExpiresAt().isBefore(now)) {
             current.setRevokedAt(now);
-            throw new SessionRejectedException("Refresh token has expired");
+            throw new SessionRejectedException("Refresh token đã hết hạn");
         }
         User user = userRepository.findById(current.getUser().getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
         if (!Boolean.TRUE.equals(user.getIsActive())) {
             refreshTokenRepository.revokeFamily(current.getFamilyId(), now);
-            throw new SessionRejectedException("Account is inactive");
+            throw new SessionRejectedException("Tài khoản đã bị khóa");
         }
         current.setLastUsedAt(now);
         current.setRevokedAt(now);

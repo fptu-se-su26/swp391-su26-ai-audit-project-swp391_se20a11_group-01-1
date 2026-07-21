@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ConcurrentHashMap;
+import com.rms.restaurant_management_system.error.RateLimitException;
 
 @Service
 public class LoginAttemptService {
@@ -19,7 +20,7 @@ public class LoginAttemptService {
             return;
         }
         if (attempt.failures() >= MAX_FAILURES) {
-            throw new RuntimeException("Too many login attempts. Please try again later");
+            throw new RateLimitException("Too many login attempts. Please try again later");
         }
     }
 
