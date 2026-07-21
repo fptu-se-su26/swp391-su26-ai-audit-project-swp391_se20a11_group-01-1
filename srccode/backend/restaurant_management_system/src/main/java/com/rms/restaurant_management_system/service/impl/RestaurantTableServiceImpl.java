@@ -35,6 +35,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         RestaurantTable table = RestaurantTable.builder()
                 .tableName(request.getTableName())
                 .capacity(request.getCapacity())
+                .originalCapacity(request.getCapacity())
                 .status(TableStatus.EMPTY)
                 .isActive(true)
                 .build();
@@ -83,7 +84,11 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         }
 
         table.setTableName(request.getTableName());
+        if (table.getMergedWith() != null && !table.getMergedWith().isBlank()) {
+            throw new RuntimeException("Split merged tables before changing capacity");
+        }
         table.setCapacity(request.getCapacity());
+        table.setOriginalCapacity(request.getCapacity());
 
         return mapToResponse(tableRepository.save(table));
     }
@@ -143,7 +148,12 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public void deleteTable(Long tableId) {
-        RestaurantTable table = findTable(tableId);
+        RestaurantTable table = findTableForUpdate(tableId);
+
+        if (table.getStatus() == TableStatus.OCCUPIED || table.getStatus() == TableStatus.RESERVED
+                || table.getStatus() == TableStatus.MERGED || table.getMergedWith() != null) {
+            throw new RuntimeException("Cannot deactivate an occupied, reserved, or merged table");
+        }
 
         table.setIsActive(false);
         table.setStatus(TableStatus.INACTIVE);
@@ -231,14 +241,35 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public List<TableResponse> mergeTables(Long sourceTableId, MergeTableRequest request) {
-        RestaurantTable source = findTable(sourceTableId);
-        RestaurantTable target = findTable(request.getTargetTableId());
+        Long targetTableId = request.getTargetTableId();
+        if (targetTableId == null || sourceTableId.equals(targetTableId)) {
+            throw new RuntimeException("Source and target table must be different");
+        }
+        Long firstId = Math.min(sourceTableId, targetTableId);
+        Long secondId = Math.max(sourceTableId, targetTableId);
+        RestaurantTable first = findTableForUpdate(firstId);
+        RestaurantTable second = findTableForUpdate(secondId);
+        RestaurantTable source = sourceTableId.equals(firstId) ? first : second;
+        RestaurantTable target = targetTableId.equals(firstId) ? first : second;
 
         if (target.getStatus() != TableStatus.EMPTY) {
             throw new RuntimeException("Target table must be empty");
         }
+        if (source.getStatus() == TableStatus.MERGED || source.getMergedInto() != null) {
+            throw new RuntimeException("A merged child table cannot be used as merge source");
+        }
+        if (target.getMergedWith() != null || target.getMergedInto() != null) {
+            throw new RuntimeException("Target table already belongs to a merge group");
+        }
 
         String currentMergedWith = source.getMergedWith();
+
+        if (source.getOriginalCapacity() == null) {
+            source.setOriginalCapacity(source.getCapacity());
+        }
+        if (target.getOriginalCapacity() == null) {
+            target.setOriginalCapacity(target.getCapacity());
+        }
 
         if (currentMergedWith == null || currentMergedWith.isBlank()) {
             source.setMergedWith(target.getTableName());
@@ -260,7 +291,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public List<TableResponse> splitTable(Long tableId) {
-        RestaurantTable source = findTable(tableId);
+        RestaurantTable source = findTableForUpdate(tableId);
 
         if (source.getMergedWith() == null || source.getMergedWith().isBlank()) {
             throw new RuntimeException("This table is not merged");
@@ -271,7 +302,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         for (String name : mergedTableNames) {
             String tableName = name.trim();
 
-            tableRepository.findByTableName(tableName).ifPresent(table -> {
+            tableRepository.findByTableNameForUpdate(tableName).ifPresent(table -> {
                 table.setStatus(TableStatus.EMPTY);
                 table.setMergedInto(null);
                 tableRepository.save(table);
@@ -280,6 +311,10 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         // Đơn giản hóa: không tự khôi phục capacity gốc vì đã cộng dồn trước đó.
         // Nếu cần chính xác tuyệt đối, nên thêm field originalCapacity.
+        if (source.getOriginalCapacity() == null) {
+            throw new RuntimeException("Original table capacity is missing; run the database migration first");
+        }
+        source.setCapacity(source.getOriginalCapacity());
         source.setMergedWith(null);
 
         tableRepository.save(source);

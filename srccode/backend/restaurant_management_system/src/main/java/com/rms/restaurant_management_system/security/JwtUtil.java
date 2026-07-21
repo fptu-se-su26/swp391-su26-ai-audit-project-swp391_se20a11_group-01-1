@@ -74,4 +74,8 @@ public class JwtUtil {
                 && !isTokenExpired(token)
                 && java.util.Objects.equals(claimedVersion, tokenVersion == null ? 0 : tokenVersion);
     }
+
+    public long getAccessTokenSeconds() {
+        return accessTokenMillis / 1000;
+    }
 }

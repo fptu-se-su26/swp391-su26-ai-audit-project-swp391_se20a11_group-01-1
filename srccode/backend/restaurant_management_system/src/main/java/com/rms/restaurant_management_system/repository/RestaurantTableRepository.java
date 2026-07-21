@@ -28,4 +28,6 @@ public interface RestaurantTableRepository extends JpaRepository<RestaurantTable
     List<RestaurantTable> findByIsActiveTrueOrderByTableIdAsc();
 
     List<RestaurantTable> findByStatusAndIsActiveTrueOrderByTableIdAsc(TableStatus status);
+
+    List<RestaurantTable> findByIsActiveTrueAndCapacityGreaterThanEqualOrderByCapacityAscTableIdAsc(Integer capacity);
 }

@@ -38,7 +38,7 @@ public class SessionService {
 
     @Transactional
     public AuthResult rotate(String rawToken, String ip, String userAgent) {
-        RefreshToken current = refreshTokenRepository.findByTokenHash(hash(rawToken))
+        RefreshToken current = refreshTokenRepository.findLockedByTokenHash(hash(rawToken))
                 .orElseThrow(() -> new RuntimeException("Refresh token không hợp lệ"));
         LocalDateTime now = LocalDateTime.now();
         if (current.getRevokedAt() != null) {
@@ -84,7 +84,7 @@ public class SessionService {
                 .ipAddress(ip).userAgent(trim(userAgent, 500)).build());
         String access = jwtUtil.generateToken(user.getEmail(), user.getRole().getRoleName(), user.getTokenVersion());
         return new AuthResult(new SessionResponse(user.getUserId(), user.getUsername(), user.getEmail(),
-                user.getRole().getRoleName(), access, 900), raw);
+                user.getRole().getRoleName(), access, jwtUtil.getAccessTokenSeconds()), raw);
     }
 
     private String hash(String raw) {
