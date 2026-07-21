@@ -121,7 +121,17 @@ class SqlServerMigrationIntegrationTest {
     private void executeClasspathScript(Connection connection, String resource) throws Exception {
         String sql = new ClassPathResource(resource).getContentAsString(StandardCharsets.UTF_8);
         try (Statement statement = connection.createStatement()) {
-            statement.execute(sql);
+            boolean hasResult = statement.execute(sql);
+            while (true) {
+                if (hasResult) {
+                    try (ResultSet ignored = statement.getResultSet()) {
+                        // Consume every server response so later T-SQL errors are surfaced by the JDBC driver.
+                    }
+                } else if (statement.getUpdateCount() == -1) {
+                    break;
+                }
+                hasResult = statement.getMoreResults();
+            }
         }
     }
 
