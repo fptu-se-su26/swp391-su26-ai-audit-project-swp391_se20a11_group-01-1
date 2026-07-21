@@ -1,15 +1,19 @@
 package com.rms.restaurant_management_system.controller;
 
 import com.rms.restaurant_management_system.dto.request.OrderRequest;
+import com.rms.restaurant_management_system.dto.request.UpdateOrderItemStatusRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateOrderStatusRequest;
+import com.rms.restaurant_management_system.dto.response.KitchenItemResponse;
 import com.rms.restaurant_management_system.dto.response.OrderResponse;
 import com.rms.restaurant_management_system.entity.User;
+import com.rms.restaurant_management_system.enums.OrderItemStatus;
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,13 +59,34 @@ public class OrderController {
     }
 
     @GetMapping("/status/{status}")
-    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
-    public List<OrderResponse> getOrdersByStatus(@PathVariable String status) {
-        return orderService.getOrdersByStatus(status);
-    }
+@PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+public List<OrderResponse> getOrdersByStatus(@PathVariable String status) {
+    return orderService.getOrdersByStatus(status);
+}
 
-    @PutMapping("/{orderId}/status")
-    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
+@GetMapping("/kitchen/items")
+public List<KitchenItemResponse> getKitchenItems(
+        @RequestParam List<OrderItemStatus> statuses
+) {
+    return orderService.getKitchenItems(statuses);
+}
+
+@PatchMapping("/items/{orderItemId}/status")
+public KitchenItemResponse updateOrderItemStatus(
+        @PathVariable Long orderItemId,
+        @Valid @RequestBody UpdateOrderItemStatusRequest request
+) {
+    return orderService.updateOrderItemStatus(orderItemId, request);
+}
+
+@PutMapping("/{orderId}/status")
+@PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+public OrderResponse updateOrderStatus(
+        @PathVariable Long orderId,
+        @Valid @RequestBody UpdateOrderStatusRequest request
+) {
+    return orderService.updateOrderStatus(orderId, request);
+}
     public OrderResponse updateOrderStatus(
             @PathVariable Long orderId,
             @Valid @RequestBody UpdateOrderStatusRequest request

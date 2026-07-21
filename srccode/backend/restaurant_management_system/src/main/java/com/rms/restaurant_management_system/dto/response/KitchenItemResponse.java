@@ -13,14 +13,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KitchenItemResponse {
-    private Long orderItemId;
+   private Long orderItemId;
     private Long orderId;
     private String orderCode;
+
+    private Long tableId;
     private String tableName;
+
     private Long foodId;
     private String foodName;
     private Integer quantity;
+
+    private String imageUrl;
+    private String emoji;
     private String note;
+
     private OrderItemStatus status;
-    private LocalDateTime orderCreatedAt;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime statusUpdatedAt;
 }

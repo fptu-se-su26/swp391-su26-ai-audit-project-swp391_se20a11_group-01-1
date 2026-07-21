@@ -5,6 +5,7 @@ import com.rms.restaurant_management_system.dto.request.UpdateOrderStatusRequest
 import com.rms.restaurant_management_system.dto.response.PaymentResponse;
 import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.Payment;
+import com.rms.restaurant_management_system.enums.OrderItemStatus;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.PaymentMethod;
 import com.rms.restaurant_management_system.enums.PaymentStatus;
@@ -12,6 +13,7 @@ import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.PaymentRepository;
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
 import com.rms.restaurant_management_system.service.interfaces.PaymentService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import vn.payos.PayOS;
 import vn.payos.model.v2.paymentRequests.CreatePaymentLinkRequest;
 import vn.payos.model.webhooks.WebhookData;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,29 +40,29 @@ public class PaymentServiceImpl implements PaymentService {
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final PayOS payOS;
+    private final EntityManager entityManager;
 
     @Value("${app.frontend-url}")
     private String frontendUrl;
 
     @Override
-    @Transactional
-    public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
-        Order order = orderRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng"));
+@Transactional
+public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
+    if (paymentRepository.findLockedByOrderOrderId(orderId).isPresent()) {
+        throw new ResourceConflictException(
+                ErrorCode.PAYMENT_ALREADY_PROCESSED,
+                "Đơn hàng đã được thanh toán"
+        );
+    }
 
-        if (paymentRepository.findLockedByOrderOrderId(orderId).isPresent()) {
-            throw new ResourceConflictException(ErrorCode.PAYMENT_ALREADY_PROCESSED, "Đơn hàng đã được thanh toán");
-        }
-
-        if (order.getStatus() != OrderStatus.READY) {
-            throw new ResourceConflictException(ErrorCode.INVALID_ORDER_STATE, "Chỉ đơn hàng READY mới có thể thanh toán");
-        }
+    Order order = reloadReadyOrderForPayment(orderId);
+    BigDecimal latestAmount = order.getTotalAmount();
 
         Payment payment = Payment.builder()
                 .order(order)
                 .method(request.getMethod())
                 .status(PaymentStatus.PAID)
-                .amount(order.getTotalAmount())
+                .amount(latestAmount)
                 .transactionCode(request.getTransactionCode())
                 .note(request.getNote())
                 .paidAt(LocalDateTime.now())
@@ -72,19 +75,15 @@ public class PaymentServiceImpl implements PaymentService {
         return mapToResponse(savedPayment);
     }
 
-    @Override
-    @Transactional
-    public PaymentResponse createPayOSPayment(Long orderId) {
-        Order order = orderRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng"));
+   @Override
+@Transactional
+public PaymentResponse createPayOSPayment(Long orderId) {
+    Payment existingPayment = paymentRepository
+            .findLockedByOrderOrderId(orderId)
+            .orElse(null);
 
-        if (order.getStatus() != OrderStatus.READY) {
-            throw new ResourceConflictException(ErrorCode.INVALID_ORDER_STATE, "Chỉ đơn hàng READY mới có thể thanh toán");
-        }
-
-        Payment existingPayment = paymentRepository.findLockedByOrderOrderId(orderId)
-                .orElse(null);
-
+    Order order = reloadReadyOrderForPayment(orderId);
+    BigDecimal latestAmount = order.getTotalAmount();
         if (existingPayment != null) {
             if (existingPayment.getStatus() == PaymentStatus.PAID) {
                 throw new ResourceConflictException(ErrorCode.PAYMENT_ALREADY_PROCESSED, "Đơn hàng đã được thanh toán");
@@ -95,9 +94,12 @@ public class PaymentServiceImpl implements PaymentService {
             }
         }
 
+        Order order = reloadReadyOrderForPayment(orderId);
+        BigDecimal latestAmount = order.getTotalAmount();
+
         Long payosOrderCode = generatePayOSOrderCode(order.getOrderId());
 
-        Long amount = order.getTotalAmount()
+        Long amount = latestAmount
                 .setScale(0, RoundingMode.HALF_UP)
                 .longValue();
 
@@ -121,7 +123,7 @@ public class PaymentServiceImpl implements PaymentService {
                     .order(order)
                     .method(PaymentMethod.QR)
                     .status(PaymentStatus.PENDING)
-                    .amount(order.getTotalAmount())
+                    .amount(latestAmount)
                     .payosOrderCode(payosOrderCode)
                     .paymentLinkId(paymentLink.getPaymentLinkId())
                     .checkoutUrl(paymentLink.getCheckoutUrl())
@@ -216,6 +218,31 @@ public class PaymentServiceImpl implements PaymentService {
         updateRequest.setStatus(OrderStatus.COMPLETED);
 
         orderService.updateOrderStatus(orderId, updateRequest);
+    }
+
+    private Order reloadReadyOrderForPayment(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        entityManager.refresh(order);
+
+        if (order.getStatus() != OrderStatus.READY) {
+            throw new RuntimeException("Only READY orders can be paid");
+        }
+
+        boolean hasActiveItems = order.getItems().stream()
+                .anyMatch(item -> item.getStatus() != OrderItemStatus.CANCELLED);
+
+        boolean hasUnreadyActiveItem = order.getItems().stream()
+                .anyMatch(item -> item.getStatus() != OrderItemStatus.CANCELLED
+                        && item.getStatus() != OrderItemStatus.READY);
+
+        if (!hasActiveItems || hasUnreadyActiveItem) {
+            throw new RuntimeException(
+                    "All non-cancelled order items must be READY before payment"
+            );
+        }
+
+        return order;
     }
 
     private Long generatePayOSOrderCode(Long orderId) {
