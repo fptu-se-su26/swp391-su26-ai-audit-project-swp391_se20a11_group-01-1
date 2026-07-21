@@ -28,6 +28,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,15 @@ public class ReservationServiceImpl implements ReservationService {
         if (request.getReservationDate().isBefore(LocalDate.now())) {
             throw new RuntimeException("Reservation date cannot be in the past");
         }
+
+        LocalDateTime startAt = parseStartAt(request.getReservationDate(), request.getReservationTime());
+        if (!startAt.isAfter(LocalDateTime.now())) {
+            throw new RuntimeException("Reservation time must be in the future");
+        }
+        LocalDateTime endAt = startAt.plusHours(2);
+
+        RestaurantTable reservedTable = selectAvailableTable(request.getTableId(), request.getNumberOfGuests(),
+                startAt, endAt, null);
 
         User user = null;
 
@@ -70,7 +82,10 @@ public class ReservationServiceImpl implements ReservationService {
                 .reservationTime(request.getReservationTime())
                 .numberOfGuests(request.getNumberOfGuests())
                 .note(request.getNote())
-                .assignedTable(null)
+                .assignedTable(reservedTable.getTableName())
+                .assignedTableId(reservedTable.getTableId())
+                .startAt(startAt)
+                .endAt(endAt)
                 .status(ReservationStatus.PENDING)
                 .preOrderTotal(BigDecimal.ZERO)
                 .items(new ArrayList<>())
@@ -189,11 +204,14 @@ public class ReservationServiceImpl implements ReservationService {
             throw new RuntimeException("Only CONFIRMED reservations can be checked in");
         }
 
-        if (request.getAssignedTable() == null || request.getAssignedTable().isBlank()) {
+        String requestedTable = request.getAssignedTable();
+        if ((requestedTable == null || requestedTable.isBlank()) && reservation.getAssignedTable() != null) {
+            requestedTable = reservation.getAssignedTable();
+        }
+        if (requestedTable == null || requestedTable.isBlank()) {
             throw new RuntimeException("Assigned table is required");
         }
-
-        RestaurantTable table = restaurantTableRepository.findByTableNameForUpdate(request.getAssignedTable().trim())
+        RestaurantTable table = restaurantTableRepository.findByTableNameForUpdate(requestedTable.trim())
                 .orElseThrow(() -> new RuntimeException("Table not found: " + request.getAssignedTable()));
 
         if (table.getIsActive() == null || !table.getIsActive()) {
@@ -204,13 +222,27 @@ public class ReservationServiceImpl implements ReservationService {
             throw new RuntimeException("Assigned table must be EMPTY");
         }
 
+        if (table.getCapacity() < reservation.getNumberOfGuests()) {
+            throw new RuntimeException("Assigned table capacity is insufficient");
+        }
+        if (reservationRepository.countOverlapping(table.getTableId(), reservation.getStartAt(),
+                reservation.getEndAt(), reservation.getReservationId()) > 0) {
+            throw new RuntimeException("Assigned table is no longer available for this reservation slot");
+        }
+
+        if (reservation.getCreatedOrderId() != null) {
+            throw new RuntimeException("Reservation has already been converted to an order");
+        }
+
         reservation.setAssignedTable(table.getTableName());
+        reservation.setAssignedTableId(table.getTableId());
         reservation.setStatus(ReservationStatus.SEATED);
 
         Order createdOrder = null;
 
         if (reservation.getItems() != null && !reservation.getItems().isEmpty()) {
             createdOrder = createOrderFromReservation(reservation, table);
+            reservation.setCreatedOrderId(createdOrder.getOrderId());
 
             table.setStatus(TableStatus.OCCUPIED);
             table.setCurrentOrderCode(createdOrder.getOrderCode());
@@ -243,6 +275,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         reservation.setStatus(ReservationStatus.CANCELLED);
         reservation.setAssignedTable(null);
+        reservation.setAssignedTableId(null);
 
         reservationRepository.save(reservation);
     }
@@ -398,5 +431,35 @@ public class ReservationServiceImpl implements ReservationService {
         int random = (int) (Math.random() * 9000) + 1000;
 
         return "ORD-RES-" + timestamp + "-" + random;
+    }
+
+    private LocalDateTime parseStartAt(LocalDate date, String time) {
+        try {
+            return LocalDateTime.of(date, LocalTime.parse(time, DateTimeFormatter.ofPattern("H:mm")));
+        } catch (DateTimeParseException exception) {
+            throw new RuntimeException("Reservation time must use HH:mm format");
+        }
+    }
+
+    private RestaurantTable selectAvailableTable(Long requestedTableId, Integer guests,
+                                                  LocalDateTime startAt, LocalDateTime endAt, Long excludeId) {
+        List<RestaurantTable> candidates;
+        if (requestedTableId != null) {
+            candidates = List.of(restaurantTableRepository.findByTableIdForUpdate(requestedTableId)
+                    .orElseThrow(() -> new RuntimeException("Requested table not found")));
+        } else {
+            candidates = restaurantTableRepository
+                    .findByIsActiveTrueAndCapacityGreaterThanEqualOrderByCapacityAscTableIdAsc(guests);
+        }
+        for (RestaurantTable candidate : candidates) {
+            RestaurantTable locked = restaurantTableRepository.findByTableIdForUpdate(candidate.getTableId())
+                    .orElseThrow(() -> new RuntimeException("Table not found"));
+            if (Boolean.TRUE.equals(locked.getIsActive()) && locked.getCapacity() >= guests
+                    && locked.getStatus() != TableStatus.MERGED && locked.getStatus() != TableStatus.INACTIVE
+                    && reservationRepository.countOverlapping(locked.getTableId(), startAt, endAt, excludeId) == 0) {
+                return locked;
+            }
+        }
+        throw new RuntimeException("No table is available for the requested time slot");
     }
 }

@@ -18,15 +18,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.payos.PayOS;
 import vn.payos.model.v2.paymentRequests.CreatePaymentLinkRequest;
+import vn.payos.model.webhooks.WebhookData;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.security.SecureRandom;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
+
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
@@ -39,10 +43,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
-        Order order = orderRepository.findById(orderId)
+        Order order = orderRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if (paymentRepository.existsByOrderOrderId(orderId)) {
+        if (paymentRepository.findLockedByOrderOrderId(orderId).isPresent()) {
             throw new RuntimeException("This order has already been paid");
         }
 
@@ -70,14 +74,14 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public PaymentResponse createPayOSPayment(Long orderId) {
-        Order order = orderRepository.findById(orderId)
+        Order order = orderRepository.findByOrderId(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
         if (order.getStatus() != OrderStatus.READY) {
             throw new RuntimeException("Only READY orders can be paid");
         }
 
-        Payment existingPayment = paymentRepository.findByOrderOrderId(orderId)
+        Payment existingPayment = paymentRepository.findLockedByOrderOrderId(orderId)
                 .orElse(null);
 
         if (existingPayment != null) {
@@ -135,30 +139,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    @SuppressWarnings("unchecked")
     public void handlePayOSWebhook(Map<String, Object> webhookBody) {
         try {
-            Object successObj = webhookBody.get("success");
-
-            if (!(successObj instanceof Boolean) || !((Boolean) successObj)) {
-                return;
-            }
-
-            Object dataObj = webhookBody.get("data");
-
-            if (!(dataObj instanceof Map<?, ?>)) {
-                throw new RuntimeException("Invalid webhook data");
-            }
-
-            Map<String, Object> data = (Map<String, Object>) dataObj;
-
-            Long payosOrderCode = toLong(data.get("orderCode"));
+            WebhookData data = payOS.webhooks().verify(webhookBody);
+            Long payosOrderCode = data.getOrderCode();
 
             if (payosOrderCode == null) {
                 throw new RuntimeException("Missing orderCode in webhook");
             }
 
-            Payment payment = paymentRepository.findByPayosOrderCode(payosOrderCode)
+            Payment payment = paymentRepository.findLockedByPayosOrderCode(payosOrderCode)
                     .orElseThrow(() -> new RuntimeException(
                             "Payment not found by PayOS orderCode: " + payosOrderCode
                     ));
@@ -167,12 +157,18 @@ public class PaymentServiceImpl implements PaymentService {
                 return;
             }
 
-            String reference = data.get("reference") != null
-                    ? String.valueOf(data.get("reference"))
-                    : null;
+            long expectedAmount = payment.getAmount().setScale(0, RoundingMode.HALF_UP).longValueExact();
+            if (data.getAmount() == null || data.getAmount() != expectedAmount) {
+                throw new RuntimeException("Webhook amount does not match the order total");
+            }
+
+            if (data.getPaymentLinkId() != null && payment.getPaymentLinkId() != null
+                    && !payment.getPaymentLinkId().equals(data.getPaymentLinkId())) {
+                throw new RuntimeException("Webhook payment link does not match");
+            }
 
             payment.setStatus(PaymentStatus.PAID);
-            payment.setTransactionCode(reference);
+            payment.setTransactionCode(data.getReference());
             payment.setPaidAt(LocalDateTime.now());
             payment.setNote("PayOS payment success");
 
@@ -209,19 +205,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private Long generatePayOSOrderCode(Long orderId) {
-        return System.currentTimeMillis() / 1000 + orderId;
-    }
-
-    private Long toLong(Object value) {
-        if (value == null) {
-            return null;
-        }
-
-        if (value instanceof Number number) {
-            return number.longValue();
-        }
-
-        return Long.valueOf(String.valueOf(value));
+        long randomPart = SECURE_RANDOM.nextLong(100_000L, 1_000_000L);
+        return Math.addExact(Math.multiplyExact(System.currentTimeMillis(), 1_000_000L), randomPart)
+                & Long.MAX_VALUE;
     }
 
     private PaymentResponse mapToResponse(Payment payment) {

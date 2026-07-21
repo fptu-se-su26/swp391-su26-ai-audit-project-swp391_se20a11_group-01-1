@@ -13,4 +13,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findByStatusOrderByCreatedAtDesc(FeedbackStatus status);
 
     List<Feedback> findAllByOrderByCreatedAtDesc();
+
+    boolean existsByFeedbackIdAndUserUserId(Long feedbackId, Long userId);
 }

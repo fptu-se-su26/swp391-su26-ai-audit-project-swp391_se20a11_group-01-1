@@ -19,12 +19,16 @@ import com.rms.restaurant_management_system.security.JwtAuthenticationFilter;
 import java.util.List;
 
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
+
+    @Value("${app.cors.allowed-origins:http://localhost:3000,http://localhost:3001}")
+    private List<String> allowedOrigins;
 
     public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter) {
         this.jwtAuthFilter = jwtAuthFilter;
@@ -68,7 +72,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/dashboard/**").hasRole("ADMIN")
                         .requestMatchers("/api/kitchen/**").hasAnyRole("KITCHEN", "ADMIN")
                         .requestMatchers("/api/users/**", "/api/auth/**").authenticated()
-                        .requestMatchers("/api/orders/**", "/api/reservations/**", "/api/feedback/**",
+                        .requestMatchers("/api/orders/**", "/api/reservations/**", "/api/feedbacks/**",
                                 "/api/payments/**", "/api/tables/**").authenticated()
 
                         // Tạm thời cho phép toàn bộ request khác để demo/dev
@@ -83,10 +87,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of(
-                "http://localhost:3000",
-                "http://localhost:3001"
-        ));
+        config.setAllowedOrigins(allowedOrigins);
 
         config.setAllowedMethods(List.of(
                 "GET",

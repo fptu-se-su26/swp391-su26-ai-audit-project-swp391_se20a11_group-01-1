@@ -19,16 +19,26 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseCookie;
+import org.springframework.beans.factory.annotation.Value;
+import java.time.Duration;
+import com.rms.restaurant_management_system.security.LoginAttemptService;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 public class AuthController {
 
     private final AuthService authService;
     private final SessionService sessionService;
     private final UserRepository userRepository;
+    private final LoginAttemptService loginAttemptService;
+
+    @Value("${app.jwt-refresh-days:30}")
+    private long refreshDays;
+
+    @Value("${app.cookie-secure:false}")
+    private boolean secureCookie;
 
     @PostMapping("/register")
     public SessionResponse register(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest,
@@ -40,8 +50,16 @@ public class AuthController {
     @PostMapping("/login")
     public SessionResponse login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest,
                                  HttpServletResponse response) {
-        AuthResponse loggedIn = authService.login(request);
-        return beginSession(loggedIn.getEmail(), httpRequest, response);
+        String attemptKey = httpRequest.getRemoteAddr() + ":" + request.getEmail().trim().toLowerCase();
+        loginAttemptService.assertAllowed(attemptKey);
+        try {
+            AuthResponse loggedIn = authService.login(request);
+            loginAttemptService.succeeded(attemptKey);
+            return beginSession(loggedIn.getEmail(), httpRequest, response);
+        } catch (RuntimeException exception) {
+            loginAttemptService.failed(attemptKey);
+            throw exception;
+        }
     }
 
     @PostMapping("/refresh")
@@ -112,11 +130,20 @@ public class AuthController {
     }
 
     private void writeRefreshCookie(HttpServletResponse response, String token) {
-        response.addHeader("Set-Cookie", "refresh_token=" + token
-                + "; Max-Age=2592000; Path=/api/auth; HttpOnly; SameSite=Lax");
+        response.addHeader("Set-Cookie", refreshCookie(token, Duration.ofDays(refreshDays)).toString());
     }
 
     private void clearRefreshCookie(HttpServletResponse response) {
-        response.addHeader("Set-Cookie", "refresh_token=; Max-Age=0; Path=/api/auth; HttpOnly; SameSite=Lax");
+        response.addHeader("Set-Cookie", refreshCookie("", Duration.ZERO).toString());
+    }
+
+    private ResponseCookie refreshCookie(String value, Duration maxAge) {
+        return ResponseCookie.from("refresh_token", value)
+                .httpOnly(true)
+                .secure(secureCookie)
+                .sameSite("Lax")
+                .path("/api/auth")
+                .maxAge(maxAge)
+                .build();
     }
 }

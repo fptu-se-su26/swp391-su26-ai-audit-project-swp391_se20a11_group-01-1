@@ -9,18 +9,20 @@ import com.rms.restaurant_management_system.service.interfaces.RestaurantTableSe
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/tables")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
+@PreAuthorize("hasAnyRole('STAFF','ADMIN')")
 public class RestaurantTableController {
 
     private final RestaurantTableService tableService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public TableResponse createTable(@Valid @RequestBody TableRequest request) {
         return tableService.createTable(request);
     }
@@ -41,6 +43,7 @@ public class RestaurantTableController {
     }
 
     @PutMapping("/{tableId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public TableResponse updateTable(
             @PathVariable Long tableId,
             @Valid @RequestBody TableRequest request
@@ -78,6 +81,7 @@ public class RestaurantTableController {
     }
 
     @DeleteMapping("/{tableId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteTable(@PathVariable Long tableId) {
         tableService.deleteTable(tableId);
         return "Table deleted successfully";
