@@ -1,57 +1,50 @@
 package com.rms.restaurant_management_system.service.impl;
 
-
 import com.rms.restaurant_management_system.dto.request.OrderItemRequest;
 import com.rms.restaurant_management_system.dto.request.OrderRequest;
+import com.rms.restaurant_management_system.dto.request.UpdateOrderItemStatusRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateOrderStatusRequest;
+import com.rms.restaurant_management_system.dto.response.KitchenItemResponse;
 import com.rms.restaurant_management_system.dto.response.OrderItemResponse;
 import com.rms.restaurant_management_system.dto.response.OrderResponse;
-
 import com.rms.restaurant_management_system.entity.Food;
 import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.OrderItem;
 import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.entity.User;
-
+import com.rms.restaurant_management_system.enums.OrderItemStatus;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.PaymentStatus;
 import com.rms.restaurant_management_system.enums.TableStatus;
-
 import com.rms.restaurant_management_system.repository.FoodRepository;
+import com.rms.restaurant_management_system.repository.OrderItemRepository;
 import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.PaymentRepository;
 import com.rms.restaurant_management_system.repository.RestaurantTableRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
-
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
-
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-
-
     private final OrderRepository orderRepository;
-
+    private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
-
     private final FoodRepository foodRepository;
-
     private final RestaurantTableRepository restaurantTableRepository;
-
     private final PaymentRepository paymentRepository;
 
     @Override
@@ -59,7 +52,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse createOrder(OrderRequest request) {
         User user = null;
 
-        // Customer QR không cần đăng nhập
         if (request.getUserId() != null) {
             user = userRepository.findById(request.getUserId())
                     .orElseThrow(() -> new RuntimeException("User not found"));
@@ -79,8 +71,9 @@ public class OrderServiceImpl implements OrderService {
         Order activeOrder = findAppendableActiveOrder(table);
 
         if (activeOrder != null) {
-            appendItems(activeOrder, request.getItems());
+            appendItems(activeOrder, request.getItems(), request.getNote());
             recalculateTotalAmount(activeOrder);
+            recalculateOrderStatus(activeOrder);
             return mapToResponse(orderRepository.save(activeOrder));
         }
 
@@ -101,14 +94,15 @@ public class OrderServiceImpl implements OrderService {
                 .tableName(table != null ? table.getTableName() : null)
                 .customerName(customerName)
                 .customerPhone(request.getCustomerPhone())
-                .status(OrderStatus.PENDING)
+                .status(OrderStatus.CONFIRMED)
                 .note(request.getNote())
                 .totalAmount(BigDecimal.ZERO)
                 .items(new ArrayList<>())
                 .build();
 
-        appendItems(order, request.getItems());
+        appendItems(order, request.getItems(), request.getNote());
         recalculateTotalAmount(order);
+        recalculateOrderStatus(order);
 
         Order savedOrder = orderRepository.save(order);
 
@@ -133,31 +127,42 @@ public class OrderServiceImpl implements OrderService {
                 .findByOrderCode(table.getCurrentOrderCode().trim())
                 .orElse(null);
 
-        if (activeOrder == null
-                || activeOrder.getStatus() == OrderStatus.COMPLETED
-                || activeOrder.getStatus() == OrderStatus.CANCELLED) {
+        if (activeOrder == null) {
             return null;
         }
 
-        if (activeOrder.getStatus() == OrderStatus.PREPARING
-                || activeOrder.getStatus() == OrderStatus.READY) {
+        if (activeOrder.getStatus() == OrderStatus.COMPLETED
+                || activeOrder.getStatus() == OrderStatus.CANCELLED) {
             throw new RuntimeException(
-                    "Cannot add items while the active table order is PREPARING or READY"
+                    "Cannot add items to a completed or cancelled order"
             );
         }
 
-        if (activeOrder.getStatus() != OrderStatus.PENDING
-                && activeOrder.getStatus() != OrderStatus.CONFIRMED) {
+        if (activeOrder.getStatus() != OrderStatus.CONFIRMED
+                && activeOrder.getStatus() != OrderStatus.PREPARING
+                && activeOrder.getStatus() != OrderStatus.READY) {
             throw new RuntimeException(
-                    "Cannot add items to the active table order in status "
-                            + activeOrder.getStatus()
+                    "Cannot add items to order in status " + activeOrder.getStatus()
             );
         }
+
+        paymentRepository.findByOrderOrderId(activeOrder.getOrderId())
+                .filter(payment -> payment.getStatus() == PaymentStatus.PENDING
+                        || payment.getStatus() == PaymentStatus.PAID)
+                .ifPresent(payment -> {
+                    throw new RuntimeException(
+                            "Cannot add items after payment has started."
+                    );
+                });
 
         return activeOrder;
     }
 
-    private void appendItems(Order order, List<OrderItemRequest> itemRequests) {
+    private void appendItems(
+            Order order,
+            List<OrderItemRequest> itemRequests,
+            String submissionNote
+    ) {
         for (OrderItemRequest itemRequest : itemRequests) {
             Food food = foodRepository.findById(itemRequest.getFoodId())
                     .orElseThrow(() -> new RuntimeException("Food not found"));
@@ -168,6 +173,7 @@ public class OrderServiceImpl implements OrderService {
 
             BigDecimal subtotal = food.getPrice()
                     .multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
+            LocalDateTime now = LocalDateTime.now();
 
             OrderItem item = OrderItem.builder()
                     .order(order)
@@ -178,14 +184,31 @@ public class OrderServiceImpl implements OrderService {
                     .subtotal(subtotal)
                     .imageUrl(food.getImageUrl())
                     .emoji(food.getEmoji())
+                    .note(resolveItemNote(itemRequest.getNote(), submissionNote))
+                    .status(OrderItemStatus.CONFIRMED)
+                    .createdAt(now)
+                    .statusUpdatedAt(now)
                     .build();
 
             order.getItems().add(item);
         }
     }
 
+    private String resolveItemNote(String itemNote, String submissionNote) {
+        if (itemNote != null && !itemNote.isBlank()) {
+            return itemNote.trim();
+        }
+
+        if (submissionNote != null && !submissionNote.isBlank()) {
+            return submissionNote.trim();
+        }
+
+        return null;
+    }
+
     private void recalculateTotalAmount(Order order) {
         BigDecimal totalAmount = order.getItems().stream()
+                .filter(item -> item.getStatus() != OrderItemStatus.CANCELLED)
                 .map(OrderItem::getSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -193,172 +216,269 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderResponse> getAllOrders(){
-
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getAllOrders() {
         return orderRepository
                 .findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
     }
+
     @Override
-    public OrderResponse getOrderById(Long orderId){
-        Order order =
-                orderRepository.findById(orderId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Order not found"
-                        )
-                );
+    @Transactional(readOnly = true)
+    public OrderResponse getOrderById(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
         return mapToResponse(order);
     }
+
     @Override
-    public List<OrderResponse> getOrdersByCustomer(Long userId){
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getOrdersByCustomer(Long userId) {
         return orderRepository
                 .findByUserUserIdOrderByCreatedAtDesc(userId)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
     }
+
     @Override
-    public List<OrderResponse> getOrdersByStatus(String status){
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getOrdersByStatus(String status) {
         OrderStatus orderStatus;
-        try{
-            orderStatus =
-                    OrderStatus.valueOf(
-                            status.toUpperCase()
-                    );
-        }catch(Exception e){
-            throw new RuntimeException(
-                    "Invalid order status"
-            );
+
+        try {
+            orderStatus = OrderStatus.valueOf(status.toUpperCase());
+        } catch (Exception exception) {
+            throw new RuntimeException("Invalid order status");
         }
+
         return orderRepository
-                .findByStatusOrderByCreatedAtDesc(
-                        orderStatus
-                )
+                .findByStatusOrderByCreatedAtDesc(orderStatus)
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
-
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<KitchenItemResponse> getKitchenItems(List<OrderItemStatus> statuses) {
+        if (statuses == null || statuses.isEmpty()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "At least one order item status is required"
+            );
+        }
+
+        return orderItemRepository
+                .findByStatusInOrderByCreatedAtAsc(statuses.stream().distinct().toList())
+                .stream()
+                .map(this::mapToKitchenItemResponse)
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public KitchenItemResponse updateOrderItemStatus(
+            Long orderItemId,
+            UpdateOrderItemStatusRequest request
+    ) {
+        Long orderId = orderItemRepository.findOrderIdByOrderItemId(orderItemId)
+                .orElseThrow(() -> new RuntimeException("Order item not found"));
+
+        Order order = findOrderForStatusUpdate(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        OrderItem item = order.getItems().stream()
+                .filter(candidate -> candidate.getOrderItemId().equals(orderItemId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Order item not found"));
+
+        validateItemStatusTransition(item.getStatus(), request.getStatus());
+
+        item.setStatus(request.getStatus());
+        item.setStatusUpdatedAt(LocalDateTime.now());
+
+        if (request.getStatus() == OrderItemStatus.CANCELLED) {
+            recalculateTotalAmount(order);
+        }
+
+        recalculateOrderStatus(order);
+        Order savedOrder = orderRepository.save(order);
+
+        if (savedOrder.getStatus() == OrderStatus.CANCELLED) {
+            releaseTable(savedOrder);
+        }
+
+        return mapToKitchenItemResponse(item);
+    }
+
     @Override
     @Transactional
     public OrderResponse updateOrderStatus(
-
             Long orderId,
-
             UpdateOrderStatusRequest request
+    ) {
+        Order order = findOrderForStatusUpdate(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
 
-    ){
-        Order order =
-                findOrderForStatusUpdate(orderId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Order not found"
-                        )
-                );
         if (request.getStatus() == OrderStatus.CANCELLED) {
-            validateOrderCanBeCancelled(order);
+            cancelWholeOrder(order);
+        } else if (request.getStatus() == OrderStatus.COMPLETED) {
+            recalculateOrderStatus(order);
+
+            if (order.getStatus() != OrderStatus.COMPLETED) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "Order can only be completed after payment"
+                );
+            }
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Order status is derived from order item statuses"
+            );
         }
-        validateStatusTransition(
 
-                order.getStatus(),
+        Order savedOrder = orderRepository.save(order);
 
-                request.getStatus()
-
-        );
-        order.setStatus(
-                request.getStatus()
-        );
-        Order savedOrder =
-                orderRepository.save(order);
-        if(
-                request.getStatus()
-                        == OrderStatus.COMPLETED
-                ||
-                request.getStatus()
-                        == OrderStatus.CANCELLED
-        ){
+        if (savedOrder.getStatus() == OrderStatus.COMPLETED
+                || savedOrder.getStatus() == OrderStatus.CANCELLED) {
             releaseTable(savedOrder);
-
         }
+
         return mapToResponse(savedOrder);
     }
+
     @Override
     @Transactional
-    public void cancelOrder(Long orderId){
-        Order order =
-                findOrderForStatusUpdate(orderId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Order not found"
-                        )
-                );
+    public void cancelOrder(Long orderId) {
+        Order order = findOrderForStatusUpdate(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        validateOrderCanBeCancelled(order);
-
-        order.setStatus(
-                OrderStatus.CANCELLED
-        );
-        Order savedOrder =
-                orderRepository.save(order);
+        cancelWholeOrder(order);
+        Order savedOrder = orderRepository.save(order);
         releaseTable(savedOrder);
     }
-    private void releaseTable(Order order){
-        if(order.getTableId() == null)
-            return;
-        RestaurantTable table =
-                restaurantTableRepository
-                        .findById(order.getTableId())
 
-                        .orElse(null);
-        if(table == null)
+    private void cancelWholeOrder(Order order) {
+        validateOrderCanBeCancelled(order);
+        LocalDateTime now = LocalDateTime.now();
 
-            return;
+        for (OrderItem item : order.getItems()) {
+            if (item.getStatus() != OrderItemStatus.CANCELLED) {
+                validateItemStatusTransition(item.getStatus(), OrderItemStatus.CANCELLED);
+                item.setStatus(OrderItemStatus.CANCELLED);
+                item.setStatusUpdatedAt(now);
+            }
+        }
 
-        if (table.getCurrentOrderCode() == null
-                || !table.getCurrentOrderCode().equals(order.getOrderCode())) {
+        recalculateTotalAmount(order);
+        recalculateOrderStatus(order);
+    }
+
+    private void validateItemStatusTransition(
+            OrderItemStatus current,
+            OrderItemStatus next
+    ) {
+        if (current == null) {
+            throw new RuntimeException(
+                    "Order item has no status; run the order item status backfill first"
+            );
+        }
+
+        boolean valid = switch (current) {
+            case CONFIRMED -> next == OrderItemStatus.PREPARING
+                    || next == OrderItemStatus.CANCELLED;
+            case PREPARING -> next == OrderItemStatus.READY;
+            default -> false;
+        };
+
+        if (!valid) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid order item status transition: " + current + " -> " + next
+            );
+        }
+    }
+
+    private void recalculateOrderStatus(Order order) {
+        if (isOrderPaid(order)) {
+            order.setStatus(OrderStatus.COMPLETED);
             return;
         }
 
-        table.setStatus(
-                TableStatus.EMPTY
-        );
-        table.setCurrentOrderCode(
-                null
-        );
-        table.setReservedBy(
-                null
-        );
-        restaurantTableRepository.save(table);
+        List<OrderItem> items = order.getItems();
+
+        if (items == null || items.isEmpty()) {
+            throw new IllegalStateException("Order must contain at least one item");
+        }
+
+        if (items.stream().anyMatch(item -> item.getStatus() == null)) {
+            throw new IllegalStateException(
+                    "Order contains items without status; run the order item status backfill first"
+            );
+        }
+
+        boolean allCancelled = items.stream()
+                .allMatch(item -> item.getStatus() == OrderItemStatus.CANCELLED);
+
+        if (allCancelled) {
+            order.setStatus(OrderStatus.CANCELLED);
+            return;
+        }
+
+        List<OrderItem> activeItems = items.stream()
+                .filter(item -> item.getStatus() != OrderItemStatus.CANCELLED)
+                .toList();
+
+        boolean allReady = activeItems.stream()
+                .allMatch(item -> item.getStatus() == OrderItemStatus.READY);
+
+        if (allReady) {
+            order.setStatus(OrderStatus.READY);
+            return;
+        }
+
+        boolean allConfirmed = activeItems.stream()
+                .allMatch(item -> item.getStatus() == OrderItemStatus.CONFIRMED);
+
+        if (allConfirmed) {
+            order.setStatus(OrderStatus.CONFIRMED);
+            return;
+        }
+
+        order.setStatus(OrderStatus.PREPARING);
+    }
+
+    private boolean isOrderPaid(Order order) {
+        if (order.getOrderId() == null) {
+            return false;
+        }
+
+        return paymentRepository.findByOrderOrderId(order.getOrderId())
+                .map(payment -> payment.getStatus() == PaymentStatus.PAID)
+                .orElse(false);
     }
 
     private void validateOrderCanBeCancelled(Order order) {
         if (order.getStatus() != OrderStatus.PENDING
                 && order.getStatus() != OrderStatus.CONFIRMED) {
-            throw new RuntimeException(
-                    "Only PENDING or CONFIRMED orders can be cancelled"
-            );
+            throw new RuntimeException("Only PENDING or CONFIRMED orders can be cancelled");
         }
 
-        boolean alreadyPaid = paymentRepository.findByOrderOrderId(order.getOrderId())
-                .map(payment -> payment.getStatus() == PaymentStatus.PAID)
-                .orElse(false);
-
-        if (alreadyPaid) {
-            throw new RuntimeException(
-                    "Cannot cancel an order that has already been paid"
-            );
+        if (isOrderPaid(order)) {
+            throw new RuntimeException("Cannot cancel an order that has already been paid");
         }
     }
 
-    private java.util.Optional<Order> findOrderForStatusUpdate(Long orderId) {
-        Order orderSnapshot = orderRepository.findById(orderId)
-                .orElse(null);
+    private Optional<Order> findOrderForStatusUpdate(Long orderId) {
+        Order orderSnapshot = orderRepository.findById(orderId).orElse(null);
 
         if (orderSnapshot == null) {
-            return java.util.Optional.empty();
+            return Optional.empty();
         }
 
         if (orderSnapshot.getTableId() != null) {
@@ -369,67 +489,57 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByOrderId(orderId);
     }
 
-    private void validateStatusTransition(
-            OrderStatus current,
-            OrderStatus next
-    ){
-        boolean valid =
-                switch(current){
-                    case PENDING ->
-                            next == OrderStatus.CONFIRMED
-                            ||
-                            next == OrderStatus.CANCELLED;
-                    case CONFIRMED ->
-                            next == OrderStatus.PREPARING
-                            ||
-                            next == OrderStatus.CANCELLED;
-                    case PREPARING ->
-                            next == OrderStatus.READY;
-                    case READY ->
-                            next == OrderStatus.COMPLETED;
-                    default -> false;
-                };
-        if(!valid){
-            throw new RuntimeException(
-                    "Invalid status transition"
-            );
+    private void releaseTable(Order order) {
+        if (order.getTableId() == null) {
+            return;
         }
+
+        RestaurantTable table = restaurantTableRepository
+                .findById(order.getTableId())
+                .orElse(null);
+
+        if (table == null) {
+            return;
+        }
+
+        if (table.getCurrentOrderCode() == null
+                || !table.getCurrentOrderCode().equals(order.getOrderCode())) {
+            return;
+        }
+
+        table.setStatus(TableStatus.EMPTY);
+        table.setCurrentOrderCode(null);
+        table.setReservedBy(null);
+        restaurantTableRepository.save(table);
     }
-    private OrderResponse mapToResponse(Order order){
-        List<OrderItemResponse> items =
-                order.getItems()
+
+    private OrderResponse mapToResponse(Order order) {
+        List<OrderItemResponse> items = order.getItems()
                 .stream()
-                .map(item ->
-                        new OrderItemResponse(
-                                item.getOrderItemId(),
-                                item.getFoodId(),
-                                item.getFoodName(),
-                                item.getUnitPrice(),
-                                item.getQuantity(),
-                                item.getSubtotal(),
-                                item.getImageUrl(),
-                                item.getEmoji()
-                        )
-                )
+                .map(item -> new OrderItemResponse(
+                        item.getOrderItemId(),
+                        item.getFoodId(),
+                        item.getFoodName(),
+                        item.getUnitPrice(),
+                        item.getQuantity(),
+                        item.getSubtotal(),
+                        item.getImageUrl(),
+                        item.getEmoji(),
+                        item.getNote() != null ? item.getNote() : order.getNote(),
+                        item.getStatus(),
+                        item.getCreatedAt() != null ? item.getCreatedAt() : order.getCreatedAt(),
+                        item.getStatusUpdatedAt()
+                ))
                 .toList();
+
         return new OrderResponse(
                 order.getOrderId(),
                 order.getOrderCode(),
+                order.getUser() != null ? order.getUser().getUserId() : null,
                 order.getUser() != null
-                        ?
-                        order.getUser().getUserId()
-                        :
-                        null,
-                order.getUser() != null
-                        ?
-                        order.getUser().getUsername()
-                        :
-                        order.getCustomerName(),
-                order.getUser() != null
-                        ?
-                        order.getUser().getEmail()
-                        :
-                        null,
+                        ? order.getUser().getUsername()
+                        : order.getCustomerName(),
+                order.getUser() != null ? order.getUser().getEmail() : null,
                 order.getTableId(),
                 order.getTableName(),
                 order.getCustomerName(),
@@ -441,27 +551,34 @@ public class OrderServiceImpl implements OrderService {
                 order.getUpdatedAt(),
                 items
         );
-
-    }
-    private String generateOrderCode(){
-        String time =
-                java.time.LocalDateTime.now()
-                .format(
-
-                        DateTimeFormatter
-                        .ofPattern(
-                                "yyyyMMddHHmmss"
-                        )
-
-                );
-        int random =
-
-                (int)(Math.random()*9000)+1000;
-        return "ORD-"
-                + time
-                + "-"
-                + random;
     }
 
+    private KitchenItemResponse mapToKitchenItemResponse(OrderItem item) {
+        Order order = item.getOrder();
 
+        return new KitchenItemResponse(
+                item.getOrderItemId(),
+                order.getOrderId(),
+                order.getOrderCode(),
+                order.getTableId(),
+                order.getTableName(),
+                item.getFoodId(),
+                item.getFoodName(),
+                item.getQuantity(),
+                item.getImageUrl(),
+                item.getEmoji(),
+                item.getNote() != null ? item.getNote() : order.getNote(),
+                item.getStatus(),
+                item.getCreatedAt() != null ? item.getCreatedAt() : order.getCreatedAt(),
+                item.getStatusUpdatedAt()
+        );
+    }
+
+    private String generateOrderCode() {
+        String time = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        int random = (int) (Math.random() * 9000) + 1000;
+
+        return "ORD-" + time + "-" + random;
+    }
 }

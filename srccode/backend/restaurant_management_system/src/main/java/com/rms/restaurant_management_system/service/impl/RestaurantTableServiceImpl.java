@@ -7,6 +7,7 @@ import com.rms.restaurant_management_system.dto.request.UpdateTableStatusRequest
 import com.rms.restaurant_management_system.dto.response.TableResponse;
 import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.RestaurantTable;
+import com.rms.restaurant_management_system.enums.OrderItemStatus;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.TableStatus;
 import com.rms.restaurant_management_system.repository.OrderRepository;
@@ -196,6 +197,15 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
             if (activeOrder.getStatus() == OrderStatus.COMPLETED
                     || activeOrder.getStatus() == OrderStatus.CANCELLED) {
                 throw new RuntimeException("Only an active order can be transferred");
+            }
+
+            boolean hasPreparingItem = activeOrder.getItems().stream()
+                    .anyMatch(item -> item.getStatus() == OrderItemStatus.PREPARING);
+
+            if (hasPreparingItem) {
+                throw new RuntimeException(
+                        "Cannot transfer table while kitchen preparation is in progress."
+                );
             }
 
             activeOrder.setTableId(target.getTableId());

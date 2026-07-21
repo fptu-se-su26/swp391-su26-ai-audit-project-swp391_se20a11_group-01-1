@@ -5,6 +5,7 @@ import com.rms.restaurant_management_system.dto.request.UpdateOrderStatusRequest
 import com.rms.restaurant_management_system.dto.response.PaymentResponse;
 import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.Payment;
+import com.rms.restaurant_management_system.enums.OrderItemStatus;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.PaymentMethod;
 import com.rms.restaurant_management_system.enums.PaymentStatus;
@@ -12,6 +13,7 @@ import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.PaymentRepository;
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
 import com.rms.restaurant_management_system.service.interfaces.PaymentService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vn.payos.PayOS;
 import vn.payos.model.v2.paymentRequests.CreatePaymentLinkRequest;
 
+import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final PayOS payOS;
+    private final EntityManager entityManager;
 
     @Value("${app.frontend-url}")
     private String frontendUrl;
@@ -39,22 +43,18 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-
         if (paymentRepository.existsByOrderOrderId(orderId)) {
             throw new RuntimeException("This order has already been paid");
         }
 
-        if (order.getStatus() != OrderStatus.READY) {
-            throw new RuntimeException("Only READY orders can be paid");
-        }
+        Order order = reloadReadyOrderForPayment(orderId);
+        BigDecimal latestAmount = order.getTotalAmount();
 
         Payment payment = Payment.builder()
                 .order(order)
                 .method(request.getMethod())
                 .status(PaymentStatus.PAID)
-                .amount(order.getTotalAmount())
+                .amount(latestAmount)
                 .transactionCode(request.getTransactionCode())
                 .note(request.getNote())
                 .paidAt(LocalDateTime.now())
@@ -70,13 +70,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     @Transactional
     public PaymentResponse createPayOSPayment(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-
-        if (order.getStatus() != OrderStatus.READY) {
-            throw new RuntimeException("Only READY orders can be paid");
-        }
-
         Payment existingPayment = paymentRepository.findByOrderOrderId(orderId)
                 .orElse(null);
 
@@ -90,9 +83,12 @@ public class PaymentServiceImpl implements PaymentService {
             }
         }
 
+        Order order = reloadReadyOrderForPayment(orderId);
+        BigDecimal latestAmount = order.getTotalAmount();
+
         Long payosOrderCode = generatePayOSOrderCode(order.getOrderId());
 
-        Long amount = order.getTotalAmount()
+        Long amount = latestAmount
                 .setScale(0, RoundingMode.HALF_UP)
                 .longValue();
 
@@ -116,7 +112,7 @@ public class PaymentServiceImpl implements PaymentService {
                     .order(order)
                     .method(PaymentMethod.QR)
                     .status(PaymentStatus.PENDING)
-                    .amount(order.getTotalAmount())
+                    .amount(latestAmount)
                     .payosOrderCode(payosOrderCode)
                     .paymentLinkId(paymentLink.getPaymentLinkId())
                     .checkoutUrl(paymentLink.getCheckoutUrl())
@@ -206,6 +202,31 @@ public class PaymentServiceImpl implements PaymentService {
         updateRequest.setStatus(OrderStatus.COMPLETED);
 
         orderService.updateOrderStatus(orderId, updateRequest);
+    }
+
+    private Order reloadReadyOrderForPayment(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        entityManager.refresh(order);
+
+        if (order.getStatus() != OrderStatus.READY) {
+            throw new RuntimeException("Only READY orders can be paid");
+        }
+
+        boolean hasActiveItems = order.getItems().stream()
+                .anyMatch(item -> item.getStatus() != OrderItemStatus.CANCELLED);
+
+        boolean hasUnreadyActiveItem = order.getItems().stream()
+                .anyMatch(item -> item.getStatus() != OrderItemStatus.CANCELLED
+                        && item.getStatus() != OrderItemStatus.READY);
+
+        if (!hasActiveItems || hasUnreadyActiveItem) {
+            throw new RuntimeException(
+                    "All non-cancelled order items must be READY before payment"
+            );
+        }
+
+        return order;
     }
 
     private Long generatePayOSOrderCode(Long orderId) {
