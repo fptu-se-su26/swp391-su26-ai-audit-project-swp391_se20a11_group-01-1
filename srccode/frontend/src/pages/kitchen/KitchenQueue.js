@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import API from '../../services/api';
 import './KitchenQueue.css';
 
 const statusMap = {
   CONFIRMED: {
-    label: 'Chờ nấu',
+    label: 'Đã xác nhận',
     cls: 'item-pending',
     next: 'PREPARING',
-    action: '🔥 Bắt đầu nấu'
+    action: 'Bắt đầu làm'
   },
   PREPARING: {
-    label: 'Đang nấu',
+    label: 'Đang chế biến',
     cls: 'item-cooking',
     next: 'READY',
-    action: '✅ Sẵn sàng'
+    action: 'Sẵn sàng'
   }
 };
+
+const KITCHEN_REFRESH_INTERVAL_MS = 8000;
+
+function getApiMessage(data, fallback) {
+  if (!data) return fallback;
+
+  if (typeof data === 'string') {
+    return data.trim() || fallback;
+  }
+
+  if (typeof data === 'object') {
+    return data.message || data.detail || data.error || fallback;
+  }
+
+  return fallback;
+}
 
 function elapsed(createdAt) {
   if (!createdAt) return '';
@@ -50,124 +66,163 @@ function urgencyClass(createdAt) {
   return '';
 }
 
+function KitchenItemVisual({ item }) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [item.imageUrl]);
+
+  if (item.imageUrl && !imageFailed) {
+    return (
+      <img
+        className="kitem-image"
+        src={item.imageUrl}
+        alt={item.foodName || 'Món ăn'}
+        onError={() => setImageFailed(true)}
+      />
+    );
+  }
+
+  return (
+    <span className="kitem-emoji" aria-hidden="true">
+      {item.emoji || '🍽️'}
+    </span>
+  );
+}
+
 function KitchenQueue() {
   const [queue, setQueue] = useState([]);
-  const [completedToday, setCompletedToday] = useState([]);
   const [clock, setClock] = useState(new Date());
   const [filter, setFilter] = useState('all'); // all | CONFIRMED | PREPARING
   const [loading, setLoading] = useState(true);
-  const [actionLoadingId, setActionLoadingId] = useState(null);
+  const [actionLoadingIds, setActionLoadingIds] = useState(() => new Set());
   const [error, setError] = useState('');
+  const mountedRef = useRef(false);
+  const fetchInFlightRef = useRef(false);
+  const actionInFlightIdsRef = useRef(new Set());
+  const queueRevisionRef = useRef(0);
+
+  const fetchKitchenItems = useCallback(async (showLoading = true) => {
+    if (fetchInFlightRef.current || actionInFlightIdsRef.current.size > 0) {
+      return;
+    }
+
+    fetchInFlightRef.current = true;
+    const revisionAtStart = queueRevisionRef.current;
+
+    if (showLoading) {
+      setLoading(true);
+    }
+
+    try {
+      const response = await API.get(
+        '/orders/kitchen/items?statuses=CONFIRMED,PREPARING'
+      );
+      const items = Array.isArray(response.data) ? [...response.data] : [];
+
+      items.sort((a, b) => {
+        return (Date.parse(a.createdAt) || 0) - (Date.parse(b.createdAt) || 0);
+      });
+
+      if (mountedRef.current && revisionAtStart === queueRevisionRef.current) {
+        setQueue(items);
+      }
+
+      if (mountedRef.current) {
+        setError('');
+      }
+    } catch (requestError) {
+      if (mountedRef.current) {
+        const message = getApiMessage(
+          requestError.response?.data,
+          'Không thể tải hàng đợi bếp.'
+        );
+        setError((current) => (current === message ? current : message));
+      }
+    } finally {
+      fetchInFlightRef.current = false;
+
+      if (showLoading && mountedRef.current) {
+        setLoading(false);
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    fetchKitchenOrders();
+    mountedRef.current = true;
+    fetchKitchenItems();
 
-    const timer = setInterval(() => {
+    const clockTimer = setInterval(() => {
       setClock(new Date());
     }, 1000);
 
     const refreshTimer = setInterval(() => {
-      fetchKitchenOrders(false);
-    }, 8000);
+      fetchKitchenItems(false);
+    }, KITCHEN_REFRESH_INTERVAL_MS);
 
     return () => {
-      clearInterval(timer);
+      mountedRef.current = false;
+      clearInterval(clockTimer);
       clearInterval(refreshTimer);
     };
-  }, []);
+  }, [fetchKitchenItems]);
 
-  const getApiMessage = (data, fallback) => {
-    if (!data) return fallback;
+  const updateItemStatus = async (item, nextStatus) => {
+    const itemId = item.orderItemId;
 
-    if (typeof data === 'string') {
-      return data;
+    if (!itemId || actionInFlightIdsRef.current.has(itemId)) {
+      return;
     }
 
-    if (typeof data === 'object') {
-      return data.message || data.error || data.detail || fallback;
-    }
-
-    return fallback;
-  };
-
-  const fetchKitchenOrders = async (showLoading = true) => {
-    if (showLoading) {
-      setLoading(true);
-    }
+    actionInFlightIdsRef.current.add(itemId);
+    queueRevisionRef.current += 1;
+    setActionLoadingIds((current) => new Set(current).add(itemId));
     setError('');
 
     try {
-      const [confirmedRes, preparingRes] = await Promise.all([
-        API.get('/orders/status/CONFIRMED'),
-        API.get('/orders/status/PREPARING')
-      ]);
-
-      const confirmedOrders = confirmedRes.data || [];
-      const preparingOrders = preparingRes.data || [];
-
-      const mergedOrders = [...confirmedOrders, ...preparingOrders].sort((a, b) => {
-        return new Date(a.createdAt) - new Date(b.createdAt);
-      });
-
-      setQueue(mergedOrders);
-    } catch (error) {
-      console.error('Fetch kitchen orders error:', error);
-
-      setError(
-        getApiMessage(
-          error.response?.data,
-          'Không thể tải hàng đợi bếp'
-        )
-      );
-    } finally {
-      if (showLoading) {
-        setLoading(false);
-      }
-    }
-  };
-
-  const updateOrderStatus = async (order, nextStatus) => {
-    setActionLoadingId(order.orderId);
-    setError('');
-
-    try {
-      const response = await API.put(`/orders/${order.orderId}/status`, {
+      const response = await API.patch(`/orders/items/${itemId}/status`, {
         status: nextStatus
       });
+      const updatedItem =
+        response.data && typeof response.data === 'object'
+          ? response.data
+          : {
+              ...item,
+              status: nextStatus,
+              statusUpdatedAt: new Date().toISOString()
+            };
 
-      if (nextStatus === 'READY') {
-        setCompletedToday((prev) => [
-          {
-            ...response.data,
-            completedAt: new Date().toLocaleTimeString('vi-VN', {
-              hour: '2-digit',
-              minute: '2-digit'
-            })
-          },
-          ...prev
-        ]);
+      if (mountedRef.current) {
+        setQueue((current) => {
+          if (nextStatus === 'READY') {
+            return current.filter((queueItem) => queueItem.orderItemId !== itemId);
+          }
 
-        setQueue((prev) =>
-          prev.filter((item) => item.orderId !== order.orderId)
-        );
-      } else {
-        setQueue((prev) =>
-          prev.map((item) =>
-            item.orderId === order.orderId ? response.data : item
+          return current.map((queueItem) =>
+            queueItem.orderItemId === itemId ? updatedItem : queueItem
+          );
+        });
+      }
+    } catch (requestError) {
+      if (mountedRef.current) {
+        setError(
+          getApiMessage(
+            requestError.response?.data,
+            'Không thể cập nhật trạng thái món.'
           )
         );
       }
-    } catch (error) {
-      console.error('Update kitchen order error:', error);
-
-      setError(
-        getApiMessage(
-          error.response?.data,
-          'Không thể cập nhật trạng thái đơn'
-        )
-      );
     } finally {
-      setActionLoadingId(null);
+      actionInFlightIdsRef.current.delete(itemId);
+
+      if (mountedRef.current) {
+        setActionLoadingIds((current) => {
+          const next = new Set(current);
+          next.delete(itemId);
+          return next;
+        });
+      }
     }
   };
 
@@ -186,11 +241,7 @@ function KitchenQueue() {
     });
   };
 
-  const formatMoney = (value) => {
-    return Number(value || 0).toLocaleString('vi-VN');
-  };
-
-  const getOrderStatusInfo = (status) => {
+  const getItemStatusInfo = (status) => {
     return (
       statusMap[status] || {
         label: status || 'Không xác định',
@@ -201,21 +252,17 @@ function KitchenQueue() {
     );
   };
 
-  const getCustomerDisplay = (order) => {
-    return order.customerName || order.username || 'Khách vãng lai';
+  const getTableDisplay = (item) => {
+    return item.tableName || (item.tableId ? `Bàn ${item.tableId}` : 'Không có bàn');
   };
 
-  const getTableDisplay = (order) => {
-    return order.tableName || (order.tableId ? `Bàn ${order.tableId}` : 'Không có bàn');
-  };
-
-  const filteredQueue = queue.filter((order) => {
+  const filteredQueue = queue.filter((item) => {
     if (filter === 'all') return true;
-    return order.status === filter;
+    return item.status === filter;
   });
 
-  const confirmedCount = queue.filter((order) => order.status === 'CONFIRMED').length;
-  const preparingCount = queue.filter((order) => order.status === 'PREPARING').length;
+  const confirmedCount = queue.filter((item) => item.status === 'CONFIRMED').length;
+  const preparingCount = queue.filter((item) => item.status === 'PREPARING').length;
 
   if (loading) {
     return (
@@ -241,14 +288,13 @@ function KitchenQueue() {
         </div>
 
         <div className="kitchen-summary">
-          <span className="ks-badge ks-total">{queue.length} đơn</span>
-          <span className="ks-badge ks-pending">⏳ {confirmedCount} chờ nấu</span>
-          <span className="ks-badge ks-cooking">🔥 {preparingCount} đang nấu</span>
-          <span className="ks-badge ks-done">✅ {completedToday.length} sẵn sàng</span>
+          <span className="ks-badge ks-total">{queue.length} món</span>
+          <span className="ks-badge ks-pending">⏳ {confirmedCount} đã xác nhận</span>
+          <span className="ks-badge ks-cooking">🔥 {preparingCount} đang chế biến</span>
 
           <button
             className="kfilter-btn"
-            onClick={fetchKitchenOrders}
+            onClick={() => fetchKitchenItems(false)}
             style={{ marginLeft: 8 }}
           >
             🔄 Làm mới
@@ -259,8 +305,8 @@ function KitchenQueue() {
       <div className="kitchen-filters">
         {[
           ['all', 'Tất cả'],
-          ['CONFIRMED', 'Chờ nấu'],
-          ['PREPARING', 'Đang nấu']
+          ['CONFIRMED', 'Đã xác nhận'],
+          ['PREPARING', 'Đang chế biến']
         ].map(([value, label]) => (
           <button
             key={value}
@@ -279,112 +325,85 @@ function KitchenQueue() {
       )}
 
       <div className="kitchen-cards">
-        {filteredQueue.length === 0 && (
+        {!error && filteredQueue.length === 0 && (
           <div className="kitchen-empty">
-            <p>🎉 Không có đơn nào đang chờ bếp</p>
+            <p>Hiện không có món nào đang chờ xử lý.</p>
           </div>
         )}
 
-        {filteredQueue.map((order) => {
-          const urgent = urgencyClass(order.createdAt);
-          const statusInfo = getOrderStatusInfo(order.status);
-          const isActionLoading = actionLoadingId === order.orderId;
+        {filteredQueue.map((item) => {
+          const urgent = urgencyClass(item.createdAt);
+          const statusInfo = getItemStatusInfo(item.status);
+          const isActionLoading = actionLoadingIds.has(item.orderItemId);
 
           return (
             <div
-              key={order.orderId}
+              key={item.orderItemId}
               className={`kitchen-card ${urgent}`}
             >
               <div className="kcard-header">
                 <div className="kcard-left">
                   <span className="kcard-id">
-                    {order.orderCode || `#${order.orderId}`}
+                    {item.orderCode || `#${item.orderId}`}
                   </span>
 
                   <span className="kcard-table">
-                    🪑 {getTableDisplay(order)}
+                    🪑 {getTableDisplay(item)}
                   </span>
-
-                  <span className="kcard-table">
-                    👤 {getCustomerDisplay(order)}
-                  </span>
-
-                  {order.customerPhone && (
-                    <span className="kcard-table">
-                      📞 {order.customerPhone}
-                    </span>
-                  )}
                 </div>
 
                 <div className="kcard-right">
                   <span className="kcard-time">
-                    ⏱ {formatTime(order.createdAt)}
+                    ⏱ {formatTime(item.createdAt)}
                   </span>
 
                   <span className={`kcard-elapsed ${urgent}`}>
-                    {elapsed(order.createdAt)}
+                    {elapsed(item.createdAt)}
                     {urgent === 'urgent-high' && ' ⚠️'}
                   </span>
                 </div>
               </div>
 
               <div className="kcard-items">
-                {order.items?.map((item) => (
-                  <div
-                    key={item.orderItemId}
-                    className={`kcard-item ${statusInfo.cls}`}
-                  >
+                <div className={`kcard-item ${statusInfo.cls}`}>
+                  <div className="kitem-media">
+                    <KitchenItemVisual item={item} />
+                  </div>
+
+                  <div className="kitem-content">
                     <div className="kitem-info">
                       <span className="kitem-name">
-                        {item.emoji ? `${item.emoji} ` : ''}
-                        {item.foodName}
+                        {item.foodName || `Món #${item.foodId}`}
                       </span>
 
                       <span className="kitem-qty">× {item.quantity}</span>
                     </div>
 
-                    <div className="kitem-right">
-                      <span className="kitem-status-label">
-                        {statusInfo.label}
-                      </span>
-                    </div>
+                    {item.note && (
+                      <div className="kitem-note">📝 {item.note}</div>
+                    )}
                   </div>
-                ))}
-              </div>
 
-              {order.note && (
-                <div className="kcard-progress">
-                  <span className="kprog-text">📝 {order.note}</span>
+                  <div className="kitem-right">
+                    <span className="kitem-status-label">
+                      {statusInfo.label}
+                    </span>
+                  </div>
                 </div>
-              )}
-
-              <div className="kcard-progress">
-                <div className="kprog-bar">
-                  <div
-                    className="kprog-fill"
-                    style={{
-                      width: order.status === 'PREPARING' ? '60%' : '20%'
-                    }}
-                  ></div>
-                </div>
-
-                <span className="kprog-text">
-                  Tổng tiền: {formatMoney(order.totalAmount)}đ
-                </span>
               </div>
 
               <div className="kcard-ready">
                 <span>
-                  {order.status === 'CONFIRMED'
-                    ? '⏳ Đơn đã xác nhận, chờ bếp bắt đầu'
-                    : '🔥 Đơn đang được chế biến'}
+                  {item.status === 'CONFIRMED'
+                    ? '⏳ Món đang chờ bắt đầu'
+                    : '🔥 Món đang được chế biến'}
                 </span>
 
                 {statusInfo.next && (
                   <button
                     className="kcard-serve-btn"
                     disabled={isActionLoading}
-                    onClick={() => updateOrderStatus(order, statusInfo.next)}
+                    onClick={() => updateItemStatus(item, statusInfo.next)}
                   >
                     {isActionLoading ? 'Đang xử lý...' : statusInfo.action}
                   </button>
@@ -394,40 +413,6 @@ function KitchenQueue() {
           );
         })}
       </div>
-
-      {completedToday.length > 0 && (
-        <div className="kitchen-done-section">
-          <h3 className="done-title">
-            ✅ Đã sẵn sàng hôm nay ({completedToday.length})
-          </h3>
-
-          <div className="done-list">
-            {completedToday.map((order) => (
-              <div key={order.orderId} className="done-card">
-                <span className="done-id">
-                  {order.orderCode || `#${order.orderId}`}
-                </span>
-
-                <span className="done-table">
-                  🪑 {getTableDisplay(order)}
-                </span>
-
-                <span className="done-table">
-                  👤 {getCustomerDisplay(order)}
-                </span>
-
-                <span className="done-items">
-                  {order.items?.length || 0} món
-                </span>
-
-                <span className="done-time">
-                  ✅ {order.completedAt}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -3,10 +3,6 @@ import { QRCodeCanvas } from 'qrcode.react';
 import API from '../../services/api';
 import './StaffOrders.css';
 
-const statusFlow = {
-  PENDING: 'CONFIRMED'
-};
-
 const statusMap = {
   PENDING: {
     label: 'Chờ xác nhận',
@@ -32,6 +28,13 @@ const statusMap = {
     label: 'Đã hủy',
     cls: 'status-cancelled'
   }
+};
+
+const itemStatusLabels = {
+  CONFIRMED: 'Đã xác nhận',
+  PREPARING: 'Đang chế biến',
+  READY: 'Sẵn sàng',
+  CANCELLED: 'Đã hủy'
 };
 
 const FILTERS = [
@@ -380,34 +383,6 @@ function StaffOrders() {
     }
   };
 
-  const updateOrderStatus = async (orderId, status) => {
-    setActionLoadingId(orderId);
-    setError('');
-
-    try {
-      const response = await API.put(`/orders/${orderId}/status`, {
-        status
-      });
-
-      setOrders((prev) =>
-        prev.map((order) =>
-          order.orderId === orderId ? response.data : order
-        )
-      );
-    } catch (error) {
-      console.error('Update order status error:', error);
-
-      setError(
-        getApiMessage(
-          error.response?.data,
-          'Không thể cập nhật trạng thái đơn hàng'
-        )
-      );
-    } finally {
-      setActionLoadingId(null);
-    }
-  };
-
   const payOrder = async (order, method) => {
     setActionLoadingId(order.orderId);
     setError('');
@@ -544,14 +519,6 @@ function StaffOrders() {
     );
   };
 
-  const getActionLabel = (status) => {
-    if (status === 'PENDING') {
-      return '✓ Xác nhận';
-    }
-
-    return '✓ Cập nhật';
-  };
-
   const getCustomerDisplay = (order) => {
     return order.customerName || order.username || 'Khách vãng lai';
   };
@@ -615,7 +582,6 @@ function StaffOrders() {
         <div className="staff-orders-list">
           {filteredOrders.map((order) => {
             const statusInfo = getStatusInfo(order.status);
-            const nextStatus = statusFlow[order.status];
             const isActionLoading = actionLoadingId === order.orderId;
 
             return (
@@ -655,6 +621,8 @@ function StaffOrders() {
                     <span key={item.orderItemId} className="sorder-tag">
                       {item.emoji ? `${item.emoji} ` : ''}
                       {item.foodName} × {item.quantity}
+                      {' · '}
+                      {itemStatusLabels[item.status] || item.status || 'Chưa cập nhật'}
                     </span>
                   ))}
 
@@ -675,16 +643,6 @@ function StaffOrders() {
                   </span>
 
                   <div className="sorder-actions">
-                    {nextStatus && (
-                      <button
-                        className="advance-btn"
-                        disabled={isActionLoading}
-                        onClick={() => updateOrderStatus(order.orderId, nextStatus)}
-                      >
-                        {isActionLoading ? 'Đang xử lý...' : getActionLabel(order.status)}
-                      </button>
-                    )}
-
                     {order.status === 'READY' && (
                       <button
                         className="advance-btn"
