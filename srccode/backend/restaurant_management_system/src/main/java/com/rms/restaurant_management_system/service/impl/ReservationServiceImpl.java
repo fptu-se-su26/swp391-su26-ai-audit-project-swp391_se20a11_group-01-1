@@ -174,7 +174,7 @@ public class ReservationServiceImpl implements ReservationService {
             Long reservationId,
             UpdateReservationStatusRequest request
     ) {
-        Reservation reservation = reservationRepository.findById(reservationId)
+        Reservation reservation = reservationRepository.findByReservationId(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
         validateStatusTransition(reservation.getStatus(), request.getStatus());
@@ -184,6 +184,7 @@ public class ReservationServiceImpl implements ReservationService {
         if (request.getStatus() == ReservationStatus.CANCELLED
                 || request.getStatus() == ReservationStatus.NO_SHOW) {
             reservation.setAssignedTable(null);
+            reservation.setAssignedTableId(null);
         }
 
         Reservation savedReservation = reservationRepository.save(reservation);
@@ -202,6 +203,9 @@ public class ReservationServiceImpl implements ReservationService {
 
         if (reservation.getStatus() != ReservationStatus.CONFIRMED) {
             throw new RuntimeException("Only CONFIRMED reservations can be checked in");
+        }
+        if (reservation.getCreatedOrderId() != null) {
+            throw new RuntimeException("Reservation has already been converted to an order");
         }
 
         String requestedTable = request.getAssignedTable();
@@ -228,10 +232,6 @@ public class ReservationServiceImpl implements ReservationService {
         if (reservationRepository.countOverlapping(table.getTableId(), reservation.getStartAt(),
                 reservation.getEndAt(), reservation.getReservationId()) > 0) {
             throw new RuntimeException("Assigned table is no longer available for this reservation slot");
-        }
-
-        if (reservation.getCreatedOrderId() != null) {
-            throw new RuntimeException("Reservation has already been converted to an order");
         }
 
         reservation.setAssignedTable(table.getTableName());
@@ -263,7 +263,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     @Transactional
     public void cancelReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId)
+        Reservation reservation = reservationRepository.findByReservationId(reservationId)
                 .orElseThrow(() -> new RuntimeException("Reservation not found"));
 
         if (reservation.getStatus() != ReservationStatus.PENDING

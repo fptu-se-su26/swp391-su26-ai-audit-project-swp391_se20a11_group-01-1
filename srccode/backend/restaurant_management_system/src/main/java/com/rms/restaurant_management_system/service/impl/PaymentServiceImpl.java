@@ -141,6 +141,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public void handlePayOSWebhook(Map<String, Object> webhookBody) {
         try {
+            if (!Boolean.TRUE.equals(webhookBody.get("success"))) {
+                return;
+            }
             WebhookData data = payOS.webhooks().verify(webhookBody);
             Long payosOrderCode = data.getOrderCode();
 
@@ -148,10 +151,20 @@ public class PaymentServiceImpl implements PaymentService {
                 throw new RuntimeException("Missing orderCode in webhook");
             }
 
-            Payment payment = paymentRepository.findLockedByPayosOrderCode(payosOrderCode)
+            Payment candidate = paymentRepository.findByPayosOrderCode(payosOrderCode)
                     .orElseThrow(() -> new RuntimeException(
                             "Payment not found by PayOS orderCode: " + payosOrderCode
                     ));
+
+            if (candidate.getStatus() == PaymentStatus.PAID) {
+                return;
+            }
+
+            Long orderId = candidate.getOrder().getOrderId();
+            orderRepository.findByOrderId(orderId)
+                    .orElseThrow(() -> new RuntimeException("Order not found"));
+            Payment payment = paymentRepository.findLockedByPayosOrderCode(payosOrderCode)
+                    .orElseThrow(() -> new RuntimeException("Payment not found"));
 
             if (payment.getStatus() == PaymentStatus.PAID) {
                 return;
@@ -174,7 +187,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             Payment savedPayment = paymentRepository.save(payment);
 
-            completeOrder(savedPayment.getOrder().getOrderId());
+            completeOrder(orderId);
 
         } catch (Exception exception) {
             throw new RuntimeException("Invalid PayOS webhook: " + exception.getMessage());

@@ -106,18 +106,22 @@ public class AuthServiceImpl implements AuthService {
                 .findFirstByEmailAndUsedAtIsNullOrderByCreatedAtDesc(email)
                 .orElseThrow(() -> new RuntimeException("OTP is invalid or expired"));
 
-        if (LocalDateTime.now().isAfter(token.getExpiresAt()) || token.getFailedAttempts() >= MAX_RESET_ATTEMPTS) {
-            token.setUsedAt(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        if (now.isAfter(token.getExpiresAt()) || token.getFailedAttempts() >= MAX_RESET_ATTEMPTS) {
             throw new RuntimeException("OTP is invalid or expired");
         }
-        if (!MessageDigest.isEqual(hash(request.getOtp()).getBytes(StandardCharsets.UTF_8),
+        String submittedHash = hash(request.getOtp());
+        if (!MessageDigest.isEqual(submittedHash.getBytes(StandardCharsets.UTF_8),
                 token.getTokenHash().getBytes(StandardCharsets.UTF_8))) {
-            token.setFailedAttempts(token.getFailedAttempts() + 1);
+            passwordResetTokenRepository.recordFailedAttempt(token.getId(), MAX_RESET_ATTEMPTS);
             throw new RuntimeException("OTP is invalid or expired");
         }
 
         validateNewPassword(request.getNewPassword());
-        token.setUsedAt(LocalDateTime.now());
+        if (passwordResetTokenRepository.consumeIfValid(token.getId(), submittedHash, now,
+                MAX_RESET_ATTEMPTS) != 1) {
+            throw new RuntimeException("OTP is invalid or expired");
+        }
         updatePasswordAndRevoke(user, request.getNewPassword());
     }
 
