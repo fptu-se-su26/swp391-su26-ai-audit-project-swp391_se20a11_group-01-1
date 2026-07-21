@@ -279,6 +279,27 @@ Run automated tests with the isolated `test` profile:
 
 The test profile uses an in-memory database and test-only credentials; it does not connect to a developer SQL Server.
 
+### 10.3 Backend database tests
+
+The default backend test command runs unit tests, MVC security tests and H2 repository integration tests. SQL Server Testcontainers tests are tagged `integration` and excluded by default, so Docker is not required for normal development.
+
+```powershell
+cd srccode/backend/restaurant_management_system
+mvn --batch-mode --no-transfer-progress clean test
+```
+
+To verify SQL Server migrations and database locking, start Docker and opt in explicitly:
+
+```powershell
+$env:RUN_SQLSERVER_TESTS = "true"
+mvn --batch-mode --no-transfer-progress `
+  "-Dtest.excluded-groups=none" `
+  "-Dgroups=integration" `
+  "-Dtest=SqlServerMigrationIntegrationTest" test
+```
+
+The container downloads the SQL Server 2022 image, creates a disposable database, executes the hardening migrations twice to verify rerunnability, checks rollback behavior, and verifies row-lock serialization. No project database credentials are used. GitHub Actions runs both the fast H2 suite and the SQL Server container suite for backend-related pull requests.
+
 The backend is expected to run at:
 
 ```text
