@@ -97,6 +97,10 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Transactional
     public TableResponse updateTableStatus(Long tableId, UpdateTableStatusRequest request) {
         RestaurantTable table = findTableForUpdate(tableId);
+        if ((table.getMergedInto() != null || (table.getMergedWith() != null && !table.getMergedWith().isBlank()))
+                && request.getStatus() != table.getStatus()) {
+            throw new RuntimeException("Split merged tables before changing their status");
+        }
         String currentOrderCode = table.getCurrentOrderCode();
         Order currentOrder = null;
 
@@ -193,6 +197,10 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         if (target.getStatus() != TableStatus.EMPTY) {
             throw new RuntimeException("Target table must be empty");
+        }
+        if (source.getMergedInto() != null || source.getMergedWith() != null
+                || target.getMergedInto() != null || target.getMergedWith() != null) {
+            throw new RuntimeException("Split merged tables before transferring an order");
         }
 
         String currentOrderCode = source.getCurrentOrderCode();
@@ -295,6 +303,9 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         if (source.getMergedWith() == null || source.getMergedWith().isBlank()) {
             throw new RuntimeException("This table is not merged");
+        }
+        if (source.getStatus() == TableStatus.OCCUPIED || source.getStatus() == TableStatus.RESERVED) {
+            throw new RuntimeException("Cannot split a table group while it is occupied or reserved");
         }
 
         String[] mergedTableNames = source.getMergedWith().split(",");
