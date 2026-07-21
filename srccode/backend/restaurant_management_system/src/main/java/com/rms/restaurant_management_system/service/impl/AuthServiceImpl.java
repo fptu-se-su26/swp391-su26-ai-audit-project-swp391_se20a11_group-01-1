@@ -12,6 +12,8 @@ import com.rms.restaurant_management_system.repository.RoleRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import com.rms.restaurant_management_system.service.interfaces.AuthService;
 import com.rms.restaurant_management_system.service.interfaces.EmailService;
+import com.rms.restaurant_management_system.security.JwtUtil;
+import com.rms.restaurant_management_system.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,13 +30,18 @@ public class AuthServiceImpl implements AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+    private final JwtUtil jwtUtil;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     private final ConcurrentHashMap<String, OtpData> otpStorage = new ConcurrentHashMap<>();
 
     @Override
     public AuthResponse register(RegisterRequest request) {
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+        request.setEmail(request.getEmail().trim().toLowerCase());
+        request.setUsername(request.getUsername().trim());
+
+        if (userRepository.existsByEmailIgnoreCase(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
 
@@ -55,11 +62,14 @@ public class AuthServiceImpl implements AuthService {
 
         User savedUser = userRepository.save(user);
 
+        String token = jwtUtil.generateToken(savedUser.getEmail(), savedUser.getRole().getRoleName(), savedUser.getTokenVersion());
+
         return new AuthResponse(
                 savedUser.getUserId(),
                 savedUser.getUsername(),
                 savedUser.getEmail(),
                 savedUser.getRole().getRoleName(),
+                token,
                 "Register successfully"
         );
     }
@@ -67,7 +77,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse login(LoginRequest request) {
 
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmailIgnoreCase(request.getEmail().trim())
                 .orElseThrow(() -> new RuntimeException("Email or password is incorrect"));
 
         if (user.getIsActive() == null || !user.getIsActive()) {
@@ -83,11 +93,14 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Email or password is incorrect");
         }
 
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole().getRoleName(), user.getTokenVersion());
+
         return new AuthResponse(
                 user.getUserId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getRole().getRoleName(),
+                token,
                 "Login successfully"
         );
     }
@@ -112,8 +125,9 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
-
+        user.setTokenVersion(user.getTokenVersion() + 1);
         userRepository.save(user);
+        refreshTokenRepository.revokeAllByUserId(user.getUserId(), LocalDateTime.now());
     }
 
     @Override
@@ -171,7 +185,9 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        user.setTokenVersion(user.getTokenVersion() + 1);
         userRepository.save(user);
+        refreshTokenRepository.revokeAllByUserId(user.getUserId(), LocalDateTime.now());
 
         otpStorage.remove(request.getEmail());
     }

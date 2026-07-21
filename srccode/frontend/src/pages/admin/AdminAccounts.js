@@ -181,7 +181,7 @@ function AdminAccounts() {
     try {
       setActionLoadingId(userId);
 
-      await updateUserRole(userId, newRole, getCurrentUserId());
+      await updateUserRole(userId, newRole);
 
       setAccounts(prev =>
         prev.map(item =>
@@ -232,7 +232,7 @@ function AdminAccounts() {
     try {
       setActionLoadingId(userId);
 
-      await updateUserStatus(userId, nextActive, getCurrentUserId());
+      await updateUserStatus(userId, nextActive);
 
       setAccounts(prev =>
         prev.map(item =>

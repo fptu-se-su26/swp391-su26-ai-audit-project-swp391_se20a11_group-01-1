@@ -4,6 +4,7 @@ import com.rms.restaurant_management_system.dto.request.UpdateUserRoleRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateUserStatusRequest;
 import com.rms.restaurant_management_system.dto.response.StaffCustomerResponse;
 import com.rms.restaurant_management_system.dto.response.UserResponse;
+import com.rms.restaurant_management_system.dto.request.UpdateMyProfileRequest;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface UserService {
     UserResponse updateUserRole(Long userId, UpdateUserRoleRequest request);
 
     UserResponse updateUserStatus(Long userId, UpdateUserStatusRequest request);
+
+    UserResponse updateMyProfile(Long userId, UpdateMyProfileRequest request);
 }
