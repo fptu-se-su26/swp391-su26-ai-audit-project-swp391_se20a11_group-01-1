@@ -1,203 +1,166 @@
 package com.rms.restaurant_management_system.service.impl;
 
-import com.rms.restaurant_management_system.dto.request.ChangePasswordRequest;
-import com.rms.restaurant_management_system.dto.request.ForgotPasswordRequest;
-import com.rms.restaurant_management_system.dto.request.LoginRequest;
-import com.rms.restaurant_management_system.dto.request.RegisterRequest;
-import com.rms.restaurant_management_system.dto.request.ResetPasswordRequest;
+import com.rms.restaurant_management_system.dto.request.*;
 import com.rms.restaurant_management_system.dto.response.AuthResponse;
+import com.rms.restaurant_management_system.entity.PasswordResetToken;
 import com.rms.restaurant_management_system.entity.Role;
 import com.rms.restaurant_management_system.entity.User;
-import com.rms.restaurant_management_system.repository.RoleRepository;
-import com.rms.restaurant_management_system.repository.UserRepository;
+import com.rms.restaurant_management_system.repository.*;
+import com.rms.restaurant_management_system.security.JwtUtil;
 import com.rms.restaurant_management_system.service.interfaces.AuthService;
 import com.rms.restaurant_management_system.service.interfaces.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HexFormat;
+import com.rms.restaurant_management_system.error.*;
 
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+    private static final int MAX_RESET_ATTEMPTS = 5;
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-
-    private final ConcurrentHashMap<String, OtpData> otpStorage = new ConcurrentHashMap<>();
+    private final JwtUtil jwtUtil;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Override
+    @Transactional
     public AuthResponse register(RegisterRequest request) {
-
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already exists");
-        }
-
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("Username already exists");
-        }
+        String email = request.getEmail().trim().toLowerCase();
+        String username = request.getUsername().trim();
+        if (userRepository.existsByEmailIgnoreCase(email)) throw new ResourceConflictException("Email đã tồn tại");
+        if (userRepository.existsByUsername(username)) throw new ResourceConflictException("Tên đăng nhập đã tồn tại");
 
         Role customerRole = roleRepository.findByRoleName("CUSTOMER")
-                .orElseThrow(() -> new RuntimeException("Role CUSTOMER not found"));
-
-        User user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .passwordHash(passwordEncoder.encode(request.getPassword()))
-                .role(customerRole)
-                .isActive(true)
-                .build();
-
-        User savedUser = userRepository.save(user);
-
-        return new AuthResponse(
-                savedUser.getUserId(),
-                savedUser.getUsername(),
-                savedUser.getEmail(),
-                savedUser.getRole().getRoleName(),
-                "Register successfully"
-        );
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò CUSTOMER"));
+        User user = userRepository.save(User.builder()
+                .username(username).email(email).passwordHash(passwordEncoder.encode(request.getPassword()))
+                .role(customerRole).isActive(true).build());
+        return authResponse(user, "Register successfully");
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Email or password is incorrect"));
-
-        if (user.getIsActive() == null || !user.getIsActive()) {
-            throw new RuntimeException("Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+        User user = userRepository.findByEmailIgnoreCase(request.getEmail().trim())
+                .orElseThrow(() -> new AuthenticationRequiredException(ErrorCode.INVALID_CREDENTIALS,
+                        "Email hoặc mật khẩu không chính xác"));
+        if (!Boolean.TRUE.equals(user.getIsActive())
+                || !passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+            throw new AuthenticationRequiredException(ErrorCode.INVALID_CREDENTIALS,
+                    "Email hoặc mật khẩu không chính xác");
         }
-
-        boolean isPasswordCorrect = passwordEncoder.matches(
-                request.getPassword(),
-                user.getPasswordHash()
-        );
-
-        if (!isPasswordCorrect) {
-            throw new RuntimeException("Email or password is incorrect");
-        }
-
-        return new AuthResponse(
-                user.getUserId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getRole().getRoleName(),
-                "Login successfully"
-        );
+        return authResponse(user, "Login successfully");
     }
 
     @Override
+    @Transactional
     public void changePassword(ChangePasswordRequest request) {
-
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        boolean isOldPasswordCorrect = passwordEncoder.matches(
-                request.getOldPassword(),
-                user.getPasswordHash()
-        );
-
-        if (!isOldPasswordCorrect) {
-            throw new RuntimeException("Old password is incorrect");
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPasswordHash())) {
+            throw new BusinessRuleException("Mật khẩu hiện tại không chính xác");
         }
-
-        if (request.getNewPassword().length() < 6) {
-            throw new RuntimeException("New password must be at least 6 characters");
-        }
-
-        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
-
-        userRepository.save(user);
+        validateNewPassword(request.getNewPassword());
+        updatePasswordAndRevoke(user, request.getNewPassword());
     }
 
     @Override
+    @Transactional
     public String forgotPassword(ForgotPasswordRequest request) {
+        String email = request.getEmail().trim().toLowerCase();
+        User user = userRepository.findByEmailIgnoreCase(email).orElse(null);
+        if (user == null || !Boolean.TRUE.equals(user.getIsActive())) return genericResetMessage();
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Email not found"));
-
-        if (user.getIsActive() == null || !user.getIsActive()) {
-            throw new RuntimeException("Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+        PasswordResetToken latest = passwordResetTokenRepository
+                .findFirstByEmailAndUsedAtIsNullOrderByCreatedAtDesc(email).orElse(null);
+        if (latest != null && latest.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(1))) {
+            return genericResetMessage();
         }
 
-        String otp = generateOtp();
-
-        otpStorage.put(
-                user.getEmail(),
-                new OtpData(
-                        otp,
-                        LocalDateTime.now().plusMinutes(5)
-                )
-        );
-
+        String otp = String.valueOf(100000 + SECURE_RANDOM.nextInt(900000));
+        passwordResetTokenRepository.save(PasswordResetToken.builder()
+                .email(email).tokenHash(hash(otp)).createdAt(LocalDateTime.now())
+                .expiresAt(LocalDateTime.now().plusMinutes(5)).build());
         emailService.sendOtpEmail(user.getEmail(), otp);
-
-        return "OTP has been sent to your email";
+        return genericResetMessage();
     }
 
     @Override
+    @Transactional
     public void resetPassword(ResetPasswordRequest request) {
+        String email = request.getEmail().trim().toLowerCase();
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .filter(candidate -> Boolean.TRUE.equals(candidate.getIsActive()))
+                .orElseThrow(this::invalidOtp);
+        PasswordResetToken token = passwordResetTokenRepository
+                .findFirstByEmailAndUsedAtIsNullOrderByCreatedAtDesc(email)
+                .orElseThrow(this::invalidOtp);
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Email not found"));
-
-        if (user.getIsActive() == null || !user.getIsActive()) {
-            throw new RuntimeException("Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.");
+        LocalDateTime now = LocalDateTime.now();
+        if (now.isAfter(token.getExpiresAt()) || token.getFailedAttempts() >= MAX_RESET_ATTEMPTS) {
+            throw invalidOtp();
+        }
+        String submittedHash = hash(request.getOtp());
+        if (!MessageDigest.isEqual(submittedHash.getBytes(StandardCharsets.UTF_8),
+                token.getTokenHash().getBytes(StandardCharsets.UTF_8))) {
+            passwordResetTokenRepository.recordFailedAttempt(token.getId(), MAX_RESET_ATTEMPTS);
+            throw invalidOtp();
         }
 
-        OtpData otpData = otpStorage.get(request.getEmail());
-
-        if (otpData == null) {
-            throw new RuntimeException("OTP not found or expired");
+        validateNewPassword(request.getNewPassword());
+        if (passwordResetTokenRepository.consumeIfValid(token.getId(), submittedHash, now,
+                MAX_RESET_ATTEMPTS) != 1) {
+            throw invalidOtp();
         }
+        updatePasswordAndRevoke(user, request.getNewPassword());
+    }
 
-        if (LocalDateTime.now().isAfter(otpData.getExpiredAt())) {
-            otpStorage.remove(request.getEmail());
-            throw new RuntimeException("OTP has expired");
+    private AuthResponse authResponse(User user, String message) {
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole().getRoleName(), user.getTokenVersion());
+        return new AuthResponse(user.getUserId(), user.getUsername(), user.getEmail(),
+                user.getRole().getRoleName(), token, message);
+    }
+
+    private void validateNewPassword(String password) {
+        if (password == null || password.length() < 8) {
+            throw new BusinessRuleException("Mật khẩu mới phải có ít nhất 8 ký tự");
         }
+    }
 
-        if (!otpData.getOtp().equals(request.getOtp())) {
-            throw new RuntimeException("OTP is incorrect");
-        }
-
-        if (request.getNewPassword().length() < 6) {
-            throw new RuntimeException("New password must be at least 6 characters");
-        }
-
-        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+    private void updatePasswordAndRevoke(User user, String password) {
+        user.setPasswordHash(passwordEncoder.encode(password));
+        user.setTokenVersion((user.getTokenVersion() == null ? 0 : user.getTokenVersion()) + 1);
         userRepository.save(user);
-
-        otpStorage.remove(request.getEmail());
+        refreshTokenRepository.revokeAllByUserId(user.getUserId(), LocalDateTime.now());
     }
 
-    private String generateOtp() {
-        Random random = new Random();
-        int number = 100000 + random.nextInt(900000);
-        return String.valueOf(number);
+    private String genericResetMessage() {
+        return "If the account exists, an OTP has been sent";
     }
 
-    private static class OtpData {
+    private BusinessRuleException invalidOtp() {
+        return new BusinessRuleException("OTP is invalid or expired");
+    }
 
-        private final String otp;
-        private final LocalDateTime expiredAt;
-
-        public OtpData(String otp, LocalDateTime expiredAt) {
-            this.otp = otp;
-            this.expiredAt = expiredAt;
-        }
-
-        public String getOtp() {
-            return otp;
-        }
-
-        public LocalDateTime getExpiredAt() {
-            return expiredAt;
+    private String hash(String value) {
+        try {
+            return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
+                    .digest(value.getBytes(StandardCharsets.UTF_8)));
+        } catch (Exception exception) {
+            throw new IllegalStateException(exception);
         }
     }
 }

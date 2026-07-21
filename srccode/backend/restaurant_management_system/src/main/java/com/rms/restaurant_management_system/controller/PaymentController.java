@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.Map;
@@ -14,12 +15,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/payments")
 @RequiredArgsConstructor
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 public class PaymentController {
 
     private final PaymentService paymentService;
 
     @PostMapping("/orders/{orderId}")
+    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     public PaymentResponse payOrder(
             @PathVariable Long orderId,
             @Valid @RequestBody PaymentRequest request
@@ -28,6 +29,7 @@ public class PaymentController {
     }
 
     @PostMapping("/orders/{orderId}/payos")
+    @PreAuthorize("@domainAuthorization.canAccessOrder(#orderId, authentication)")
     public PaymentResponse createPayOSPayment(@PathVariable Long orderId) {
         return paymentService.createPayOSPayment(orderId);
     }
@@ -39,11 +41,13 @@ public class PaymentController {
     }
 
     @GetMapping("/orders/{orderId}")
+    @PreAuthorize("@domainAuthorization.canAccessOrder(#orderId, authentication)")
     public PaymentResponse getPaymentByOrderId(@PathVariable Long orderId) {
         return paymentService.getPaymentByOrderId(orderId);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('STAFF','ADMIN')")
     public List<PaymentResponse> getAllPayments() {
         return paymentService.getAllPayments();
     }

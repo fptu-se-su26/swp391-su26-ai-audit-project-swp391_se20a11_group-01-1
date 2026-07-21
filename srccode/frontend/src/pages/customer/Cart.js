@@ -8,11 +8,8 @@ import { useAuth } from '../../context/AuthContext';
 import './Cart.css';
 
 const PAYMENT_METHODS = [
-  { id: 'cod', icon: '💵', label: 'Thanh toán tại bàn' },
-  { id: 'card', icon: '💳', label: 'Thẻ tín dụng / Ghi nợ' },
-  { id: 'momo', icon: '🟣', label: 'Ví MoMo' },
-  { id: 'zalopay', icon: '🔵', label: 'ZaloPay' },
-  { id: 'vnpay', icon: '🔴', label: 'VNPay QR' },
+  { id: 'cod', icon: '💵', label: 'Tiền mặt tại bàn' },
+  { id: 'qr',  icon: '📱', label: 'Quét mã QR' },
 ];
 
 function Cart() {
@@ -24,6 +21,7 @@ function Cart() {
 
   const [payMethod, setPayMethod] = useState('cod');
   const [step, setStep] = useState('cart'); // cart | payment | success
+  
   const [orderNote, setOrderNote] = useState('');
   const [orderLoading, setOrderLoading] = useState(false);
   const [orderError, setOrderError] = useState('');
@@ -76,7 +74,6 @@ function Cart() {
     }
 
     const orderItems = buildOrderItems();
-
     const invalidItem = orderItems.find((item) => !item.foodId || item.quantity <= 0);
 
     if (invalidItem) {
@@ -87,37 +84,30 @@ function Cart() {
     setOrderLoading(true);
 
     try {
-      const selectedPayment = PAYMENT_METHODS.find((method) => method.id === payMethod);
-
       const noteParts = [];
-
-      if (orderNote.trim()) {
-        noteParts.push(orderNote.trim());
-      }
 
       if (selectedPayment) {
         noteParts.push(`Payment method: ${selectedPayment.label}`);
       }
+
+      if (orderNote.trim()) noteParts.push(orderNote.trim());
 
       const response = await API.post('/orders', {
         userId: user.userId,
         note: noteParts.join(' | '),
         items: orderItems
       });
-
-      addSpend(Number(response.data.totalAmount || 0));
+      
+      if (activeVoucher) useVoucher(activeVoucher.code);
+      addSpend(finalTotal);
       clearCart();
 
       setCreatedOrder(response.data);
       setStep('success');
     } catch (error) {
       console.error('Create order error:', error);
-
       setOrderError(
-        getApiMessage(
-          error.response?.data,
-          'Không thể đặt hàng. Vui lòng thử lại.'
-        )
+        getApiMessage(error.response?.data, 'Không thể đặt hàng. Vui lòng thử lại.')
       );
     } finally {
       setOrderLoading(false);
@@ -141,18 +131,11 @@ function Cart() {
 
   // ── Success screen ──────────────────────────────────────
   if (step === 'success') {
-    const method = PAYMENT_METHODS.find((m) => m.id === payMethod);
-
     return (
       <div className="order-success">
         <div className="success-anim">✅</div>
-
-        <h2>Đặt hàng thành công!</h2>
-
-        <p>
-          Cảm ơn bạn đã đặt món tại <strong>Cái Gì Cũng Không Có</strong>
-        </p>
-
+        <h2>Đặt món thành công!</h2>
+        <p>Cảm ơn bạn đã đặt món tại <strong>Cái Gì Cũng Không Có</strong></p>
         <div className="success-info-box">
           {createdOrder?.orderCode && (
             <div className="success-row">
@@ -160,19 +143,6 @@ function Cart() {
               <strong>{createdOrder.orderCode}</strong>
             </div>
           )}
-
-          <div className="success-row">
-            <span>📌 Trạng thái</span>
-            <strong>{createdOrder?.status || 'PENDING'}</strong>
-          </div>
-
-          <div className="success-row">
-            <span>💳 Thanh toán</span>
-            <strong>
-              {method?.icon} {method?.label}
-            </strong>
-          </div>
-
           <div className="success-row">
             <span>💰 Tổng tiền</span>
             <strong style={{ color: '#e85d04' }}>
@@ -181,23 +151,18 @@ function Cart() {
                 : '—'}
             </strong>
           </div>
-
           <div className="success-row">
             <span>⏱ Thời gian chờ</span>
             <strong>~20-30 phút</strong>
           </div>
         </div>
-
         <p className="success-note">
-          🔔 Nhân viên sẽ phục vụ bạn sớm nhất. Bạn có thể theo dõi đơn hàng tại mục{' '}
-          <strong>Đơn hàng</strong>.
+          🔔 Nhân viên sẽ phục vụ bạn sớm nhất. Khi muốn thanh toán, vào mục <strong>Đơn hàng</strong> để thanh toán.
         </p>
-
         <div className="success-btns">
           <button className="btn-primary" onClick={() => navigate('/customer/orders')}>
             📋 Xem đơn hàng
           </button>
-
           <button className="btn-secondary" onClick={() => navigate('/customer/menu')}>
             🍽️ Đặt thêm
           </button>
@@ -206,7 +171,7 @@ function Cart() {
     );
   }
 
-  // ── Payment step ────────────────────────────────────────
+  
   if (step === 'payment') {
     return (
       <div className="cart-page">
@@ -342,7 +307,7 @@ function Cart() {
     );
   }
 
-  // ── Cart step ───────────────────────────────────────────
+ 
   return (
     <div className="cart-page">
       <h1 className="page-title">Giỏ hàng</h1>
@@ -388,8 +353,21 @@ function Cart() {
             <span>{totalPrice.toLocaleString('vi-VN')}đ</span>
           </div>
 
-          <button className="order-btn" onClick={() => setStep('payment')}>
-            💳 Tiến hành thanh toán
+          <div className="form-group" style={{ marginTop: 8 }}>
+            <label className="form-label">📝 Ghi chú</label>
+            <textarea
+              className="form-input"
+              rows={2}
+              placeholder="Yêu cầu đặc biệt, dị ứng thực phẩm..."
+              value={orderNote}
+              onChange={(e) => setOrderNote(e.target.value)}
+            />
+          </div>
+
+          {orderError && <p className="voucher-msg error">❌ {orderError}</p>}
+
+          <button className="order-btn" onClick={handleOrder} disabled={orderLoading}>
+            {orderLoading ? 'Đang đặt món...' : '🍽️ Đặt món ngay'}
           </button>
 
           <button className="back-btn" onClick={() => navigate('/customer/menu')}>

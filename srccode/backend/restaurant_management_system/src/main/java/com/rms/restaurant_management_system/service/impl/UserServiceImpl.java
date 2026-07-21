@@ -2,25 +2,33 @@ package com.rms.restaurant_management_system.service.impl;
 
 import com.rms.restaurant_management_system.dto.request.UpdateUserRoleRequest;
 import com.rms.restaurant_management_system.dto.request.UpdateUserStatusRequest;
+import com.rms.restaurant_management_system.dto.request.UpdateMyProfileRequest;
 import com.rms.restaurant_management_system.dto.response.StaffCustomerResponse;
 import com.rms.restaurant_management_system.dto.response.UserResponse;
 import com.rms.restaurant_management_system.entity.Order;
 import com.rms.restaurant_management_system.entity.Role;
 import com.rms.restaurant_management_system.entity.User;
+import com.rms.restaurant_management_system.entity.SecurityAuditLog;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.RoleRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
+import com.rms.restaurant_management_system.repository.RefreshTokenRepository;
+import com.rms.restaurant_management_system.repository.SecurityAuditLogRepository;
 import com.rms.restaurant_management_system.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.rms.restaurant_management_system.error.BusinessRuleException;
+import com.rms.restaurant_management_system.error.ResourceConflictException;
+import com.rms.restaurant_management_system.error.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +37,13 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final RoleRepository roleRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final SecurityAuditLogRepository securityAuditLogRepository;
 
     @Override
     public UserResponse getProfileByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
 
         return mapToUserResponse(user);
     }
@@ -122,12 +132,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUserRole(Long userId, UpdateUserRoleRequest request) {
-        if (request.getCurrentUserId() != null && request.getCurrentUserId().equals(userId)) {
-            throw new RuntimeException("Bạn không thể tự đổi vai trò của chính mình.");
-        }
-
         if (request.getRoleName() == null || request.getRoleName().isBlank()) {
-            throw new RuntimeException("Vai trò không được để trống.");
+            throw new BusinessRuleException("Vai trò không được để trống");
         }
 
         String roleName = request.getRoleName().trim().toUpperCase();
@@ -136,38 +142,60 @@ public class UserServiceImpl implements UserService {
                 && !roleName.equals("STAFF")
                 && !roleName.equals("KITCHEN")
                 && !roleName.equals("CUSTOMER")) {
-            throw new RuntimeException("Vai trò không hợp lệ.");
+            throw new BusinessRuleException("Vai trò không hợp lệ");
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
+
+        if ("ADMIN".equals(user.getRole().getRoleName()) && !"ADMIN".equals(roleName)
+                && userRepository.countByRoleRoleNameAndIsActiveTrue("ADMIN") <= 1) {
+            throw new ResourceConflictException("Không thể hạ quyền quản trị viên đang hoạt động cuối cùng");
+        }
 
         Role role = roleRepository.findByRoleName(roleName)
-                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò " + roleName));
 
         user.setRole(role);
-
-        return mapToUserResponse(userRepository.save(user));
+        user.setTokenVersion(user.getTokenVersion() + 1);
+        User saved = userRepository.save(user);
+        refreshTokenRepository.revokeAllByUserId(userId, java.time.LocalDateTime.now());
+        recordAudit(userId, "ROLE_CHANGED");
+        return mapToUserResponse(saved);
     }
 
     @Override
     public UserResponse updateUserStatus(Long userId, UpdateUserStatusRequest request) {
-        if (request.getCurrentUserId() != null && request.getCurrentUserId().equals(userId)) {
-            throw new RuntimeException("Bạn không thể tự khóa tài khoản của chính mình.");
-        }
-
         if (request.getIsActive() == null) {
-            throw new RuntimeException("Trạng thái không được để trống.");
+            throw new BusinessRuleException("Trạng thái không được để trống");
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
+
+        if (Boolean.FALSE.equals(request.getIsActive()) && "ADMIN".equals(user.getRole().getRoleName())
+                && userRepository.countByRoleRoleNameAndIsActiveTrue("ADMIN") <= 1) {
+            throw new ResourceConflictException("Không thể khóa quản trị viên đang hoạt động cuối cùng");
+        }
 
         user.setIsActive(request.getIsActive());
-
-        return mapToUserResponse(userRepository.save(user));
+        user.setTokenVersion(user.getTokenVersion() + 1);
+        User saved = userRepository.save(user);
+        refreshTokenRepository.revokeAllByUserId(userId, java.time.LocalDateTime.now());
+        recordAudit(userId, "STATUS_CHANGED");
+        return mapToUserResponse(saved);
     }
 
+    @Override
+    @Transactional
+    public UserResponse updateMyProfile(Long userId, UpdateMyProfileRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
+        user.setFullName(request.getFullName().trim());
+        user.setPhone(request.getPhone() == null ? null : request.getPhone().trim());
+        user.setAvatarUrl(request.getAvatarUrl() == null ? null : request.getAvatarUrl().trim());
+        return mapToUserResponse(userRepository.save(user));
+    }
     private UserResponse mapToUserResponse(User user) {
         return new UserResponse(
                 user.getUserId(),
@@ -175,8 +203,24 @@ public class UserServiceImpl implements UserService {
                 user.getEmail(),
                 user.getRole().getRoleName(),
                 user.getIsActive(),
-                user.getCreatedAt()
+                user.getCreatedAt(),
+                user.getFullName(),
+                user.getPhone(),
+                user.getAvatarUrl()
         );
+    }
+
+    private void recordAudit(Long targetUserId, String action) {
+        Long actorUserId = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication() == null
+                ? null : SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof User actor) actorUserId = actor.getUserId();
+        securityAuditLogRepository.save(SecurityAuditLog.builder()
+                .actorUserId(actorUserId)
+                .targetUserId(targetUserId)
+                .action(action)
+                .createdAt(java.time.LocalDateTime.now())
+                .build());
     }
 
     private boolean isCustomer(User user) {

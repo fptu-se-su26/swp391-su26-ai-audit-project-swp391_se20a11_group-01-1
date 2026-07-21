@@ -20,16 +20,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.payos.PayOS;
 import vn.payos.model.v2.paymentRequests.CreatePaymentLinkRequest;
+import vn.payos.model.webhooks.WebhookData;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.security.SecureRandom;
+import com.rms.restaurant_management_system.error.*;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
+
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
@@ -41,14 +46,17 @@ public class PaymentServiceImpl implements PaymentService {
     private String frontendUrl;
 
     @Override
-    @Transactional
-    public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
-        if (paymentRepository.existsByOrderOrderId(orderId)) {
-            throw new RuntimeException("This order has already been paid");
-        }
+@Transactional
+public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
+    if (paymentRepository.findLockedByOrderOrderId(orderId).isPresent()) {
+        throw new ResourceConflictException(
+                ErrorCode.PAYMENT_ALREADY_PROCESSED,
+                "Đơn hàng đã được thanh toán"
+        );
+    }
 
-        Order order = reloadReadyOrderForPayment(orderId);
-        BigDecimal latestAmount = order.getTotalAmount();
+    Order order = reloadReadyOrderForPayment(orderId);
+    BigDecimal latestAmount = order.getTotalAmount();
 
         Payment payment = Payment.builder()
                 .order(order)
@@ -67,15 +75,18 @@ public class PaymentServiceImpl implements PaymentService {
         return mapToResponse(savedPayment);
     }
 
-    @Override
-    @Transactional
-    public PaymentResponse createPayOSPayment(Long orderId) {
-        Payment existingPayment = paymentRepository.findByOrderOrderId(orderId)
-                .orElse(null);
+   @Override
+@Transactional
+public PaymentResponse createPayOSPayment(Long orderId) {
+    Payment existingPayment = paymentRepository
+            .findLockedByOrderOrderId(orderId)
+            .orElse(null);
 
+    Order order = reloadReadyOrderForPayment(orderId);
+    BigDecimal latestAmount = order.getTotalAmount();
         if (existingPayment != null) {
             if (existingPayment.getStatus() == PaymentStatus.PAID) {
-                throw new RuntimeException("This order has already been paid");
+                throw new ResourceConflictException(ErrorCode.PAYMENT_ALREADY_PROCESSED, "Đơn hàng đã được thanh toán");
             }
 
             if (existingPayment.getStatus() == PaymentStatus.PENDING) {
@@ -125,66 +136,71 @@ public class PaymentServiceImpl implements PaymentService {
             return mapToResponse(savedPayment);
 
         } catch (Exception exception) {
-            throw new RuntimeException("Cannot create PayOS payment link: " + exception.getMessage());
+            throw new ExternalServiceException("Không thể tạo liên kết thanh toán PayOS", exception);
         }
     }
 
     @Override
     @Transactional
-    @SuppressWarnings("unchecked")
     public void handlePayOSWebhook(Map<String, Object> webhookBody) {
         try {
-            Object successObj = webhookBody.get("success");
+            if (!Boolean.TRUE.equals(webhookBody.get("success"))) {
+                return;
+            }
+            WebhookData data = payOS.webhooks().verify(webhookBody);
+            Long payosOrderCode = data.getOrderCode();
 
-            if (!(successObj instanceof Boolean) || !((Boolean) successObj)) {
+            if (payosOrderCode == null) {
+                throw new BusinessRuleException("Webhook PayOS thiếu orderCode");
+            }
+
+            Payment candidate = paymentRepository.findByPayosOrderCode(payosOrderCode)
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy giao dịch PayOS"));
+
+            if (candidate.getStatus() == PaymentStatus.PAID) {
                 return;
             }
 
-            Object dataObj = webhookBody.get("data");
-
-            if (!(dataObj instanceof Map<?, ?>)) {
-                throw new RuntimeException("Invalid webhook data");
-            }
-
-            Map<String, Object> data = (Map<String, Object>) dataObj;
-
-            Long payosOrderCode = toLong(data.get("orderCode"));
-
-            if (payosOrderCode == null) {
-                throw new RuntimeException("Missing orderCode in webhook");
-            }
-
-            Payment payment = paymentRepository.findByPayosOrderCode(payosOrderCode)
-                    .orElseThrow(() -> new RuntimeException(
-                            "Payment not found by PayOS orderCode: " + payosOrderCode
-                    ));
+            Long orderId = candidate.getOrder().getOrderId();
+            orderRepository.findByOrderId(orderId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng"));
+            Payment payment = paymentRepository.findLockedByPayosOrderCode(payosOrderCode)
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy thanh toán"));
 
             if (payment.getStatus() == PaymentStatus.PAID) {
                 return;
             }
 
-            String reference = data.get("reference") != null
-                    ? String.valueOf(data.get("reference"))
-                    : null;
+            long expectedAmount = payment.getAmount().setScale(0, RoundingMode.HALF_UP).longValueExact();
+            if (data.getAmount() == null || data.getAmount() != expectedAmount) {
+                throw new BusinessRuleException("Webhook amount does not match order total");
+            }
+
+            if (data.getPaymentLinkId() != null && payment.getPaymentLinkId() != null
+                    && !payment.getPaymentLinkId().equals(data.getPaymentLinkId())) {
+                throw new BusinessRuleException("Liên kết thanh toán trong webhook không khớp");
+            }
 
             payment.setStatus(PaymentStatus.PAID);
-            payment.setTransactionCode(reference);
+            payment.setTransactionCode(data.getReference());
             payment.setPaidAt(LocalDateTime.now());
             payment.setNote("PayOS payment success");
 
             Payment savedPayment = paymentRepository.save(payment);
 
-            completeOrder(savedPayment.getOrder().getOrderId());
+            completeOrder(orderId);
 
+        } catch (ApiException exception) {
+            throw exception;
         } catch (Exception exception) {
-            throw new RuntimeException("Invalid PayOS webhook: " + exception.getMessage());
+            throw new BusinessRuleException("invalid signature in PayOS webhook");
         }
     }
 
     @Override
     public PaymentResponse getPaymentByOrderId(Long orderId) {
         Payment payment = paymentRepository.findByOrderOrderId(orderId)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy thanh toán"));
 
         return mapToResponse(payment);
     }
@@ -230,19 +246,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private Long generatePayOSOrderCode(Long orderId) {
-        return System.currentTimeMillis() / 1000 + orderId;
-    }
-
-    private Long toLong(Object value) {
-        if (value == null) {
-            return null;
-        }
-
-        if (value instanceof Number number) {
-            return number.longValue();
-        }
-
-        return Long.valueOf(String.valueOf(value));
+        long randomPart = SECURE_RANDOM.nextLong(100_000L, 1_000_000L);
+        return Math.addExact(Math.multiplyExact(System.currentTimeMillis(), 1_000_000L), randomPart)
+                & Long.MAX_VALUE;
     }
 
     private PaymentResponse mapToResponse(Payment payment) {

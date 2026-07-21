@@ -22,4 +22,8 @@ public class UserResponse {
     private Boolean isActive;
 
     private LocalDateTime createdAt;
+
+    private String fullName;
+    private String phone;
+    private String avatarUrl;
 }

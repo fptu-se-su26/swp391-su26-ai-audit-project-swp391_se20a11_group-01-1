@@ -10,6 +10,9 @@ import com.rms.restaurant_management_system.entity.RestaurantTable;
 import com.rms.restaurant_management_system.enums.OrderItemStatus;
 import com.rms.restaurant_management_system.enums.OrderStatus;
 import com.rms.restaurant_management_system.enums.TableStatus;
+import com.rms.restaurant_management_system.error.BusinessRuleException;
+import com.rms.restaurant_management_system.error.ResourceConflictException;
+import com.rms.restaurant_management_system.error.ResourceNotFoundException;
 import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.RestaurantTableRepository;
 import com.rms.restaurant_management_system.service.interfaces.RestaurantTableService;
@@ -30,12 +33,13 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Transactional
     public TableResponse createTable(TableRequest request) {
         if (tableRepository.existsByTableName(request.getTableName())) {
-            throw new RuntimeException("Table name already exists");
+            throw new ResourceConflictException("Table name already exists");
         }
 
         RestaurantTable table = RestaurantTable.builder()
                 .tableName(request.getTableName())
                 .capacity(request.getCapacity())
+                .originalCapacity(request.getCapacity())
                 .status(TableStatus.EMPTY)
                 .isActive(true)
                 .build();
@@ -64,7 +68,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         try {
             tableStatus = TableStatus.valueOf(status.toUpperCase());
         } catch (IllegalArgumentException exception) {
-            throw new RuntimeException("Invalid table status: " + status);
+            throw new BusinessRuleException("Invalid table status: " + status);
         }
 
         return tableRepository.findByStatusAndIsActiveTrueOrderByTableIdAsc(tableStatus)
@@ -80,11 +84,15 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         if (!table.getTableName().equals(request.getTableName())
                 && tableRepository.existsByTableName(request.getTableName())) {
-            throw new RuntimeException("Table name already exists");
+            throw new ResourceConflictException("Table name already exists");
         }
 
         table.setTableName(request.getTableName());
+        if (table.getMergedWith() != null && !table.getMergedWith().isBlank()) {
+            throw new RuntimeException("Split merged tables before changing capacity");
+        }
         table.setCapacity(request.getCapacity());
+        table.setOriginalCapacity(request.getCapacity());
 
         return mapToResponse(tableRepository.save(table));
     }
@@ -93,12 +101,16 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Transactional
     public TableResponse updateTableStatus(Long tableId, UpdateTableStatusRequest request) {
         RestaurantTable table = findTableForUpdate(tableId);
+        if ((table.getMergedInto() != null || (table.getMergedWith() != null && !table.getMergedWith().isBlank()))
+                && request.getStatus() != table.getStatus()) {
+            throw new RuntimeException("Split merged tables before changing their status");
+        }
         String currentOrderCode = table.getCurrentOrderCode();
         Order currentOrder = null;
 
         if (currentOrderCode != null && !currentOrderCode.isBlank()) {
             currentOrder = orderRepository.findByOrderCode(currentOrderCode.trim())
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new ResourceNotFoundException(
                             "Current order not found: " + currentOrderCode
                     ));
         }
@@ -144,7 +156,12 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public void deleteTable(Long tableId) {
-        RestaurantTable table = findTable(tableId);
+        RestaurantTable table = findTableForUpdate(tableId);
+
+        if (table.getStatus() == TableStatus.OCCUPIED || table.getStatus() == TableStatus.RESERVED
+                || table.getStatus() == TableStatus.MERGED || table.getMergedWith() != null) {
+            throw new RuntimeException("Cannot deactivate an occupied, reserved, or merged table");
+        }
 
         table.setIsActive(false);
         table.setStatus(TableStatus.INACTIVE);
@@ -185,12 +202,16 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         if (target.getStatus() != TableStatus.EMPTY) {
             throw new RuntimeException("Target table must be empty");
         }
+        if (source.getMergedInto() != null || source.getMergedWith() != null
+                || target.getMergedInto() != null || target.getMergedWith() != null) {
+            throw new RuntimeException("Split merged tables before transferring an order");
+        }
 
         String currentOrderCode = source.getCurrentOrderCode();
 
         if (currentOrderCode != null && !currentOrderCode.isBlank()) {
             Order activeOrder = orderRepository.findByOrderCode(currentOrderCode.trim())
-                    .orElseThrow(() -> new RuntimeException(
+                    .orElseThrow(() -> new ResourceNotFoundException(
                             "Active order not found: " + currentOrderCode
                     ));
 
@@ -229,7 +250,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
     private RestaurantTable findTableForUpdate(Long tableId) {
         RestaurantTable table = tableRepository.findByTableIdForUpdate(tableId)
-                .orElseThrow(() -> new RuntimeException("Table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Table not found"));
 
         if (table.getIsActive() == null || !table.getIsActive()) {
             throw new RuntimeException("Table is inactive");
@@ -241,14 +262,35 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public List<TableResponse> mergeTables(Long sourceTableId, MergeTableRequest request) {
-        RestaurantTable source = findTable(sourceTableId);
-        RestaurantTable target = findTable(request.getTargetTableId());
+        Long targetTableId = request.getTargetTableId();
+        if (targetTableId == null || sourceTableId.equals(targetTableId)) {
+            throw new RuntimeException("Source and target table must be different");
+        }
+        Long firstId = Math.min(sourceTableId, targetTableId);
+        Long secondId = Math.max(sourceTableId, targetTableId);
+        RestaurantTable first = findTableForUpdate(firstId);
+        RestaurantTable second = findTableForUpdate(secondId);
+        RestaurantTable source = sourceTableId.equals(firstId) ? first : second;
+        RestaurantTable target = targetTableId.equals(firstId) ? first : second;
 
         if (target.getStatus() != TableStatus.EMPTY) {
             throw new RuntimeException("Target table must be empty");
         }
+        if (source.getStatus() == TableStatus.MERGED || source.getMergedInto() != null) {
+            throw new RuntimeException("A merged child table cannot be used as merge source");
+        }
+        if (target.getMergedWith() != null || target.getMergedInto() != null) {
+            throw new RuntimeException("Target table already belongs to a merge group");
+        }
 
         String currentMergedWith = source.getMergedWith();
+
+        if (source.getOriginalCapacity() == null) {
+            source.setOriginalCapacity(source.getCapacity());
+        }
+        if (target.getOriginalCapacity() == null) {
+            target.setOriginalCapacity(target.getCapacity());
+        }
 
         if (currentMergedWith == null || currentMergedWith.isBlank()) {
             source.setMergedWith(target.getTableName());
@@ -270,10 +312,13 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
     @Override
     @Transactional
     public List<TableResponse> splitTable(Long tableId) {
-        RestaurantTable source = findTable(tableId);
+        RestaurantTable source = findTableForUpdate(tableId);
 
         if (source.getMergedWith() == null || source.getMergedWith().isBlank()) {
             throw new RuntimeException("This table is not merged");
+        }
+        if (source.getStatus() == TableStatus.OCCUPIED || source.getStatus() == TableStatus.RESERVED) {
+            throw new RuntimeException("Cannot split a table group while it is occupied or reserved");
         }
 
         String[] mergedTableNames = source.getMergedWith().split(",");
@@ -281,7 +326,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
         for (String name : mergedTableNames) {
             String tableName = name.trim();
 
-            tableRepository.findByTableName(tableName).ifPresent(table -> {
+            tableRepository.findByTableNameForUpdate(tableName).ifPresent(table -> {
                 table.setStatus(TableStatus.EMPTY);
                 table.setMergedInto(null);
                 tableRepository.save(table);
@@ -290,6 +335,10 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
         // Đơn giản hóa: không tự khôi phục capacity gốc vì đã cộng dồn trước đó.
         // Nếu cần chính xác tuyệt đối, nên thêm field originalCapacity.
+        if (source.getOriginalCapacity() == null) {
+            throw new RuntimeException("Original table capacity is missing; run the database migration first");
+        }
+        source.setCapacity(source.getOriginalCapacity());
         source.setMergedWith(null);
 
         tableRepository.save(source);
@@ -299,7 +348,7 @@ public class RestaurantTableServiceImpl implements RestaurantTableService {
 
     private RestaurantTable findTable(Long tableId) {
         RestaurantTable table = tableRepository.findById(tableId)
-                .orElseThrow(() -> new RuntimeException("Table not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Table not found"));
 
         if (!table.getIsActive()) {
             throw new RuntimeException("Table is inactive");

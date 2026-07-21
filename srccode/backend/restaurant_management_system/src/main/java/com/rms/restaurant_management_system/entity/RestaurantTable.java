@@ -25,6 +25,11 @@ public class RestaurantTable {
     @Column(nullable = false)
     private Integer capacity;
 
+    private Integer originalCapacity;
+
+    @Version
+    private Long version;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private TableStatus status;

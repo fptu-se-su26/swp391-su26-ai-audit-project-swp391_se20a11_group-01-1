@@ -10,19 +10,17 @@ export const getStaffCustomers = async () => {
   return response.data;
 };
 
-export const updateUserRole = async (userId, roleName, currentUserId) => {
+export const updateUserRole = async (userId, roleName) => {
   const response = await API.put(`/users/${userId}/role`, {
-    roleName,
-    currentUserId
+    roleName
   });
 
   return response.data;
 };
 
-export const updateUserStatus = async (userId, isActive, currentUserId) => {
+export const updateUserStatus = async (userId, isActive) => {
   const response = await API.put(`/users/${userId}/status`, {
-    isActive,
-    currentUserId
+    isActive
   });
 
   return response.data;

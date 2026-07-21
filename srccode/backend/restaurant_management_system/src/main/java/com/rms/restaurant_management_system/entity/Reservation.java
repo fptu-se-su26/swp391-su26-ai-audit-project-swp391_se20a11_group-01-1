@@ -50,6 +50,15 @@ public class Reservation {
     @Column(columnDefinition = "NVARCHAR(50)")
     private String assignedTable;
 
+    private Long assignedTableId;
+
+    private LocalDateTime startAt;
+
+    private LocalDateTime endAt;
+
+    @Column(unique = true)
+    private Long createdOrderId;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private ReservationStatus status;

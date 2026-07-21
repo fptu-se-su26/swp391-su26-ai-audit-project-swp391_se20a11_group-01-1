@@ -14,6 +14,8 @@ public class ReservationRequest {
 
     private Long userId;
 
+    private Long tableId;
+
     @NotNull(message = "Reservation date is required")
     private LocalDate reservationDate;
 
