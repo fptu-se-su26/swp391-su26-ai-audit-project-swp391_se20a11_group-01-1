@@ -201,42 +201,45 @@ GO
 
 Use the database script or migrations supplied with the selected release tag to create tables and initial data.
 
-### 9.2 Configure database credentials
+### 9.2 Configure backend environment
 
-Do not commit real credentials to Git.
+Do not commit real credentials to Git. The committed configuration contains no database, JWT, mail or PayOS secret. Start from the backend environment template:
 
-Recommended environment variables:
+```powershell
+cd srccode/backend/restaurant_management_system
+Copy-Item src/main/resources/application-local.example.properties src/main/resources/application-local.properties
+```
+
+`application-local.properties` and `.env` are ignored by Git. Spring Boot does not automatically load `.env`; export the variables in the shell or configure them in the IDE. The complete variable list is in `.env.example`.
+
+Minimum local environment:
 
 ```text
 DB_URL=jdbc:sqlserver://localhost:1433;databaseName=RestaurantManagementDB;encrypt=true;trustServerCertificate=true
 DB_USERNAME=your_sql_server_username
 DB_PASSWORD=your_sql_server_password
 MAIL_USERNAME=your_email_address
-MAIL_APP_PASSWORD=your_email_app_password
+MAIL_PASSWORD=your_email_app_password
 JWT_SECRET=use_a_random_secret_of_at_least_32_characters
+PAYOS_CLIENT_ID=your_payos_client_id
+PAYOS_API_KEY=your_payos_api_key
+PAYOS_CHECKSUM_KEY=your_payos_checksum_key
 ```
 
-Example Spring configuration:
+PowerShell example for the current terminal session:
 
-```properties
-spring.datasource.url=${DB_URL}
-spring.datasource.username=${DB_USERNAME}
-spring.datasource.password=${DB_PASSWORD}
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServerDialect
-
-spring.mail.host=smtp.gmail.com
-spring.mail.port=587
-spring.mail.username=${MAIL_USERNAME}
-spring.mail.password=${MAIL_APP_PASSWORD}
-spring.mail.properties.mail.smtp.auth=true
-spring.mail.properties.mail.smtp.starttls.enable=true
+```powershell
+$env:DB_USERNAME = "your_sql_server_username"
+$env:DB_PASSWORD = "your_sql_server_password"
+$env:JWT_SECRET = "replace-with-at-least-32-random-bytes"
+$env:MAIL_USERNAME = "your_email_address"
+$env:MAIL_PASSWORD = "your_email_app_password"
+$env:PAYOS_CLIENT_ID = "your_payos_client_id"
+$env:PAYOS_API_KEY = "your_payos_api_key"
+$env:PAYOS_CHECKSUM_KEY = "your_payos_checksum_key"
 ```
 
-For final evaluation, database structure should be controlled by a reviewed SQL script or migration instead of relying only on `ddl-auto=update`.
+The `local` profile may use `JPA_DDL_AUTO=update` for developer convenience. The `prod` profile always uses `validate`; database structure must be applied using reviewed migrations before deployment. Production has no fallback for credentials or cryptographic keys and will fail fast when a required value is missing.
 
 ## 10. How to Run
 
@@ -249,10 +252,10 @@ cd swp391-su26-ai-audit-project-swp391_se20a11_group-01-1
 
 ### 10.2 Run the backend
 
-Open a terminal in the backend directory:
+Open a terminal in the backend directory after configuring the local environment:
 
 ```bash
-cd backend
+cd srccode/backend/restaurant_management_system
 ```
 
 Windows:
@@ -267,6 +270,14 @@ macOS/Linux:
 chmod +x mvnw
 ./mvnw clean spring-boot:run
 ```
+
+Run automated tests with the isolated `test` profile:
+
+```powershell
+.\mvnw.cmd clean test
+```
+
+The test profile uses an in-memory database and test-only credentials; it does not connect to a developer SQL Server.
 
 The backend is expected to run at:
 

@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest({OrderController.class, ReservationController.class, PaymentController.class,
         RestaurantTableController.class, FeedbackController.class})
 @Import({SecurityConfig.class, JwtAuthenticationFilter.class, DomainAuthorizationService.class})
+@ActiveProfiles("test")
 class SecurityAuthorizationIntegrationTest {
     @Autowired MockMvc mvc;
 
