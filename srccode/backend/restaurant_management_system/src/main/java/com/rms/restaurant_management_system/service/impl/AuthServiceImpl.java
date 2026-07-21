@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HexFormat;
+import com.rms.restaurant_management_system.error.*;
 
 @Service
 @RequiredArgsConstructor
@@ -40,11 +41,11 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse register(RegisterRequest request) {
         String email = request.getEmail().trim().toLowerCase();
         String username = request.getUsername().trim();
-        if (userRepository.existsByEmailIgnoreCase(email)) throw new RuntimeException("Email already exists");
-        if (userRepository.existsByUsername(username)) throw new RuntimeException("Username already exists");
+        if (userRepository.existsByEmailIgnoreCase(email)) throw new ResourceConflictException("Email đã tồn tại");
+        if (userRepository.existsByUsername(username)) throw new ResourceConflictException("Tên đăng nhập đã tồn tại");
 
         Role customerRole = roleRepository.findByRoleName("CUSTOMER")
-                .orElseThrow(() -> new RuntimeException("Role CUSTOMER not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò CUSTOMER"));
         User user = userRepository.save(User.builder()
                 .username(username).email(email).passwordHash(passwordEncoder.encode(request.getPassword()))
                 .role(customerRole).isActive(true).build());
@@ -54,10 +55,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmailIgnoreCase(request.getEmail().trim())
-                .orElseThrow(() -> new RuntimeException("Email or password is incorrect"));
+                .orElseThrow(() -> new AuthenticationRequiredException(ErrorCode.INVALID_CREDENTIALS,
+                        "Email hoặc mật khẩu không chính xác"));
         if (!Boolean.TRUE.equals(user.getIsActive())
                 || !passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new RuntimeException("Email or password is incorrect");
+            throw new AuthenticationRequiredException(ErrorCode.INVALID_CREDENTIALS,
+                    "Email hoặc mật khẩu không chính xác");
         }
         return authResponse(user, "Login successfully");
     }
@@ -66,9 +69,9 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void changePassword(ChangePasswordRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPasswordHash())) {
-            throw new RuntimeException("Old password is incorrect");
+            throw new BusinessRuleException("Mật khẩu hiện tại không chính xác");
         }
         validateNewPassword(request.getNewPassword());
         updatePasswordAndRevoke(user, request.getNewPassword());
@@ -101,26 +104,26 @@ public class AuthServiceImpl implements AuthService {
         String email = request.getEmail().trim().toLowerCase();
         User user = userRepository.findByEmailIgnoreCase(email)
                 .filter(candidate -> Boolean.TRUE.equals(candidate.getIsActive()))
-                .orElseThrow(() -> new RuntimeException("OTP is invalid or expired"));
+                .orElseThrow(this::invalidOtp);
         PasswordResetToken token = passwordResetTokenRepository
                 .findFirstByEmailAndUsedAtIsNullOrderByCreatedAtDesc(email)
-                .orElseThrow(() -> new RuntimeException("OTP is invalid or expired"));
+                .orElseThrow(this::invalidOtp);
 
         LocalDateTime now = LocalDateTime.now();
         if (now.isAfter(token.getExpiresAt()) || token.getFailedAttempts() >= MAX_RESET_ATTEMPTS) {
-            throw new RuntimeException("OTP is invalid or expired");
+            throw invalidOtp();
         }
         String submittedHash = hash(request.getOtp());
         if (!MessageDigest.isEqual(submittedHash.getBytes(StandardCharsets.UTF_8),
                 token.getTokenHash().getBytes(StandardCharsets.UTF_8))) {
             passwordResetTokenRepository.recordFailedAttempt(token.getId(), MAX_RESET_ATTEMPTS);
-            throw new RuntimeException("OTP is invalid or expired");
+            throw invalidOtp();
         }
 
         validateNewPassword(request.getNewPassword());
         if (passwordResetTokenRepository.consumeIfValid(token.getId(), submittedHash, now,
                 MAX_RESET_ATTEMPTS) != 1) {
-            throw new RuntimeException("OTP is invalid or expired");
+            throw invalidOtp();
         }
         updatePasswordAndRevoke(user, request.getNewPassword());
     }
@@ -133,7 +136,7 @@ public class AuthServiceImpl implements AuthService {
 
     private void validateNewPassword(String password) {
         if (password == null || password.length() < 8) {
-            throw new RuntimeException("New password must be at least 8 characters");
+            throw new BusinessRuleException("Mật khẩu mới phải có ít nhất 8 ký tự");
         }
     }
 
@@ -146,6 +149,10 @@ public class AuthServiceImpl implements AuthService {
 
     private String genericResetMessage() {
         return "If the account exists, an OTP has been sent";
+    }
+
+    private BusinessRuleException invalidOtp() {
+        return new BusinessRuleException("OTP is invalid or expired");
     }
 
     private String hash(String value) {

@@ -20,15 +20,20 @@ import java.util.List;
 import org.mockito.ArgumentCaptor;
 import com.rms.restaurant_management_system.dto.request.OrderRequest;
 import com.rms.restaurant_management_system.dto.request.ReservationRequest;
+import com.rms.restaurant_management_system.error.ApiErrorWriter;
+import com.rms.restaurant_management_system.error.CorrelationIdFilter;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest({OrderController.class, ReservationController.class, PaymentController.class,
         RestaurantTableController.class, FeedbackController.class})
-@Import({SecurityConfig.class, JwtAuthenticationFilter.class, DomainAuthorizationService.class})
+@Import({SecurityConfig.class, JwtAuthenticationFilter.class, DomainAuthorizationService.class,
+        ApiErrorWriter.class, CorrelationIdFilter.class})
 @ActiveProfiles("test")
 class SecurityAuthorizationIntegrationTest {
     @Autowired MockMvc mvc;
@@ -46,7 +51,10 @@ class SecurityAuthorizationIntegrationTest {
 
     @Test
     void guestCannotReadProtectedOrder() throws Exception {
-        mvc.perform(get("/api/orders/1")).andExpect(status().isUnauthorized());
+        mvc.perform(get("/api/orders/1"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTHENTICATION_REQUIRED"))
+                .andExpect(header().exists(CorrelationIdFilter.HEADER));
     }
 
     @Test

@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.security.SecureRandom;
+import com.rms.restaurant_management_system.error.*;
 
 @Service
 @RequiredArgsConstructor
@@ -44,14 +45,14 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public PaymentResponse payOrder(Long orderId, PaymentRequest request) {
         Order order = orderRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng"));
 
         if (paymentRepository.findLockedByOrderOrderId(orderId).isPresent()) {
-            throw new RuntimeException("This order has already been paid");
+            throw new ResourceConflictException(ErrorCode.PAYMENT_ALREADY_PROCESSED, "Đơn hàng đã được thanh toán");
         }
 
         if (order.getStatus() != OrderStatus.READY) {
-            throw new RuntimeException("Only READY orders can be paid");
+            throw new ResourceConflictException(ErrorCode.INVALID_ORDER_STATE, "Chỉ đơn hàng READY mới có thể thanh toán");
         }
 
         Payment payment = Payment.builder()
@@ -75,10 +76,10 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public PaymentResponse createPayOSPayment(Long orderId) {
         Order order = orderRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng"));
 
         if (order.getStatus() != OrderStatus.READY) {
-            throw new RuntimeException("Only READY orders can be paid");
+            throw new ResourceConflictException(ErrorCode.INVALID_ORDER_STATE, "Chỉ đơn hàng READY mới có thể thanh toán");
         }
 
         Payment existingPayment = paymentRepository.findLockedByOrderOrderId(orderId)
@@ -86,7 +87,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         if (existingPayment != null) {
             if (existingPayment.getStatus() == PaymentStatus.PAID) {
-                throw new RuntimeException("This order has already been paid");
+                throw new ResourceConflictException(ErrorCode.PAYMENT_ALREADY_PROCESSED, "Đơn hàng đã được thanh toán");
             }
 
             if (existingPayment.getStatus() == PaymentStatus.PENDING) {
@@ -133,7 +134,7 @@ public class PaymentServiceImpl implements PaymentService {
             return mapToResponse(savedPayment);
 
         } catch (Exception exception) {
-            throw new RuntimeException("Cannot create PayOS payment link: " + exception.getMessage());
+            throw new ExternalServiceException("Không thể tạo liên kết thanh toán PayOS", exception);
         }
     }
 
@@ -148,13 +149,11 @@ public class PaymentServiceImpl implements PaymentService {
             Long payosOrderCode = data.getOrderCode();
 
             if (payosOrderCode == null) {
-                throw new RuntimeException("Missing orderCode in webhook");
+                throw new BusinessRuleException("Webhook PayOS thiếu orderCode");
             }
 
             Payment candidate = paymentRepository.findByPayosOrderCode(payosOrderCode)
-                    .orElseThrow(() -> new RuntimeException(
-                            "Payment not found by PayOS orderCode: " + payosOrderCode
-                    ));
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy giao dịch PayOS"));
 
             if (candidate.getStatus() == PaymentStatus.PAID) {
                 return;
@@ -162,9 +161,9 @@ public class PaymentServiceImpl implements PaymentService {
 
             Long orderId = candidate.getOrder().getOrderId();
             orderRepository.findByOrderId(orderId)
-                    .orElseThrow(() -> new RuntimeException("Order not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy đơn hàng"));
             Payment payment = paymentRepository.findLockedByPayosOrderCode(payosOrderCode)
-                    .orElseThrow(() -> new RuntimeException("Payment not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy thanh toán"));
 
             if (payment.getStatus() == PaymentStatus.PAID) {
                 return;
@@ -172,12 +171,12 @@ public class PaymentServiceImpl implements PaymentService {
 
             long expectedAmount = payment.getAmount().setScale(0, RoundingMode.HALF_UP).longValueExact();
             if (data.getAmount() == null || data.getAmount() != expectedAmount) {
-                throw new RuntimeException("Webhook amount does not match the order total");
+                throw new BusinessRuleException("Webhook amount does not match order total");
             }
 
             if (data.getPaymentLinkId() != null && payment.getPaymentLinkId() != null
                     && !payment.getPaymentLinkId().equals(data.getPaymentLinkId())) {
-                throw new RuntimeException("Webhook payment link does not match");
+                throw new BusinessRuleException("Liên kết thanh toán trong webhook không khớp");
             }
 
             payment.setStatus(PaymentStatus.PAID);
@@ -189,15 +188,17 @@ public class PaymentServiceImpl implements PaymentService {
 
             completeOrder(orderId);
 
+        } catch (ApiException exception) {
+            throw exception;
         } catch (Exception exception) {
-            throw new RuntimeException("Invalid PayOS webhook: " + exception.getMessage());
+            throw new BusinessRuleException("invalid signature in PayOS webhook");
         }
     }
 
     @Override
     public PaymentResponse getPaymentByOrderId(Long orderId) {
         Payment payment = paymentRepository.findByOrderOrderId(orderId)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy thanh toán"));
 
         return mapToResponse(payment);
     }

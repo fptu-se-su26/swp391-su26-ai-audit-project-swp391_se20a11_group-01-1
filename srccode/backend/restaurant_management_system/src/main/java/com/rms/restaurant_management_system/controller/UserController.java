@@ -13,6 +13,9 @@ import com.rms.restaurant_management_system.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import com.rms.restaurant_management_system.error.AuthenticationRequiredException;
+import com.rms.restaurant_management_system.error.BusinessRuleException;
+import com.rms.restaurant_management_system.error.ErrorCode;
 
 @RestController
 @RequestMapping("/api/users")
@@ -58,7 +61,7 @@ public class UserController {
             Authentication authentication
     ) {
         if (currentUser(authentication).getUserId().equals(userId)) {
-            throw new RuntimeException("Bạn không thể tự đổi vai trò của chính mình");
+            throw new BusinessRuleException("Bạn không thể tự đổi vai trò của chính mình");
         }
         return userService.updateUserRole(userId, request);
     }
@@ -71,14 +74,14 @@ public class UserController {
             Authentication authentication
     ) {
         if (currentUser(authentication).getUserId().equals(userId)) {
-            throw new RuntimeException("Bạn không thể tự khóa tài khoản của chính mình");
+            throw new BusinessRuleException("Bạn không thể tự khóa tài khoản của chính mình");
         }
         return userService.updateUserStatus(userId, request);
     }
 
     private User currentUser(Authentication authentication) {
         if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
-            throw new RuntimeException("Chưa đăng nhập");
+            throw new AuthenticationRequiredException(ErrorCode.AUTHENTICATION_REQUIRED, "Chưa đăng nhập");
         }
         return user;
     }

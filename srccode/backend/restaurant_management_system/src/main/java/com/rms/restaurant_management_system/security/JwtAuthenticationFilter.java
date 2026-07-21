@@ -18,6 +18,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
+import com.rms.restaurant_management_system.error.ApiErrorWriter;
+import com.rms.restaurant_management_system.error.CorrelationIdFilter;
+import com.rms.restaurant_management_system.error.ErrorCode;
+import org.springframework.http.HttpStatus;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final UserRepository userRepository;
+    private final ApiErrorWriter apiErrorWriter;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -63,7 +68,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } catch (Exception e) {
-            log.debug("JWT authentication rejected: {}", e.getMessage());
+            log.debug("JWT authentication rejected correlationId={}", CorrelationIdFilter.from(request));
+            SecurityContextHolder.clearContext();
+            apiErrorWriter.write(request, response, HttpStatus.UNAUTHORIZED, ErrorCode.INVALID_TOKEN,
+                    "Token không hợp lệ hoặc đã hết hạn");
+            return;
         }
 
         filterChain.doFilter(request, response);

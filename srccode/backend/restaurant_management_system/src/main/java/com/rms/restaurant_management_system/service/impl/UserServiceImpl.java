@@ -26,6 +26,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import com.rms.restaurant_management_system.error.BusinessRuleException;
+import com.rms.restaurant_management_system.error.ResourceConflictException;
+import com.rms.restaurant_management_system.error.ResourceNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getProfileByEmail(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
 
         return mapToUserResponse(user);
     }
@@ -130,7 +133,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse updateUserRole(Long userId, UpdateUserRoleRequest request) {
         if (request.getRoleName() == null || request.getRoleName().isBlank()) {
-            throw new RuntimeException("Vai trò không được để trống.");
+            throw new BusinessRuleException("Vai trò không được để trống");
         }
 
         String roleName = request.getRoleName().trim().toUpperCase();
@@ -139,19 +142,19 @@ public class UserServiceImpl implements UserService {
                 && !roleName.equals("STAFF")
                 && !roleName.equals("KITCHEN")
                 && !roleName.equals("CUSTOMER")) {
-            throw new RuntimeException("Vai trò không hợp lệ.");
+            throw new BusinessRuleException("Vai trò không hợp lệ");
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
 
         if ("ADMIN".equals(user.getRole().getRoleName()) && !"ADMIN".equals(roleName)
                 && userRepository.countByRoleRoleNameAndIsActiveTrue("ADMIN") <= 1) {
-            throw new RuntimeException("Không thể hạ quyền quản trị viên đang hoạt động cuối cùng");
+            throw new ResourceConflictException("Không thể hạ quyền quản trị viên đang hoạt động cuối cùng");
         }
 
         Role role = roleRepository.findByRoleName(roleName)
-                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy vai trò " + roleName));
 
         user.setRole(role);
         user.setTokenVersion(user.getTokenVersion() + 1);
@@ -164,15 +167,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse updateUserStatus(Long userId, UpdateUserStatusRequest request) {
         if (request.getIsActive() == null) {
-            throw new RuntimeException("Trạng thái không được để trống.");
+            throw new BusinessRuleException("Trạng thái không được để trống");
         }
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
 
         if (Boolean.FALSE.equals(request.getIsActive()) && "ADMIN".equals(user.getRole().getRoleName())
                 && userRepository.countByRoleRoleNameAndIsActiveTrue("ADMIN") <= 1) {
-            throw new RuntimeException("Không thể khóa quản trị viên đang hoạt động cuối cùng");
+            throw new ResourceConflictException("Không thể khóa quản trị viên đang hoạt động cuối cùng");
         }
 
         user.setIsActive(request.getIsActive());
@@ -186,7 +189,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponse updateMyProfile(Long userId, UpdateMyProfileRequest request) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
         user.setFullName(request.getFullName().trim());
         user.setPhone(request.getPhone() == null ? null : request.getPhone().trim());
         user.setAvatarUrl(request.getAvatarUrl() == null ? null : request.getAvatarUrl().trim());

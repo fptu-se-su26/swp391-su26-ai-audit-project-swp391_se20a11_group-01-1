@@ -23,6 +23,10 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.beans.factory.annotation.Value;
 import java.time.Duration;
 import com.rms.restaurant_management_system.security.LoginAttemptService;
+import com.rms.restaurant_management_system.error.AuthenticationRequiredException;
+import com.rms.restaurant_management_system.error.ErrorCode;
+import com.rms.restaurant_management_system.error.ResourceNotFoundException;
+import com.rms.restaurant_management_system.security.SessionRejectedException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -56,7 +60,7 @@ public class AuthController {
             AuthResponse loggedIn = authService.login(request);
             loginAttemptService.succeeded(attemptKey);
             return beginSession(loggedIn.getEmail(), httpRequest, response);
-        } catch (RuntimeException exception) {
+        } catch (AuthenticationRequiredException exception) {
             loginAttemptService.failed(attemptKey);
             throw exception;
         }
@@ -107,7 +111,8 @@ public class AuthController {
     }
 
     private SessionResponse beginSession(String email, HttpServletRequest request, HttpServletResponse response) {
-        User user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+        User user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng"));
         AuthResult result = sessionService.start(user, request.getRemoteAddr(), request.getHeader("User-Agent"));
         writeRefreshCookie(response, result.refreshToken());
         return result.session();
@@ -115,7 +120,7 @@ public class AuthController {
 
     private User requireUser(Authentication authentication) {
         if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
-            throw new RuntimeException("Chưa đăng nhập");
+            throw new AuthenticationRequiredException(ErrorCode.AUTHENTICATION_REQUIRED, "Chưa đăng nhập");
         }
         return user;
     }
@@ -126,7 +131,7 @@ public class AuthController {
                 if ("refresh_token".equals(cookie.getName())) return cookie.getValue();
             }
         }
-        throw new RuntimeException("Refresh token không tồn tại");
+        throw new SessionRejectedException("Refresh token không tồn tại");
     }
 
     private void writeRefreshCookie(HttpServletResponse response, String token) {
