@@ -7,6 +7,7 @@ import com.rms.restaurant_management_system.entity.User;
 import com.rms.restaurant_management_system.repository.RefreshTokenRepository;
 import com.rms.restaurant_management_system.repository.UserRepository;
 import com.rms.restaurant_management_system.security.JwtUtil;
+import com.rms.restaurant_management_system.security.SessionRejectedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,24 +37,24 @@ public class SessionService {
         return issue(user, UUID.randomUUID().toString(), ip, userAgent);
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = SessionRejectedException.class)
     public AuthResult rotate(String rawToken, String ip, String userAgent) {
         RefreshToken current = refreshTokenRepository.findLockedByTokenHash(hash(rawToken))
                 .orElseThrow(() -> new RuntimeException("Refresh token không hợp lệ"));
         LocalDateTime now = LocalDateTime.now();
         if (current.getRevokedAt() != null) {
             refreshTokenRepository.revokeFamily(current.getFamilyId(), now);
-            throw new RuntimeException("Phiên đăng nhập đã bị thu hồi");
+            throw new SessionRejectedException("Refresh token has been revoked");
         }
         if (current.getExpiresAt().isBefore(now)) {
             current.setRevokedAt(now);
-            throw new RuntimeException("Phiên đăng nhập đã hết hạn");
+            throw new SessionRejectedException("Refresh token has expired");
         }
         User user = userRepository.findById(current.getUser().getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (!Boolean.TRUE.equals(user.getIsActive())) {
             refreshTokenRepository.revokeFamily(current.getFamilyId(), now);
-            throw new RuntimeException("Tài khoản đã bị khóa");
+            throw new SessionRejectedException("Account is inactive");
         }
         current.setLastUsedAt(now);
         current.setRevokedAt(now);
