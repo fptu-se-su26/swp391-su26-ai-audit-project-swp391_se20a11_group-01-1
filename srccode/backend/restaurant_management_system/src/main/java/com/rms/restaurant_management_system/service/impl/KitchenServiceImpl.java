@@ -23,8 +23,8 @@ public class KitchenServiceImpl implements KitchenService {
     @Override
     @Transactional(readOnly = true)
     public List<KitchenItemResponse> getActiveKitchenItems() {
-        List<OrderItemStatus> activeStatuses = Arrays.asList(OrderItemStatus.PENDING, OrderItemStatus.PREPARING);
-        List<OrderItem> items = orderItemRepository.findByStatusIn(activeStatuses);
+        List<OrderItemStatus> activeStatuses = Arrays.asList(OrderItemStatus.CONFIRMED, OrderItemStatus.PREPARING);
+        List<OrderItem> items = orderItemRepository.findByStatusInOrderByCreatedAtAsc(activeStatuses);
         
         return items.stream().map(item -> KitchenItemResponse.builder()
                 .orderItemId(item.getOrderItemId())
@@ -36,7 +36,7 @@ public class KitchenServiceImpl implements KitchenService {
                 .quantity(item.getQuantity())
                 .note(item.getOrder().getNote()) // Sharing the main order note for now
                 .status(item.getStatus())
-                .orderCreatedAt(item.getOrder().getCreatedAt())
+                .createdAt(item.getOrder().getCreatedAt())
                 .build()).collect(Collectors.toList());
     }
 

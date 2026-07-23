@@ -7,6 +7,7 @@ import com.rms.restaurant_management_system.repository.OrderRepository;
 import com.rms.restaurant_management_system.repository.PaymentRepository;
 import com.rms.restaurant_management_system.service.impl.PaymentServiceImpl;
 import com.rms.restaurant_management_system.service.interfaces.OrderService;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +30,19 @@ class PaymentWebhookVerificationTest {
     @Mock OrderRepository orderRepository;
     @Mock OrderService orderService;
     @Mock PayOS payOS;
+    @Mock EntityManager entityManager;
     @Mock WebhooksService webhooksService;
     PaymentServiceImpl paymentService;
 
     @BeforeEach
     void setUp() {
-        paymentService = new PaymentServiceImpl(paymentRepository, orderRepository, orderService, payOS);
+        paymentService = new PaymentServiceImpl(
+                paymentRepository,
+                orderRepository,
+                orderService,
+                payOS,
+                entityManager
+        );
     }
 
     @Test

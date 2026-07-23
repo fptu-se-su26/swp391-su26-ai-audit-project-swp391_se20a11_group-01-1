@@ -79,14 +79,8 @@ public KitchenItemResponse updateOrderItemStatus(
     return orderService.updateOrderItemStatus(orderItemId, request);
 }
 
-@PutMapping("/{orderId}/status")
-@PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-public OrderResponse updateOrderStatus(
-        @PathVariable Long orderId,
-        @Valid @RequestBody UpdateOrderStatusRequest request
-) {
-    return orderService.updateOrderStatus(orderId, request);
-}
+    @PutMapping("/{orderId}/status")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public OrderResponse updateOrderStatus(
             @PathVariable Long orderId,
             @Valid @RequestBody UpdateOrderStatusRequest request

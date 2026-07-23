@@ -79,7 +79,7 @@ class PaymentServiceImplTest {
                 item(11L, unreadyStatus, "10000")
         );
 
-        when(paymentRepository.existsByOrderOrderId(1L)).thenReturn(false);
+        when(paymentRepository.findLockedByOrderOrderId(1L)).thenReturn(Optional.empty());
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
 
         RuntimeException exception = assertThrows(
@@ -99,7 +99,7 @@ class PaymentServiceImplTest {
                 item(11L, OrderItemStatus.PREPARING, "10000")
         );
 
-        when(paymentRepository.findByOrderOrderId(1L)).thenReturn(Optional.empty());
+        when(paymentRepository.findLockedByOrderOrderId(1L)).thenReturn(Optional.empty());
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
 
         RuntimeException exception = assertThrows(
@@ -121,7 +121,7 @@ class PaymentServiceImplTest {
                 item(12L, OrderItemStatus.CANCELLED, "90000")
         );
 
-        when(paymentRepository.existsByOrderOrderId(1L)).thenReturn(false);
+        when(paymentRepository.findLockedByOrderOrderId(1L)).thenReturn(Optional.empty());
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
         when(paymentRepository.save(any(Payment.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
@@ -142,7 +142,7 @@ class PaymentServiceImplTest {
         assertEquals(OrderStatus.COMPLETED, statusCaptor.getValue().getStatus());
 
         InOrder reloadOrder = inOrder(paymentRepository, orderRepository);
-        reloadOrder.verify(paymentRepository).existsByOrderOrderId(1L);
+        reloadOrder.verify(paymentRepository).findLockedByOrderOrderId(1L);
         reloadOrder.verify(orderRepository).findById(1L);
         verify(entityManager).refresh(order);
     }
@@ -164,7 +164,7 @@ class PaymentServiceImplTest {
                 "http://localhost:3000"
         );
 
-        when(paymentRepository.findByOrderOrderId(1L)).thenReturn(Optional.empty());
+        when(paymentRepository.findLockedByOrderOrderId(1L)).thenReturn(Optional.empty());
         when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
         when(payOS.paymentRequests()).thenReturn(paymentRequestsService);
         when(paymentRequestsService.create(any(CreatePaymentLinkRequest.class)))

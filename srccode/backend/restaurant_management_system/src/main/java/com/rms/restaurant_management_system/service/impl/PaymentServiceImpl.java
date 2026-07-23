@@ -94,9 +94,6 @@ public PaymentResponse createPayOSPayment(Long orderId) {
             }
         }
 
-        Order order = reloadReadyOrderForPayment(orderId);
-        BigDecimal latestAmount = order.getTotalAmount();
-
         Long payosOrderCode = generatePayOSOrderCode(order.getOrderId());
 
         Long amount = latestAmount
